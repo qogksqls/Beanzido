@@ -47,7 +47,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			}
 		});
 		
-		super.handleTextMessage(session, message);
+//		super.handleTextMessage(session, message);
 	}
 
 	@Override

@@ -5,12 +5,8 @@ import lombok.Data;
 
 @Data
 public class MessageDTO {
-	public enum MessageType{
-		TALK, QUIT
-	}
-
-	private MessageType type;
 	private String content;
+	private String img;
 	private String location;
 	private float latitude;
 	private float longitude;
