@@ -1,0 +1,37 @@
+.Bean {
+  background: #F5F5F5;
+  box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 10px 10px 10px 1px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+
+  .nickname-container {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    border-radius: 50%;
+    box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.25);
+    color: white;
+    font-size: 12px;
+    line-height: 25px;
+  }
+
+  .contents-container {
+    .up {
+      font-size: 8px;
+      display: flex;
+
+      .time {
+        margin-left: 5px;
+        color: rgba(0, 0, 0, 0.4);
+      }
+    }
+    .down { 
+      width: 120px;
+      font-size: 10px;
+      white-space: normal;
+      text-align: start;
+    }
+  }
+}
