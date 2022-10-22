@@ -1,5 +1,6 @@
 import { Map } from "react-kakao-maps-sdk";
 import Bean from "components/Bean/Bean";
+import { Suspense } from "react";
 
 type MapProps = {
   MyPosition: {
