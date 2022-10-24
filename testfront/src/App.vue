@@ -14,7 +14,7 @@
           <button type="submit">메세지 전송</button>
         </form>
         <ul id="logs">
-          <li v-for="log in logs" :key="log" class="log">{{log.content}}
+          <li v-for="log in logs" :key="log" class="log">{{log.message}}
             <img :src = log.img>
           </li>
         </ul>
@@ -113,7 +113,16 @@ export default {
     },
    sendMessage(e) {
       e;
-     
+     const dto ={
+      content : this.message,
+      img : this.img,
+      location : '서울 특별시 영등포구 도림천로 15길 15-15',
+      latitude : 36.22,
+      longitude : 36.22,
+      color : 2,
+      nickName : '부들 부들',
+      
+     }
       this.socket.send(JSON.stringify({content: this.message, img:this.img}));
       this.logs.push({ event: "메시지 전송", data: this.message });
       

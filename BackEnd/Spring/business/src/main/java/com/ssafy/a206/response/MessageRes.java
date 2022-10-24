@@ -1,10 +1,9 @@
-package com.ssafy.a206.dto;
-
+package com.ssafy.a206.response;
 
 import lombok.Data;
 
 @Data
-public class MessageDTO {
+public class MessageRes {
 	private String content;
 	private String img;
 	private String location;
@@ -12,6 +11,5 @@ public class MessageDTO {
 	private float longitude;
 	private int color;
 	private String nickName;
-
+	private String ip;
 }
-
