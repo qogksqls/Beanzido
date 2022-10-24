@@ -1,6 +1,5 @@
 import { Map } from "react-kakao-maps-sdk";
 import Bean from "components/Bean/Bean";
-import { Suspense } from "react";
 
 type MapProps = {
   MyPosition: {
@@ -13,7 +12,7 @@ function KakaoMap({ MyPosition }: MapProps) {
   const BeanList = [
     {
       Position: MyPosition,
-      nickname: "황태희",
+      nickname: "괜찮은 치와와",
       contents: "안녕하세요 이게 되는지 잘 모르겠네요 이거는 20줄까지는 하고 싶은데",
       color: "red",
       img: "",
