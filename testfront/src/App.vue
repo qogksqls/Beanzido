@@ -10,10 +10,13 @@
       <div v-if="status === 'connected'">
         <form @submit.prevent="sendMessage" action="#">
           <input v-model="message" />
+          <input type="file" @change="fileChange"/>
           <button type="submit">메세지 전송</button>
         </form>
         <ul id="logs">
-          <li v-for="log in logs" :key="log" class="log">{{ log.event }}: {{ log.data }}</li>
+          <li v-for="log in logs" :key="log" class="log">{{log.content}}
+            <img :src = log.img>
+          </li>
         </ul>
       </div>
     </div>
@@ -33,6 +36,8 @@ export default {
   data() {
     return {
       message: "",
+      img : null,
+      imgURL : null,
       logs: [],
       socket : null,
       status: "disconnected",
@@ -69,9 +74,21 @@ export default {
     }
   },
   methods: {
+    fileChange: function(e) {
+                console.log(e.target.files)//files는 배열로 들어온다.
+                // this.img = e.target.files[0];
+                const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0])
+      reader.onload = () => {
+        console.log(reader.result)	// base64
+        this.img=reader.result;
+      }
+            },
+
     //
     connect() {
       this.socket = new WebSocket("ws://localhost:8080/chat-server/map");
+      this.socket.binaryType ="arraybuffer";
       this.socket.onopen = () => {
         this.status = "connected";
         this.logs.push({
@@ -80,7 +97,12 @@ export default {
         });
 
         this.socket.onmessage = ({ data }) => {
-          this.logs.push({ event: "메세지 수신", data });
+          
+
+            console.log(data);
+            data = JSON.parse(data);
+            this.logs.push(data);
+
         };
       };
     },
@@ -89,11 +111,12 @@ export default {
       this.status = "disconnected";
       this.logs = [];
     },
-    sendMessage(e) {
-      e
-      let payload = {content:this.message, img:""}
-      this.socket.send(JSON.stringify(payload));
+   sendMessage(e) {
+      e;
+     
+      this.socket.send(JSON.stringify({content: this.message, img:this.img}));
       this.logs.push({ event: "메시지 전송", data: this.message });
+      
       this.message = "";
     },
     //

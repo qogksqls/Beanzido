@@ -3,8 +3,11 @@ package com.ssafy.a206.config;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.PongMessage;
 import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
@@ -33,6 +36,24 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		super.afterConnectionEstablished(session);
 	}
 
+	
+	@Override
+	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
+		log.info("데이터 통신 ID : {}", session.getId());
+		log.info("데이터 통신 내용 : {}", message);
+		
+		sessions.values().forEach(s -> {
+
+			try {
+				s.sendMessage(message);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		});
+		
+	}
+	
+	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		log.info("데이터 통신 ID : {}", session.getId());
