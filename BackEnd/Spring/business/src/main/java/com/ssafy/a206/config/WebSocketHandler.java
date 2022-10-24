@@ -22,7 +22,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		log.info("웹소켓 연결 ID : {}", session.getId());
 		String sessionId = session.getId();
 		sessions.put(sessionId, session);
-
+		System.out.println(session.getRemoteAddress());
 		sessions.values().forEach(s -> {
 
 			try {
