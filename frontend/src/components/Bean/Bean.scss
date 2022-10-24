@@ -1,37 +1,90 @@
-.Bean {
-  background: #F5F5F5;
-  box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.25);
+.bean.close {
+  border-radius: 18px 18px 18px 1px;
+}
+
+
+.bean {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   border-radius: 10px 10px 10px 1px;
+  padding: 5px;
+  background: #f5f5f5;
+  box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
-  padding: 5px;
+  transition: all ease 500ms;
 
+  
   .nickname-container {
     width: 25px;
     height: 25px;
-    margin-right: 5px;
     border-radius: 50%;
     box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.25);
     color: white;
     font-size: 12px;
     line-height: 25px;
   }
-
+  
   .contents-container {
+    text-overflow: clip;
+    &>div {
+      width: 120px;
+      margin-left: 5px;
+    }
     .up {
       font-size: 8px;
       display: flex;
+      width: 100%;
+      
+      div {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
 
       .time {
         margin-left: 5px;
         color: rgba(0, 0, 0, 0.4);
       }
     }
-    .down { 
-      width: 120px;
+    .down {
+      margin-top: 2px;
       font-size: 10px;
-      white-space: normal;
       text-align: start;
+      overflow: hidden;
+      white-space: normal;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
   }
+  div.fade-enter {
+    width: 0;
+    opacity: 0;
+  }
+  div.fade-enter-active {
+    width: 120px;
+    margin-left: 5px;
+    opacity: 1;
+    transition: all ease 500ms;
+  }
+  
+  div.fade-exit {
+    height: 42px;
+    width: 120px;
+    margin: 0;
+    opacity: 1;
+  }
+  div.fade-exit-active {
+    height: 0;
+    width: 0;
+    opacity: 0;
+    transition: all ease 500ms;
+    .down {
+      display: none;
+    }
+  }
+  
 }

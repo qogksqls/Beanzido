@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  position: relative;
 }
 
 .App-logo {
@@ -34,5 +35,24 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.create-button {
+  position: absolute;
+  bottom: 5%;
+  left: calc(50% - 40px);
+  z-index: 89;
+  width: 80px;
+  height: 80px;
+  transition: all ease 0.2s 0s;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(1.05);
+    
+  }
+  &:active {
+    filter: brightness(0.9);
   }
 }

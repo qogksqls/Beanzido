@@ -14,7 +14,7 @@ function KakaoMap({ MyPosition }: MapProps) {
     {
       Position: MyPosition,
       nickname: "황태희",
-      contents: "안녕하세요 이게 되는지 잘 모르겠네요",
+      contents: "안녕하세요 이게 되는지 잘 모르겠네요 이거는 20줄까지는 하고 싶은데",
       color: "red",
       img: "",
       createdAt: Date(),
