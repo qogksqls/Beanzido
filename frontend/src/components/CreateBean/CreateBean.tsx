@@ -4,6 +4,7 @@ import x from '../../assets/img/x.svg';
 import Camera from '../../assets/img/Camera.svg';
 import Img_box from '../../assets/img/Img_box.svg';
 import 새로고침 from '../../assets/img/새로고침.svg';
+import colorPicker from '../../assets/img/colorPicker.svg';
 
 type createBeanProps = {
   CloseCreateBean: () => void;
@@ -20,6 +21,104 @@ function CreateBean({ CloseCreateBean }: createBeanProps) {
   const RefreshNickname = () => {
     setRefreshNickname(newNickName)
   }
+
+  const [changeStyle, setChangeStyle] = useState(false)
+  function OpenChangeStyle() {
+    setChangeStyle(true)
+  }
+  function CloseChangeStyle() {
+    setChangeStyle(false)
+  }
+  function BeanStyle() {
+    return <>
+    <div className='bean-style-back' onClick={CloseChangeStyle}></div>
+    <div className='bean-style'>
+      <div style={{display: 'flex', height: '100%', justifyContent: 'space-around'}}>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column', 
+          justifyContent: 'space-between'}}>
+          <div className='bean-color'>
+            <div className='circle' style={{ backgroundColor: '#BDDB79'}}></div>
+            <p>완두콩</p>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+            <hr style={{margin: '0', width: '70%'}}/>
+          </div>
+          <div className='bean-color'>
+            <div className='circle' style={{ backgroundColor: '#F25F9B'}}></div>
+            <p>강낭콩</p>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+            <hr style={{margin: '0', width: '70%'}}/>
+          </div>
+          <div className='bean-color'>
+            <div className='circle' style={{ backgroundColor: '#A6A6A6'}}></div>
+            <p>쥐눈이콩</p>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+            <hr style={{margin: '0', width: '70%'}}/>
+          </div>
+          <div className='bean-color'>
+            <div className='circle' style={{ backgroundColor: '#F57329'}}></div>
+            <p>랜탈콩</p>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+            <hr style={{margin: '0', width: '70%'}}/>
+          </div>
+          <div className='bean-color'>
+            <div className='circle' style={{ backgroundColor: '#FFE9A0'}}></div>
+            <p>병아리콩</p>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+            <hr style={{margin: '0', width: '70%'}}/>
+          </div>
+        </div>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column', 
+          justifyContent: 'space-between'}}>
+          <div className='bean-color'>
+            <div className='circle' style={{ backgroundColor: '#377E19'}}></div>
+            <p>녹두</p>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+            <hr style={{margin: '0', width: '70%'}}/>
+          </div>
+          <div className='bean-color'>
+            <div className='circle' style={{ backgroundColor: '#E6BD46'}}></div>
+            <p>땅콩</p>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+            <hr style={{margin: '0', width: '70%'}}/>
+          </div>
+          <div className='bean-color'>
+            <div className='circle' style={{ backgroundColor: '#4E4E4E'}}></div>
+            <p>검은콩</p>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+            <hr style={{margin: '0', width: '70%'}}/>
+          </div>
+          <div className='bean-color'>
+            <div className='circle' style={{ backgroundColor: '#CC3737'}}></div>
+            <p>팥</p>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+            <hr style={{margin: '0', width: '70%'}}/>
+          </div>
+          <div className='bean-color'>
+            <div className='circle' style={{ backgroundColor: '#375E97'}}></div>
+            <p>젤리빈</p>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+            <hr style={{margin: '0', width: '70%'}}/>
+          </div>
+        </div>
+      </div>
+    </div>
+    </>
+  }
+
   return (
     <>
       <div className="create-bean-back" onClick={CloseCreateBean}></div>
@@ -31,13 +130,14 @@ function CreateBean({ CloseCreateBean }: createBeanProps) {
         <div className="content">
           <div className="name-style">
             <div className="name-refresh">
-              <p>{refreshNickname}님,</p>
+              <h4>{refreshNickname}</h4><p>님,</p>
               <img className="refresh" src={새로고침} alt="" onClick={RefreshNickname} />
             </div>
-            <div className="style-button">
+            <div className="style-button" onClick={OpenChangeStyle}>
               <p>스타일 변경</p>
             </div>
           </div>
+          {changeStyle && <BeanStyle />}
           <div className="message">
             <textarea placeholder="전하고 싶은 메시지를 입력해주세요." />
           </div>
