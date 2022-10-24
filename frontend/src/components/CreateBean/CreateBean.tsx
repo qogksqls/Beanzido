@@ -11,7 +11,7 @@ type createBeanProps = {
 
 function CreateBean({CloseCreateBean}: createBeanProps) {
   return (
-    <div className='create-bean-back'>
+    <div className='create-bean-back' onClick={CloseCreateBean}>
       <div className='create-bean'>
         <div className='header'>
           <h2>글 작성</h2>
