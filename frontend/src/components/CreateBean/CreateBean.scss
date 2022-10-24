@@ -1,0 +1,66 @@
+.create-bean {
+	position: absolute;
+	top: 15%;
+	left: calc(50% - 183px);
+	z-index: 99;
+	width: 366px;
+	height: 456px;
+	background-color: white;
+	border-radius: 10px;
+	--create-bean-color: #C7F2A4;
+
+	.header {
+		background-color: var(--create-bean-color);
+		border-radius: 10px 10px 0 0;
+		padding: 10px;
+		h2 {
+			margin: auto;
+		}
+		&::after {  // 삼각형
+			border-top: 10px solid var(--create-bean-color);
+			border-left: 10px solid transparent;
+			border-right: 10px solid transparent;
+			border-bottom: 0px solid transparent;
+			content: "";
+			position: absolute;
+			top: 52px;
+			left: calc(50% - 5px);
+		}
+	}
+
+	.x {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		cursor: pointer;
+	}
+
+	.content {
+		margin: 0 30px 0 30px;
+		.name-style {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			.name-refresh {
+				display: flex;
+				.refresh {
+					cursor: pointer;
+				}
+			}
+			.style-button {
+				background-color: var(--create-bean-color);
+				width: 84px;
+				height: 24px;
+				font-size: 13px;
+				display: flex;
+				align-items: center;
+				border-radius: 5px;
+				p {
+					margin: auto;
+				}
+				cursor: pointer;
+			}
+		}
+	}
+
+}
