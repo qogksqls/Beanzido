@@ -116,14 +116,13 @@ export default {
      const dto ={
       content : this.message,
       img : this.img,
-      location : '서울 특별시 영등포구 도림천로 15길 15-15',
       latitude : 36.22,
       longitude : 36.22,
-      color : 2,
+      color : '1',
       nickName : '부들 부들',
       
      }
-      this.socket.send(JSON.stringify({content: this.message, img:this.img}));
+      this.socket.send(JSON.stringify(dto));
       this.logs.push({ event: "메시지 전송", data: this.message });
       
       this.message = "";

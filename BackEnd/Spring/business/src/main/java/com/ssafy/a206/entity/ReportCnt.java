@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "message")
-public class Message {
+@Table(name = "reportCnt")
+public class ReportCnt {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int no;
@@ -22,21 +22,12 @@ public class Message {
 	@Column(name = "ip")
 	private String ip;
 	
-	@Column(name = "content")
-	private String content;
+	@Column(name = "cnt")
+	private int cnt;
 	
-	@Column(name = "img")
-	private String img;
+	public void cntAdd() {
+		this.cnt++;
+	}
 	
-	@Column(name = "created_at")
-	private String created_at;
 	
-	@Column(name = "location")
-	private String location;
-	
-	@Column(name = "latitude")
-	private float latitude;
-	
-	@Column(name = "longitude")
-	private float longitude;
 }

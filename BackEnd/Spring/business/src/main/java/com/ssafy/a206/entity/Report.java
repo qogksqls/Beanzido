@@ -13,18 +13,20 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "accuse")
-public class Accuse {
+@Table(name = "report")
+public class Report {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int no;
 	
-	@Column(name = "ip")
-	private String ip;
+	@Column(name = "reporter")
+	private String reporter;
 	
-	@Column(name = "cnt")
-	private int cnt;
+	@Column(name = "reportee")
+	private String reportee;
 	
-	
-	
+	public Report(String reporter, String reportee) {
+		this.reportee = reportee;
+		this.reporter = reporter;
+	}
 }
