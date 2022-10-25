@@ -10,6 +10,8 @@ import Sidebar from "components/Sidebar/Sidebar";
 function App() {
   const location = useGeoLocation();
   const [openCreateBean, setOpenCreateBean] = useState(false)
+  const [isSideBar, setisSideBar] = useState(true)
+
   const BeanList = [
     {
       Position: location.coordinates,
@@ -38,7 +40,7 @@ function App() {
         alt="chat-button" />
       {openCreateBean && <CreateBean CloseCreateBean={CloseCreateBean} />}
       <KakaoMap BeanList={BeanList} MyPosition={location.coordinates} />
-      <Sidebar BeanList={BeanList}/>
+      <Sidebar isSideBar={isSideBar} setisSideBar={setisSideBar} BeanList={BeanList}/>
     </div>
   );
 }
