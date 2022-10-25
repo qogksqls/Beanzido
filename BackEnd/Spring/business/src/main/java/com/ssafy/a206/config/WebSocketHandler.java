@@ -19,7 +19,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		log.info("À¥¼ÒÄÏ ¿¬°á ID : {}", session.getId());
+		log.info("ì„¸ì…˜ ID : {}", session.getId());
 		String sessionId = session.getId();
 		sessions.put(sessionId, session);
 		System.out.println(session.getRemoteAddress());
@@ -39,8 +39,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
-		log.info("µ¥ÀÌÅÍ Åë½Å ID : {}", session.getId());
-		log.info("µ¥ÀÌÅÍ Åë½Å ³»¿ë : {}", message);
+		log.info("ì„¸ì…˜ ID : {}", session.getId());
+		log.info("ë©”ì‹œì§€ : {}", message);
 		
 		sessions.values().forEach(s -> {
 
@@ -56,8 +56,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		log.info("µ¥ÀÌÅÍ Åë½Å ID : {}", session.getId());
-		log.info("µ¥ÀÌÅÍ Åë½Å ³»¿ë : {}", message);
+		log.info("ì„¸ì…˜ ID : {}", session.getId());
+		log.info("ë©”ì‹œì§€ : {}", message);
 		
 		sessions.values().forEach(s -> {
 
@@ -73,13 +73,13 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		log.info("À¥¼ÒÄÏ ¿¬°á Á¾·á ID : {}", session.getId());
+		log.info("ì„¸ì…˜ ID : {}", session.getId());
 		super.afterConnectionClosed(session, status);
 	}
 
 	@Override
 	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-		log.info("µ¥ÀÌÅÍ Åë½Å ¿¡·¯ ID : {}", session.getId());
+		log.info("ì„¸ì…˜ ID : {}", session.getId());
 		super.handleTransportError(session, exception);
 	}
 }
