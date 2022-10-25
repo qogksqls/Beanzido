@@ -3,7 +3,7 @@ import "./App.scss";
 import KakaoMap from "components/KakaoMap";
 import useGeoLocation from "assets/hooks/useGeolocation";
 import CreateBean from "./components/CreateBean/CreateBean"
-
+import FeedbackBean from "components/FeedbackBean/FeedbackBean";
 import createButton from "./assets/img/chat-button.svg"
 
 function App() {
@@ -26,6 +26,7 @@ function App() {
         alt="chat-button" />
       {openCreateBean && <CreateBean CloseCreateBean={CloseCreateBean} />}
       <KakaoMap MyPosition={location.coordinates}></KakaoMap>
+      <FeedbackBean />
     </div>
   );
 }
