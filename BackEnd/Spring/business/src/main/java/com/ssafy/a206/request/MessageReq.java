@@ -1,6 +1,10 @@
 package com.ssafy.a206.request;
 
-import com.ssafy.a206.dto.MessageDTO;
+
+import java.sql.Timestamp;
+import java.util.Date;
+
+import com.ssafy.a206.entity.MessageLog;
 
 import lombok.Data;
 
@@ -12,5 +16,12 @@ public class MessageReq {
 	private float latitude;
 	private float longitude;
 	private int color;
-	private String nickName;
+	private String nickname;
+	
+	public MessageLog createMessageLog(String ip) {
+		Timestamp timestamp = new Timestamp(new Date().getTime());
+		
+		return new MessageLog(ip, content, img, timestamp, location, latitude, longitude, color, nickname);
+	}
+	
 }
