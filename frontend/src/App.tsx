@@ -5,10 +5,22 @@ import useGeoLocation from "assets/hooks/useGeolocation";
 import CreateBean from "./components/CreateBean/CreateBean"
 
 import createButton from "./assets/img/chat-button.svg"
+import Sidebar from "components/Sidebar/Sidebar";
 
 function App() {
   const location = useGeoLocation();
   const [openCreateBean, setOpenCreateBean] = useState(false)
+  const BeanList = [
+    {
+      Position: location.coordinates,
+      nickname: "괜찮은 황태희",
+      contents:
+        "안녕하세요 이게 되는지 잘 모르겠네요 이거는 20줄까지는 하고 싶은데",
+      color: "red",
+      img: "",
+      createdAt: Date(),
+    },
+  ];
 
   function OpenCreateBean() {
     setOpenCreateBean(true)
@@ -25,7 +37,8 @@ function App() {
         src={createButton}
         alt="chat-button" />
       {openCreateBean && <CreateBean CloseCreateBean={CloseCreateBean} />}
-      <KakaoMap MyPosition={location.coordinates}></KakaoMap>
+      <KakaoMap BeanList={BeanList} MyPosition={location.coordinates} />
+      <Sidebar BeanList={BeanList}/>
     </div>
   );
 }
