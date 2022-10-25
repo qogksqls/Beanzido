@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { RecoilRoot } from "recoil";
 import "./App.scss";
 import KakaoMap from "components/KakaoMap";
-import useGeoLocation from "assets/hooks/useGeolocation";
-import { useMySocket, MySocketState } from "assets/hooks/useWebSocket";
+import useGeoLocation from "components/hooks/useGeolocation";
 import CreateBean from "./components/CreateBean/CreateBean"
-
 import createButton from "./assets/img/chat-button.svg"
 
 function App() {
@@ -19,6 +18,7 @@ function App() {
   }
 
   return (
+    <RecoilRoot>
     <div className="App">
       <img
         className="create-button"
@@ -28,6 +28,7 @@ function App() {
       {openCreateBean && <CreateBean CloseCreateBean={CloseCreateBean} />}
       <KakaoMap MyPosition={location.coordinates}></KakaoMap>
     </div>
+    </RecoilRoot>
   );
 }
 
