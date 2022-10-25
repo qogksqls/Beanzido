@@ -1,12 +1,13 @@
 import React, { useState, useRef, Dispatch } from "react";
 import { CSSTransition } from "react-transition-group";
+import ChatList from "components/ChatList/ChatList";
 import "./Sidebar.scss";
-import openIcon from "assets/img/Expand_right_light.svg"
-import closeIcon from "assets/img/Expand_left_light.svg"
+import openIcon from "assets/img/Expand_right_light.svg";
+import closeIcon from "assets/img/Expand_left_light.svg";
 
 type SideProps = {
   isSideBar: boolean;
-  setisSideBar: Dispatch<React.SetStateAction<boolean>>  ;
+  setisSideBar: Dispatch<React.SetStateAction<boolean>>;
   BeanList: {
     nickname: string;
     contents: string;
@@ -20,7 +21,11 @@ type SideProps = {
   }[];
 };
 
-export default function Sidebar({ isSideBar, setisSideBar, BeanList }: SideProps) {
+export default function Sidebar({
+  isSideBar,
+  setisSideBar,
+  BeanList,
+}: SideProps) {
   const nodeRef = useRef(null);
 
   function closeSidebar() {
@@ -40,11 +45,14 @@ export default function Sidebar({ isSideBar, setisSideBar, BeanList }: SideProps
         onEnter={() => openSidebar}
         onExited={() => closeSidebar}
       >
-        <div className="inner">ss</div>
+        <div className="inner"><ChatList /></div>
       </CSSTransition>
       <div className="handle" onClick={isSideBar ? closeSidebar : openSidebar}>
-        <img src={isSideBar ? closeIcon : openIcon} alt={isSideBar ? 'close' : 'open'} />
-        </div>
+        <img
+          src={isSideBar ? closeIcon : openIcon}
+          alt={isSideBar ? "close" : "open"}
+        />
+      </div>
     </div>
   );
 }

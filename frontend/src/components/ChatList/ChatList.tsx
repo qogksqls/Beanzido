@@ -20,17 +20,29 @@ import { beanListState } from "store/atom";
 // };
 
 function ChatList() {
-  const socketUrl = 'wss://echo.websocket.org'
+  const socketUrl = 'wss://ws.postman-echo.com/raw'
   const [beanList, setBeanList] = useRecoilState(beanListState);
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
 
+  const dto = JSON.stringify({
+    Position: {
+      lat: 37.5009614732362,
+      lng: 127.03972084911923,
+    },
+    nickname: "괜찮은 황태희",
+    contents:
+      "안녕하세요 이게 되는지 잘 모르겠네요 이거는 20줄까지는 하고 싶은데",
+    color: "red",
+    img: "",
+    createdAt: Date(),
+  })
   useEffect(() => {
     if (lastMessage !== null) {
-      console.log(lastMessage)
+      setBeanList([...beanList, JSON.parse(lastMessage.data)])
     }
   }, [lastMessage]);
 
-  const handleClickSendMessage = useCallback(() => sendMessage('Hello'), []);
+  const handleClickSendMessage = useCallback((bean: string) => sendMessage(bean), []);
 
   const connectionStatus = {
     [ReadyState.CONNECTING]: 'Connecting',
@@ -45,7 +57,7 @@ function ChatList() {
     <div className="chat-list">
       <div>
         <button
-          onClick={handleClickSendMessage}
+          onClick={() => handleClickSendMessage(dto)}
           disabled={readyState !== ReadyState.OPEN}
         >
           Click Me to send 'Hello'

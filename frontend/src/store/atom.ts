@@ -2,7 +2,7 @@ import {atom} from "recoil";
 
 export const beanListState = atom({
   key: 'beanListState',
-  default: <{
+  default: [] as {
     nickname: string;
     contents: string;
     color: string;
@@ -12,5 +12,5 @@ export const beanListState = atom({
       lat: number;
       lng: number;
     };
-  }[]>[],
+  }[],
 });
