@@ -87,7 +87,7 @@ export default {
 
     //
     connect() {
-      this.socket = new WebSocket("ws://localhost:8080/chat-server/map");
+      this.socket = new WebSocket("ws://13.125.39.100:8091/chat-server/map");
       this.socket.binaryType ="arraybuffer";
       this.socket.onopen = () => {
         this.status = "connected";

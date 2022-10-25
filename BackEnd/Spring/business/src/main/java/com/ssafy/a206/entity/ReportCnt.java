@@ -1,6 +1,7 @@
 package com.ssafy.a206.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "reportCnt")
 public class ReportCnt {
 	@Id
