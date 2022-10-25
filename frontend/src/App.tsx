@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.scss";
 import KakaoMap from "components/KakaoMap";
 import useGeoLocation from "assets/hooks/useGeolocation";
+import { useMySocket, MySocketState } from "assets/hooks/useWebSocket";
 import CreateBean from "./components/CreateBean/CreateBean"
 
 import createButton from "./assets/img/chat-button.svg"
