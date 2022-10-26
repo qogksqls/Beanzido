@@ -4,6 +4,7 @@ import "./App.scss";
 import KakaoMap from "components/KakaoMap";
 import useGeoLocation from "components/hooks/useGeolocation";
 import CreateBean from "./components/CreateBean/CreateBean"
+import FeedbackBean from "components/FeedbackBean/FeedbackBean";
 import createButton from "./assets/img/chat-button.svg"
 import Sidebar from "components/Sidebar/Sidebar";
 
@@ -32,9 +33,9 @@ function App() {
         onClick={() => setIsCreateBean(true)}
         src={createButton}
         alt="chat-button" />
-      {isCreateBean && <CreateBean setIsCreateBean={setIsCreateBean} />}
-      <KakaoMap MyPosition={location.coordinates} />
-      <Sidebar isSideBar={isSideBar} setisSideBar={setisSideBar} BeanList={BeanList}/>
+      {openCreateBean && <CreateBean CloseCreateBean={CloseCreateBean} />}
+      <KakaoMap MyPosition={location.coordinates}></KakaoMap>
+      <FeedbackBean />
     </div>
     </RecoilRoot>
   );
