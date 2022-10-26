@@ -3,7 +3,7 @@ import "./ChatItem.scss";
 type ChatProps = {
   Chatinfo: {
     nickname: string;
-    contents: string;
+    content: string;
     color: string;
     img?: string;
   };
@@ -23,7 +23,7 @@ function ChatItem({ Chatinfo }: ChatProps) {
           <div>{Chatinfo.nickname}</div>
           <div className="time">just now</div>
         </div>
-        <div className="down">{Chatinfo.contents}</div>
+        <div className="down">{Chatinfo.content}</div>
       </div>
     </div>
   );

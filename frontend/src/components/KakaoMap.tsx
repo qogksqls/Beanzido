@@ -1,35 +1,29 @@
+import { useRecoilState } from "recoil";
 import { Map } from "react-kakao-maps-sdk";
 import Bean from "components/Bean/Bean";
+import { beanListState } from "store/atom";
 
 type MapProps = {
-  BeanList: {
-    nickname: string;
-    contents: string;
-    color: string;
-    img?: string;
-    createdAt: string;
-    Position: {
-      lat: number;
-      lng: number;
-    };
-  }[];
   MyPosition: {
     lat: number;
     lng: number;
   };
 };
 
-function KakaoMap({ BeanList, MyPosition }: MapProps) {
+function KakaoMap({ MyPosition }: MapProps) {
+  const [beanList, setBeanList] = useRecoilState(beanListState);
+
   return (
     <Map center={MyPosition} style={{ width: "100vw", height: "100vh" }}>
-      {BeanList.map((BeanProps, index) => (
+      {beanList.map((BeanProps, index) => (
         <Bean
           nickname={BeanProps.nickname}
-          contents={BeanProps.contents}
+          contents={BeanProps.content}
           color={BeanProps.color}
           img={BeanProps.img}
           createdAt={BeanProps.createdAt}
-          Position={BeanProps.Position}
+          Position={{ lat: BeanProps.latitude, lng: BeanProps.longitude }}
+          key={index}
         ></Bean>
       ))}
     </Map>

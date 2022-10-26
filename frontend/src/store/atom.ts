@@ -1,16 +1,24 @@
-import {atom} from "recoil";
+import { atom } from "recoil";
 
 export const beanListState = atom({
-  key: 'beanListState',
+  key: "beanListState",
   default: [] as {
     nickname: string;
-    contents: string;
+    content: string;
     color: string;
     img?: string;
     createdAt: string;
-    Position: {
-      lat: number;
-      lng: number;
-    };
+    latitude: number;
+    longitude: number;
   }[],
+});
+
+export const randomNameState = atom({
+  key: "randomNameState",
+  default: "",
+});
+
+export const beanColorState = atom({
+  key: "beanColorState",
+  default: 0,
 });

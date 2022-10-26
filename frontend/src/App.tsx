@@ -9,7 +9,7 @@ import Sidebar from "components/Sidebar/Sidebar";
 
 function App() {
   const location = useGeoLocation();
-  const [openCreateBean, setOpenCreateBean] = useState(false)
+  const [isCreateBean, setIsCreateBean] = useState(false)
   const [isSideBar, setisSideBar] = useState(true)
 
   const BeanList = [
@@ -24,23 +24,16 @@ function App() {
     },
   ];
 
-  function OpenCreateBean() {
-    setOpenCreateBean(true)
-  }
-  function CloseCreateBean() {
-    setOpenCreateBean(false);
-  }
-
   return (
     <RecoilRoot>
     <div className="App">
       <img
         className="create-button"
-        onClick={OpenCreateBean}
+        onClick={() => setIsCreateBean(true)}
         src={createButton}
         alt="chat-button" />
-      {openCreateBean && <CreateBean CloseCreateBean={CloseCreateBean} />}
-      <KakaoMap BeanList={BeanList} MyPosition={location.coordinates} />
+      {isCreateBean && <CreateBean setIsCreateBean={setIsCreateBean} />}
+      <KakaoMap MyPosition={location.coordinates} />
       <Sidebar isSideBar={isSideBar} setisSideBar={setisSideBar} BeanList={BeanList}/>
     </div>
     </RecoilRoot>
