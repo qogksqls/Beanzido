@@ -1,6 +1,7 @@
+import { useRecoilState } from "recoil";
 import { Map } from "react-kakao-maps-sdk";
 import Bean from "components/Bean/Bean";
-import { Suspense } from "react";
+import { beanListState } from "store/atom";
 
 type MapProps = {
   MyPosition: {
@@ -10,26 +11,19 @@ type MapProps = {
 };
 
 function KakaoMap({ MyPosition }: MapProps) {
-  const BeanList = [
-    {
-      Position: MyPosition,
-      nickname: "황태희",
-      contents: "안녕하세요 이게 되는지 잘 모르겠네요 이거는 20줄까지는 하고 싶은데",
-      color: "red",
-      img: "",
-      createdAt: Date(),
-    },
-  ];
+  const [beanList, setBeanList] = useRecoilState(beanListState);
+
   return (
     <Map center={MyPosition} style={{ width: "100vw", height: "100vh" }}>
-      {BeanList.map((BeanProps, index) => (
+      {beanList.map((BeanProps, index) => (
         <Bean
           nickname={BeanProps.nickname}
-          contents={BeanProps.contents}
+          contents={BeanProps.content}
           color={BeanProps.color}
           img={BeanProps.img}
           createdAt={BeanProps.createdAt}
-          Position={BeanProps.Position}
+          Position={{ lat: BeanProps.latitude, lng: BeanProps.longitude }}
+          key={index}
         ></Bean>
       ))}
     </Map>
