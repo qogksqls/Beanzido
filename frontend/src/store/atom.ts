@@ -13,8 +13,8 @@ export const beanListState = atom({
   }[],
 });
 
-export const randomNameState = atom({
-  key: "randomNameState",
+export const nameState = atom({
+  key: "nameState",
   default: "",
 });
 
