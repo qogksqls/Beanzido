@@ -7,15 +7,17 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 
 import useGeoLocation from "components/hooks/useGeolocation";
 import CreateBean from "./components/CreateBean/CreateBean";
-import createButton from "./assets/img/chat-button.svg";
 import Sidebar from "components/Sidebar/Sidebar";
+import createButton from "./assets/img/chat-button.svg";
+import FeedbackButtonImg from "./assets/img/FeedbackButton.svg";
+import FeedbackButton from "components/FeedbackButton/FeedbackButton";
 
 function App() {
+  const [isFeedbackButton, setIsFeedbackButton] = useState(false);
   const [beanList, setBeanList] = useRecoilState(beanListState);
-
-  const { location, initialLocation } = useGeoLocation();
   const [isCreateBean, setIsCreateBean] = useState(false);
   const [isSideBar, setisSideBar] = useState(false);
+  const { location, initialLocation } = useGeoLocation();
   const socketurl = process.env.REACT_APP_SOCKET_URL
     ? process.env.REACT_APP_SOCKET_URL
     : "";
@@ -46,6 +48,7 @@ function App() {
   });
 
   return (
+
     <div className="App">
       <img
         className="create-button"
@@ -53,6 +56,14 @@ function App() {
         src={createButton}
         alt="chat-button"
       />
+      <img
+        className="feedback-button"
+        onClick={() => setIsFeedbackButton(true)}
+        src={FeedbackButtonImg}
+        alt="feedback-button"
+      />
+      {isFeedbackButton && <FeedbackButton setIsFeedbackButton={setIsFeedbackButton} />}
+
       <div style={{ position: "absolute", zIndex: 100 }}>
         <button
           onClick={() => handleClickSendMessage(dto)}
