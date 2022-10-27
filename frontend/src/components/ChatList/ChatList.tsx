@@ -6,9 +6,11 @@ import ChatItem from "components/ChatItem/ChatItem";
 import { beanListState } from "store/atom";
 
 function ChatList() {
-  const socketUrl = "wss://ws.postman-echo.com/raw";
+  const socketurl = process.env.REACT_APP_SOCKET_URL
+    ? process.env.REACT_APP_SOCKET_URL
+    : "";
   const [beanList, setBeanList] = useRecoilState(beanListState);
-  const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
+  const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl);
 
   const dto = JSON.stringify({
     latitude: 37.5009614732362,
@@ -22,7 +24,9 @@ function ChatList() {
   });
   useEffect(() => {
     if (lastMessage !== null) {
-      setBeanList([...beanList, JSON.parse(lastMessage.data)]);
+      if (lastMessage.data[0] == "{") {
+        setBeanList([...beanList, JSON.parse(lastMessage.data)]);
+      }
     }
   }, [lastMessage]);
 

@@ -25,6 +25,7 @@ const useGeolocation = () => {
   };
 
   const onError = (error: { code: number; message: string }) => {
+    console.log("position error");
     setLocation({
       loaded: true,
       coordinates: {
@@ -42,7 +43,9 @@ const useGeolocation = () => {
         message: "Geolocation not supported",
       });
     }
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    navigator.geolocation.watchPosition(onSuccess, onError, {
+      enableHighAccuracy: true,
+    });
   }, []);
 
   return location;
