@@ -11,15 +11,9 @@ const useGeolocation = () => {
     loaded: false,
     coordinates: { lat: 0, lng: 0 },
   });
-  const initialLocation = {
-    lat: 37.5009614732362,
-    lng: 127.03972084911923,
-  };
   const onSuccess = (location: {
     coords: { latitude: number; longitude: number };
   }) => {
-    initialLocation.lat = location.coords.latitude * 1;
-    initialLocation.lng = location.coords.longitude * 1;
     setLocation({
       loaded: true,
       coordinates: {
@@ -48,12 +42,12 @@ const useGeolocation = () => {
         message: "Geolocation not supported",
       });
     }
-    navigator.geolocation.watchPosition(onSuccess, onError, {
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
       enableHighAccuracy: true,
     });
   }, []);
 
-  return { location, initialLocation };
+  return location;
 };
 
 export default useGeolocation;

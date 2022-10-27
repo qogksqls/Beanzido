@@ -5,28 +5,26 @@ import { CSSTransition } from "react-transition-group";
 
 type BeanProps = {
   nickname: string;
-  contents: string;
+  content: string;
   color: string;
-  img?: string;
+  img: string;
   createdAt: string;
-  Position: {
-    lat: number;
-    lng: number;
-  };
+  latitude: number;
+  longitude: number;
 };
 
 function Bean({
   nickname,
-  contents,
+  content,
   color,
   img,
   createdAt,
-  Position,
+  latitude,
+  longitude,
 }: BeanProps) {
   const [isOpen, setIsOpen] = useState(true);
   const beanRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef(null);
-
   const controlBean = () => {
     const bean = beanRef.current;
     if (bean) {
@@ -35,7 +33,12 @@ function Bean({
     setIsOpen(!isOpen);
   };
   return (
-    <CustomOverlayMap position={Position} xAnchor={0} yAnchor={0} clickable>
+    <CustomOverlayMap
+      position={{ lat: latitude, lng: longitude }}
+      xAnchor={0}
+      yAnchor={0}
+      clickable
+    >
       <div className="bean open" ref={beanRef} onClick={controlBean}>
         <div className="nickname-container" style={{ backgroundColor: color }}>
           {nickname[0]}
@@ -55,7 +58,7 @@ function Bean({
                 <div>{nickname}</div>
                 <div className="time">just now</div>
               </div>
-              <div className="down">{contents}</div>
+              <div className="down">{content}</div>
             </div>
           </CSSTransition>
         </div>

@@ -17,7 +17,7 @@ function App() {
   const [beanList, setBeanList] = useRecoilState(beanListState);
   const [isCreateBean, setIsCreateBean] = useState(false);
   const [isSideBar, setisSideBar] = useState(false);
-  const { location, initialLocation } = useGeoLocation();
+  const location = useGeoLocation();
   const socketurl = process.env.REACT_APP_SOCKET_URL
     ? process.env.REACT_APP_SOCKET_URL
     : "";
@@ -27,6 +27,7 @@ function App() {
     if (lastMessage !== null) {
       if (lastMessage.data[0] == "{") {
         setBeanList([...beanList, JSON.parse(lastMessage.data)]);
+        console.log(beanList);
       }
     }
   }, [lastMessage]);
@@ -36,19 +37,7 @@ function App() {
     []
   );
 
-  const dto = JSON.stringify({
-    latitude: 37.5009614732362,
-    longitude: 127.03972084911923,
-    nickname: "괜찮은 황태희",
-    content:
-      "안녕하세요 이게 되는지 잘 모르겠네요 이거는 20줄까지는 하고 싶은데",
-    color: "1",
-    img: "",
-    createdAt: Date(),
-  });
-
   return (
-
     <div className="App">
       <img
         className="create-button"
@@ -62,19 +51,28 @@ function App() {
         src={FeedbackButtonImg}
         alt="feedback-button"
       />
-      {isFeedbackButton && <FeedbackButton setIsFeedbackButton={setIsFeedbackButton} />}
+      {isFeedbackButton && (
+        <FeedbackButton setIsFeedbackButton={setIsFeedbackButton} />
+      )}
 
       <div style={{ position: "absolute", zIndex: 100 }}>
-        <button
-          onClick={() => handleClickSendMessage(dto)}
-          disabled={readyState !== ReadyState.OPEN}
-        >
-          Click Me to send 'Hello'
-        </button>
         {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
+        <div>{beanList ? JSON.stringify(beanList) : ""}</div>
       </div>
-      {isCreateBean && <CreateBean setIsCreateBean={setIsCreateBean} />}
-      <KakaoMap MyPosition={initialLocation} />
+      {isCreateBean && (
+        <CreateBean
+          sendMessage={sendMessage}
+          setIsCreateBean={setIsCreateBean}
+          latitude={location.coordinates.lat}
+          longitude={location.coordinates.lng}
+        />
+      )}
+      <KakaoMap
+        MyPosition={{
+          lat: location.coordinates.lat,
+          lng: location.coordinates.lng,
+        }}
+      />
       <Sidebar isSideBar={isSideBar} setisSideBar={setisSideBar} />
     </div>
   );

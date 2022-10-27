@@ -19,12 +19,21 @@ import x from "../../assets/img/x.svg";
 import Camera from "../../assets/img/Camera.svg";
 import Img_box from "../../assets/img/Img_box.svg";
 import 새로고침 from "../../assets/img/새로고침.svg";
+import { SendMessage } from "react-use-websocket";
 
 type createBeanProps = {
   setIsCreateBean: Dispatch<SetStateAction<boolean>>;
+  sendMessage: SendMessage;
+  latitude: number;
+  longitude: number;
 };
 
-export default function CreateBean({ setIsCreateBean }: createBeanProps) {
+export default function CreateBean({
+  setIsCreateBean,
+  sendMessage,
+  latitude,
+  longitude,
+}: createBeanProps) {
   const [isBeanStyle, setIsBeanStyle] = useState(false);
   const { name, setRandomName } = useRandomName(); // nickname
   const [contentValue, setContentValue] = useState(""); // content
@@ -86,16 +95,16 @@ export default function CreateBean({ setIsCreateBean }: createBeanProps) {
   let time = `${year}/${month}/${date} - ${hours}:${minutes}:${seconds}:${milliseconds}`;
 
   function SaveBaen() {
-    console.log("글작성");
     const beanInfo = {
-      ninkname: name,
-      content: contentValue,
+      nickname: name,
+      content: contentValue ? contentValue : "내용이 없습니다.",
       color: indexToColor(beanColor).backgroundColor,
       img: imgSrc,
       createdAt: time,
-      latitude: "",
-      longitude: "",
+      latitude: latitude,
+      longitude: longitude,
     };
+    sendMessage(JSON.stringify(beanInfo));
   }
 
   return (
@@ -149,13 +158,13 @@ export default function CreateBean({ setIsCreateBean }: createBeanProps) {
             </div>
           ) : (
             <div className="camera-picture">
-              {/* <div className="camera-btn" onClick={OnCamera}>
+              <div className="camera-btn" onClick={OnCamera}>
                 <img className="camera-img" src={Camera} alt="" />
                 <div>
                   <h4>카메라(선택)</h4>
                   <p>사진 첨부 시 사진 촬영</p>
                 </div>
-              </div> */}
+              </div>
               <div>
                 <input
                   id="picture"
