@@ -12,9 +12,11 @@ type MapProps = {
 
 function KakaoMap({ MyPosition }: MapProps) {
   const [beanList, setBeanList] = useRecoilState(beanListState);
+  const vh = window.innerHeight ? window.innerHeight + "px" : "100vh";
+  console.log(vh);
 
   return (
-    <Map center={MyPosition} style={{ width: "100vw", height: "100vh" }}>
+    <Map center={MyPosition} style={{ width: "100vw", height: vh }}>
       {beanList.map((BeanProps, index) => (
         <Bean
           nickname={BeanProps.nickname}
