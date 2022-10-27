@@ -1,3 +1,17 @@
+$breakpoint: 500px;
+
+@mixin mobile {
+  @media (max-width: #{$breakpoint - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$breakpoint}) {
+    @content;
+  }
+}
+
 :root {
 	--create-bean-color: #c7f2a4;
   --create-text-color: #000000;
@@ -186,4 +200,19 @@
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */
   }
+}
+
+@include mobile {
+  .create-bean {
+    .content {
+      .camera-picture {
+        .camera-btn {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@include desktop {
 }
