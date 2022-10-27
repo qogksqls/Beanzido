@@ -3,15 +3,14 @@ import { RecoilRoot } from "recoil";
 import "./App.scss";
 import KakaoMap from "components/KakaoMap";
 import useGeoLocation from "components/hooks/useGeolocation";
-import CreateBean from "./components/CreateBean/CreateBean"
-import FeedbackBean from "components/FeedbackBean/FeedbackBean";
-import createButton from "./assets/img/chat-button.svg"
+import CreateBean from "./components/CreateBean/CreateBean";
+import createButton from "./assets/img/chat-button.svg";
 import Sidebar from "components/Sidebar/Sidebar";
 
 function App() {
   const location = useGeoLocation();
-  const [isCreateBean, setIsCreateBean] = useState(false)
-  const [isSideBar, setisSideBar] = useState(true)
+  const [isCreateBean, setIsCreateBean] = useState(false);
+  const [isSideBar, setisSideBar] = useState(true);
 
   const BeanList = [
     {
@@ -27,16 +26,21 @@ function App() {
 
   return (
     <RecoilRoot>
-    <div className="App">
-      <img
-        className="create-button"
-        onClick={() => setIsCreateBean(true)}
-        src={createButton}
-        alt="chat-button" />
-      {openCreateBean && <CreateBean CloseCreateBean={CloseCreateBean} />}
-      <KakaoMap MyPosition={location.coordinates}></KakaoMap>
-      <FeedbackBean />
-    </div>
+      <div className="App">
+        <img
+          className="create-button"
+          onClick={() => setIsCreateBean(true)}
+          src={createButton}
+          alt="chat-button"
+        />
+        {isCreateBean && <CreateBean setIsCreateBean={setIsCreateBean} />}
+        <KakaoMap MyPosition={location.coordinates} />
+        <Sidebar
+          isSideBar={isSideBar}
+          setisSideBar={setisSideBar}
+          BeanList={BeanList}
+        />
+      </div>
     </RecoilRoot>
   );
 }
