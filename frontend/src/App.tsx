@@ -16,10 +16,6 @@ function App() {
   const { location, initialLocation } = useGeoLocation();
   const [isCreateBean, setIsCreateBean] = useState(false);
   const [isSideBar, setisSideBar] = useState(true);
-  const socketurl = process.env.REACT_APP_SOCKET_URL
-    ? process.env.REACT_APP_SOCKET_URL
-    : "";
-  const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl);
 
   useEffect(() => {
     if (lastMessage !== null) {

@@ -14,11 +14,10 @@
 }
 .create-bean {
   position: absolute;
-  top: 15%;
+  top: 10%;
   left: calc(50% - 183px);
   z-index: 99;
   width: 366px;
-  height: 456px;
   background-color: white;
   border-radius: 10px;
   .header {
@@ -44,8 +43,8 @@
 
   .x {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 10px;
+    right: 10px;
     cursor: pointer;
   }
 
@@ -107,7 +106,7 @@
       text-align: start;
       border-radius: 5px;
       margin-bottom: 20px;
-      .camera {
+      .camera-btn {
         display: flex;
         margin-bottom: 10px;
         cursor: pointer;
@@ -149,6 +148,18 @@
         }
       }
     }
+    .capture-box {
+      border: 1px solid var(--create-bean-color);
+      padding: 10px;
+      .capture {
+        border-radius: 10px;
+        width: 100%;
+        cursor: pointer;
+        transform: rotateY(180deg);
+        -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+        -moz-transform:rotateY(180deg); /* Firefox */
+      }
+    }
     .finish-button {
       width: 100%;
       text-align: center;
@@ -156,6 +167,7 @@
       color: var(--create-text-color);
       border-radius: 5px;
       padding: 10px 0 10px 0;
+      margin: 10px 0 10px 0;
       cursor: pointer;
       h3 {
         margin: auto;
@@ -164,3 +176,13 @@
   }
 }
 
+.camera {
+  position: absolute;
+  z-index: 99;
+  left: calc(50% - 320px);
+  .webcam {
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+  }
+}
