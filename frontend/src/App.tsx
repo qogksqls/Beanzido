@@ -4,12 +4,16 @@ import "./App.scss";
 import KakaoMap from "components/KakaoMap";
 import useGeoLocation from "components/hooks/useGeolocation";
 import CreateBean from "./components/CreateBean/CreateBean";
-import createButton from "./assets/img/chat-button.svg";
 import Sidebar from "components/Sidebar/Sidebar";
+import createButton from "./assets/img/chat-button.svg";
+import FeedbackButtonImg from "./assets/img/FeedbackButton.svg";
+import FeedbackButton from "components/FeedbackButton/FeedbackButton";
 
 function App() {
   const location = useGeoLocation();
   const [isCreateBean, setIsCreateBean] = useState(false);
+  const [isFeedbackButton, setIsFeedbackButton] = useState(false);
+
   const [isSideBar, setisSideBar] = useState(true);
 
   const BeanList = [
@@ -34,6 +38,14 @@ function App() {
           alt="chat-button"
         />
         {isCreateBean && <CreateBean setIsCreateBean={setIsCreateBean} />}
+        <img
+          className="feedback-button"
+          onClick={() => setIsFeedbackButton(true)}
+          src={FeedbackButtonImg}
+          alt="feedback-button"
+        />
+        {isFeedbackButton && <FeedbackButton setIsFeedbackButton={setIsFeedbackButton} />}
+
         <KakaoMap MyPosition={location.coordinates} />
         <Sidebar
           isSideBar={isSideBar}

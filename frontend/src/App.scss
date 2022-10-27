@@ -64,3 +64,24 @@
     filter: brightness(0.9);
   }
 }
+
+.feedback-button {
+  position: absolute;
+  top: 2%;
+  right: 1%;
+  // bottom: 85%;
+  // left: 90%;
+  z-index: 89;
+  width: 80px;
+  height: 80px;
+  transition: all ease 0.2s 0s;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.05);
+    
+  }
+  &:active {
+    filter: brightness(0.9);
+  }
+}
