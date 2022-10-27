@@ -10,7 +10,7 @@ import Sidebar from "components/Sidebar/Sidebar";
 function App() {
   const location = useGeoLocation();
   const [isCreateBean, setIsCreateBean] = useState(false);
-  const [isSideBar, setisSideBar] = useState(true);
+  const [isSideBar, setisSideBar] = useState(false);
 
   const BeanList = [
     {
