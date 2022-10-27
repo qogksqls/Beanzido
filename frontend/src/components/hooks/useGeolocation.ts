@@ -18,8 +18,8 @@ const useGeolocation = () => {
   const onSuccess = (location: {
     coords: { latitude: number; longitude: number };
   }) => {
-    initialLocation.lat = location.coords.latitude;
-    initialLocation.lng = location.coords.longitude;
+    initialLocation.lat = location.coords.latitude * 1;
+    initialLocation.lng = location.coords.longitude * 1;
     setLocation({
       loaded: true,
       coordinates: {
