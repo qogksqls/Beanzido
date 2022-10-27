@@ -8,24 +8,9 @@ import closeIcon from "assets/img/Expand_left_light.svg";
 type SideProps = {
   isSideBar: boolean;
   setisSideBar: Dispatch<React.SetStateAction<boolean>>;
-  BeanList: {
-    nickname: string;
-    contents: string;
-    color: string;
-    img?: string;
-    createdAt: string;
-    Position: {
-      lat: number;
-      lng: number;
-    };
-  }[];
 };
 
-export default function Sidebar({
-  isSideBar,
-  setisSideBar,
-  BeanList,
-}: SideProps) {
+export default function Sidebar({ isSideBar, setisSideBar }: SideProps) {
   const nodeRef = useRef(null);
 
   function closeSidebar() {
@@ -45,7 +30,9 @@ export default function Sidebar({
         onEnter={() => openSidebar}
         onExited={() => closeSidebar}
       >
-        <div className="inner"><ChatList /></div>
+        <div className="inner">
+          <ChatList />
+        </div>
       </CSSTransition>
       <div className="handle" onClick={isSideBar ? closeSidebar : openSidebar}>
         <img
