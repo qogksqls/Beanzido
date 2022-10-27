@@ -14,6 +14,7 @@ function App() {
   const [beanList, setBeanList] = useRecoilState(beanListState);
 
   const location = useGeoLocation();
+  const initialPosition = location.coordinates;
   const [isCreateBean, setIsCreateBean] = useState(false);
   const [isSideBar, setisSideBar] = useState(true);
   const socketurl = process.env.REACT_APP_SOCKET_URL
@@ -63,7 +64,7 @@ function App() {
         {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
       </div>
       {isCreateBean && <CreateBean setIsCreateBean={setIsCreateBean} />}
-      <KakaoMap MyPosition={location.coordinates} />
+      <KakaoMap MyPosition={initialPosition} />
       <Sidebar isSideBar={isSideBar} setisSideBar={setisSideBar} />
     </div>
   );
