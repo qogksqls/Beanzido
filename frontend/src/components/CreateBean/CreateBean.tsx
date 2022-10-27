@@ -149,13 +149,13 @@ export default function CreateBean({ setIsCreateBean }: createBeanProps) {
             </div>
           ) : (
             <div className="camera-picture">
-              <div className="camera-btn" onClick={OnCamera}>
+              {/* <div className="camera-btn" onClick={OnCamera}>
                 <img className="camera-img" src={Camera} alt="" />
                 <div>
                   <h4>카메라(선택)</h4>
                   <p>사진 첨부 시 사진 촬영</p>
                 </div>
-              </div>
+              </div> */}
               <div>
                 <input
                   id="picture"
@@ -168,7 +168,7 @@ export default function CreateBean({ setIsCreateBean }: createBeanProps) {
                   <img className="picture-img" src={Img_box} alt="" />
                   <div>
                     <h4>사진(선택)</h4>
-                    <p>사진 첨부 시 이미지 첨부</p>
+                    <p>사진을 첨부할 수 있어요.</p>
                   </div>
                 </label>
               </div>
