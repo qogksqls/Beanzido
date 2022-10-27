@@ -1,5 +1,6 @@
 package com.ssafy.a206.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,5 +15,9 @@ public class ReportController {
 	public String reportPost(@RequestBody ReportReq reportReq) {
 		
 		return "sucess";
+	}
+	@GetMapping
+	public int reportCnt() {
+		return 1;
 	}
 }
