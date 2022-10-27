@@ -3,7 +3,7 @@ import { useCallback } from "react";
 export default function useColor() {
   const indexToColor = useCallback((idx: number) => {
     const IndexToColor = [
-      { name: "완두콩", backgroundColor: "#BDDB79", color: "black" },
+      { name: "완두콩", backgroundColor: "#c7f2a4", color: "black" },
       { name: "강낭콩", backgroundColor: "#F25F9B", color: "black" },
       { name: "쥐눈이콩", backgroundColor: "#A6A6A6", color: "black" },
       { name: "랜탈콩", backgroundColor: "#F57329", color: "black" },

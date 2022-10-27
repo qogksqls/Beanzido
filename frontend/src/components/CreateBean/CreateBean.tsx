@@ -5,6 +5,7 @@ import React, {
   useRef,
   useCallback,
   useEffect,
+  ChangeEvent,
 } from "react";
 import { useRecoilState } from "recoil";
 import { beanColorState } from "store/atom";
@@ -63,6 +64,13 @@ export default function CreateBean({ setIsCreateBean }: createBeanProps) {
         <button onClick={cancelCamera}>취소</button>
       </div>
     );
+  };
+
+  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const fileUrl = e.target.files
+      ? URL.createObjectURL(e.target.files[0])
+      : "";
+    setImgSrc(fileUrl);
   };
 
   let today = new Date();
@@ -141,19 +149,28 @@ export default function CreateBean({ setIsCreateBean }: createBeanProps) {
             </div>
           ) : (
             <div className="camera-picture">
-              <div className="camera-btn">
+              <div className="camera-btn" onClick={OnCamera}>
                 <img className="camera-img" src={Camera} alt="" />
-                <div onClick={OnCamera}>
+                <div>
                   <h4>카메라(선택)</h4>
                   <p>사진 첨부 시 사진 촬영</p>
                 </div>
               </div>
-              <div className="picture">
-                <img className="picture-img" src={Img_box} alt="" />
-                <div>
-                  <h4>사진(선택)</h4>
-                  <p>사진 첨부 시 이미지 첨부</p>
-                </div>
+              <div>
+                <input
+                  id="picture"
+                  type="file"
+                  style={{ display: "none" }}
+                  accept="image/jpg,image/png,image/jpeg,image/gif"
+                  onChange={onFileChange}
+                />
+                <label htmlFor="picture" className="picture">
+                  <img className="picture-img" src={Img_box} alt="" />
+                  <div>
+                    <h4>사진(선택)</h4>
+                    <p>사진 첨부 시 이미지 첨부</p>
+                  </div>
+                </label>
               </div>
             </div>
           )}
