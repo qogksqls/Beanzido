@@ -13,11 +13,7 @@ import Sidebar from "components/Sidebar/Sidebar";
 function App() {
   const [beanList, setBeanList] = useRecoilState(beanListState);
 
-  const location = useGeoLocation();
-  const initialPosition = {
-    lat: 37.5009614732362,
-    lng: 127.03972084911923,
-  };
+  const { location, initialLocation } = useGeoLocation();
   const [isCreateBean, setIsCreateBean] = useState(false);
   const [isSideBar, setisSideBar] = useState(true);
   const socketurl = process.env.REACT_APP_SOCKET_URL
@@ -67,7 +63,7 @@ function App() {
         {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
       </div>
       {isCreateBean && <CreateBean setIsCreateBean={setIsCreateBean} />}
-      <KakaoMap MyPosition={initialPosition} />
+      <KakaoMap MyPosition={initialLocation} />
       <Sidebar isSideBar={isSideBar} setisSideBar={setisSideBar} />
     </div>
   );

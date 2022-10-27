@@ -11,10 +11,15 @@ const useGeolocation = () => {
     loaded: false,
     coordinates: { lat: 0, lng: 0 },
   });
-
+  const initialLocation = {
+    lat: 37.5009614732362,
+    lng: 127.03972084911923,
+  };
   const onSuccess = (location: {
     coords: { latitude: number; longitude: number };
   }) => {
+    initialLocation.lat = location.coords.latitude;
+    initialLocation.lng = location.coords.longitude;
     setLocation({
       loaded: true,
       coordinates: {
@@ -48,7 +53,7 @@ const useGeolocation = () => {
     });
   }, []);
 
-  return location;
+  return { location, initialLocation };
 };
 
 export default useGeolocation;
