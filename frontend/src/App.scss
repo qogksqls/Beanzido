@@ -58,49 +58,51 @@
   width: 60px;
   height: 60px;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all ease 0.2s 0s;
+  &:hover {
+    filter: brightness(1.05);
+  }
+  &:active {
+    filter: brightness(0.9);
+  }
   .create-button-img {
     width: 50px;
     height: 50px;
-    transition: all ease 0.2s 0s;
-    
-    &:hover {
-      cursor: pointer;
-      filter: brightness(1.05);
-      
-    }
-    &:active {
-      filter: brightness(0.9);
-    }
   }
 }
 
 .feedback-button {
-  background-color: white;
+  background: linear-gradient(to right, rgb(220, 227, 91), rgb(69, 182, 73));
   position: absolute;
   top: 2%;
   right: 1%;
   z-index: 89;
-  width: 50px;
-  height: 50px;
-  border-radius: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-
+  transition: all ease 0.2s 0s;
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
   .feedback-button-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 20px;
+    position:absolute;
+    background: white;
     transition: all ease 0.2s 0s;
-    width: 40px;
-    height: 40px;
-    border-radius: 30px;
-    cursor: pointer;
-  
     &:hover {
-      filter: brightness(1.05);
-      
+      opacity: 0;
     }
-    &:active {
-      filter: brightness(0.9);
-    }
+  }
+  &:hover {
+    filter: brightness(1.05);
+  }
+  &:active {
+    filter: brightness(0.9);
   }
 }
 
