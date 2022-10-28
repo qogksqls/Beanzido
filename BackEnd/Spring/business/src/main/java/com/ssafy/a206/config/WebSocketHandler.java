@@ -1,30 +1,22 @@
 package com.ssafy.a206.config;
 
-import java.net.InetSocketAddress;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.socket.BinaryMessage;
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.PongMessage;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketMessage;
-import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.a206.dto.MessageDTO;
 import com.ssafy.a206.repository.RedisChatRepository;
 import com.ssafy.a206.request.MessageReq;
-import com.ssafy.a206.response.MessageRes;
 import com.ssafy.a206.service.MessageLogService;
-import com.ssafy.a206.serviceImpl.RedisService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.socket.BinaryMessage;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class WebSocketHandler extends TextWebSocketHandler {
@@ -33,8 +25,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	@Autowired
 	private MessageLogService messageLogService;
 	
-	@Autowired
-	private RedisService redisService;
+//	@Autowired
+//	private RedisService redisService;
 	
 	@Autowired
 	private RedisChatRepository redisChatRep;
