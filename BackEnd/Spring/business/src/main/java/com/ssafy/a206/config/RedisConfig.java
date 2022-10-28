@@ -9,13 +9,12 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.web.socket.WebSocketSession;
 
 @Configuration
 @EnableRedisRepositories
 public class RedisConfig {
-	@Value("${REDIS_PORT_SESSION}")
-	private int redisPortSession;
+//	@Value("${REDIS_PORT_SESSION}")
+//	private int redisPortSession;
 	
 	@Value("${REDIS_PORT_CHAT}")
 	private int redisPortChat;
@@ -52,16 +51,16 @@ public class RedisConfig {
 		return redisTemplate;
 	}
 	
-	@Bean
-	public RedisTemplate<String, WebSocketSession> redisTemplateSession(){
-		// redisTemplate 에서 set, get,delete 사용 
-		RedisTemplate<String, WebSocketSession> redisTemplate = new RedisTemplate<>();
-		//redis-cli를 통해 데이터 조회 시, 알아볼 수 없는 형태로 출력되는 것을 방지 
-		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		redisTemplate.setValueSerializer(new StringRedisSerializer());
-		redisTemplate.setConnectionFactory(redisConnectionFactory(redisPortSession));
-		
-		return redisTemplate;
-	}
+//	@Bean
+//	public RedisTemplate<String, WebSocketSession> redisTemplateSession(){
+//			// redisTemplate 에서 set, get,delete 사용
+//			RedisTemplate<String, WebSocketSession> redisTemplate = new RedisTemplate<>();
+//			//redis-cli를 통해 데이터 조회 시, 알아볼 수 없는 형태로 출력되는 것을 방지
+//			redisTemplate.setKeySerializer(new StringRedisSerializer());
+//			redisTemplate.setValueSerializer(new StringRedisSerializer());
+//			redisTemplate.setConnectionFactory(redisConnectionFactory(redisPortSession));
+//
+//		return redisTemplate;
+//	}
 	
 }
