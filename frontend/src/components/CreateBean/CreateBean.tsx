@@ -13,6 +13,7 @@ import useColor from "components/hooks/useColor";
 import Webcam from "react-webcam";
 import useRandomName from "components/hooks/useRandomName";
 import BeanStyle from "components/BeanStyle/BeanStyle";
+import imageCompression from "browser-image-compression"
 
 import "./CreateBean.scss";
 import x from "../../assets/img/x.svg";
@@ -75,13 +76,40 @@ export default function CreateBean({
     );
   };
 
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const fileUrl = e.target.files
-      ? URL.createObjectURL(e.target.files[0])
-      : "";
-    setImgSrc(fileUrl);
-  };
+  // const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const fileUrl = e.target.files
+  //     ? URL.createObjectURL(e.target.files[0])
+  //     : "";
+  //   setImgSrc(fileUrl);
+  // };
 
+  async function handleImageUpload(event: any) {
+
+    const imageFile = event.target.files[0];
+    console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+  
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 480,
+      useWebWorker: true
+    }
+    try {
+      
+      const compressedFile = await imageCompression(imageFile, options);
+      console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+      const reader = new FileReader();
+      reader.readAsDataURL(compressedFile)
+      reader.onload = () => {
+        console.log(reader.result)   // base64
+        setImgSrc("" + reader.result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  
+  }
   // let today = new Date();
 
   // let year = today.getFullYear(); // 년도
@@ -108,6 +136,7 @@ export default function CreateBean({
     sendMessage(JSON.stringify(beanInfo));
     setIsCreateBean(false);
   }
+  
 
   return (
     <>
@@ -173,7 +202,7 @@ export default function CreateBean({
                   type="file"
                   style={{ display: "none" }}
                   accept="image/jpg,image/png,image/jpeg,image/gif"
-                  onChange={onFileChange}
+                  onChange={handleImageUpload}
                 />
                 <label htmlFor="picture" className="picture">
                   <img className="picture-img" src={Img_box} alt="" />
