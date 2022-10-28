@@ -12,6 +12,17 @@ $breakpoint: 500px;
   }
 }
 
+@keyframes fadeInUp {
+  0% {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+  }
+  to {
+      opacity: 1;
+      transform: translateZ(0);
+  }
+}
+
 :root {
 	--create-bean-color: #c7f2a4;
   --create-text-color: #000000;
@@ -27,6 +38,8 @@ $breakpoint: 500px;
   z-index: 90;
 }
 .create-bean {
+  position: relative;
+  animation: fadeInUp 1.5s;
   position: absolute;
   top: 10%;
   left: calc(50% - 170px);
