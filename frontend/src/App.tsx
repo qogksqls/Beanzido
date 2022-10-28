@@ -48,12 +48,14 @@ function App() {
 
   return (
     <div className="App">
-      <img
-        className="create-button"
-        onClick={() => setIsCreateBean(true)}
-        src={createButton}
-        alt="chat-button"
-      />
+      <div className="create-button">
+        <img
+          className="create-button-img"
+          onClick={() => setIsCreateBean(true)}
+          src={createButton}
+          alt="chat-button"
+        />
+      </div>
       <img
         className="feedback-button"
         onClick={() => setIsFeedbackButton(true)}

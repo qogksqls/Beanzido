@@ -45,23 +45,26 @@
     transform: rotate(360deg);
   }
 }
-
 .create-button {
+  background-color: #F6F6F6;
+  border-radius: 20px;
   position: absolute;
-  bottom: 5%;
-  left: calc(50% - 40px);
   z-index: 89;
-  width: 80px;
-  height: 80px;
-  transition: all ease 0.2s 0s;
-
-  &:hover {
-    cursor: pointer;
-    filter: brightness(1.05);
+  bottom: 5%;
+  left: calc(50% - 30px);
+  .create-button-img {
+    width: 60px;
+    height: 60px;
+    transition: all ease 0.2s 0s;
     
-  }
-  &:active {
-    filter: brightness(0.9);
+    &:hover {
+      cursor: pointer;
+      filter: brightness(1.05);
+      
+    }
+    &:active {
+      filter: brightness(0.9);
+    }
   }
 }
 
