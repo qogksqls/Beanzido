@@ -106,6 +106,7 @@ export default function CreateBean({
     };
     // console.log(beanInfo);
     sendMessage(JSON.stringify(beanInfo));
+    setIsCreateBean(false);
   }
 
   return (
