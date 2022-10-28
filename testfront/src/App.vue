@@ -87,7 +87,7 @@ export default {
 
     //
     connect() {
-      this.socket = new WebSocket("ws://13.125.39.100:8091/chat-server/map");
+      this.socket = new WebSocket("ws://localhost:8080/chat-server/map");
       this.socket.binaryType ="arraybuffer";
       this.socket.onopen = () => {
         this.status = "connected";
@@ -119,7 +119,8 @@ export default {
       latitude : 36.22,
       longitude : 36.22,
       color : '1',
-      nickName : '부들 부들',
+      nickname : '부들 부들',
+      location : '서울'
       
      }
       this.socket.send(JSON.stringify(dto));

@@ -12,11 +12,11 @@ import lombok.Data;
 public class MessageReq {
 	private String content;
 	private String img;
-	private String location;
 	private float latitude;
 	private float longitude;
 	private int color;
 	private String nickname;
+	private String location;
 	
 	public MessageLog createMessageLog(String ip) {
 		Timestamp timestamp = new Timestamp(new Date().getTime());

@@ -28,6 +28,12 @@ public class ReportServiceImpl implements ReportService{
 		
 		return true;
 	}
+
+
+	@Override
+	public int reportCntByIp(String ip) {
+		return reportCntRep.countByIp(ip);
+	}
 	
 	
 }
