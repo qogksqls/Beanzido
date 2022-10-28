@@ -50,7 +50,7 @@ $breakpoint: 500px;
       border-bottom: 0px solid transparent;
       content: '';
       position: absolute;
-      top: 52px;
+      top: 50px;
       left: calc(50% - 5px);
     }
   }
@@ -179,7 +179,7 @@ $breakpoint: 500px;
       color: var(--create-text-color);
       border-radius: 5px;
       padding: 10px 0 10px 0;
-      margin: 10px 0 10px 0;
+      margin: 10px 0 20px 0;
       cursor: pointer;
       h3 {
         margin: auto;
