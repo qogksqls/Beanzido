@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { beanListState } from "store/atom";
 import "./App.scss";
@@ -21,13 +21,22 @@ function App() {
   const socketurl = process.env.REACT_APP_SOCKET_URL
     ? process.env.REACT_APP_SOCKET_URL
     : "";
-  const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl);
+  // const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl);
+
+  const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl, {
+    shouldReconnect: (closeEvent) => {
+      // console.log("소켓 재 연결중...");
+      return true;
+    },
+    reconnectAttempts: 10,
+    reconnectInterval: 3000,
+  });
 
   useEffect(() => {
     if (lastMessage !== null) {
       if (lastMessage.data[0] == "{") {
         setBeanList([...beanList, JSON.parse(lastMessage.data)]);
-        console.log(beanList);
+        // console.log(beanList);
       }
     }
   }, [lastMessage]);
@@ -68,12 +77,7 @@ function App() {
           longitude={location.coordinates.lng}
         />
       )}
-      <KakaoMap
-        MyPosition={{
-          lat: location.coordinates.lat,
-          lng: location.coordinates.lng,
-        }}
-      />
+      {location.loaded && <KakaoMap />}
       <Sidebar isSideBar={isSideBar} setisSideBar={setisSideBar} />
     </div>
   );

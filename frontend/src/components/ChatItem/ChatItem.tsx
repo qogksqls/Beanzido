@@ -4,7 +4,7 @@ type ChatProps = {
   Chatinfo: {
     nickname: string;
     content: string;
-    color: string;
+    color: number;
     img?: string;
   };
 };
@@ -12,12 +12,7 @@ type ChatProps = {
 function ChatItem({ Chatinfo }: ChatProps) {
   return (
     <div className="chat-item">
-      <div
-        className="nickname-container"
-        style={{ backgroundColor: Chatinfo.color }}
-      >
-        {Chatinfo.nickname[0]}
-      </div>
+      <div className="nickname-container">{Chatinfo.nickname[0]}</div>
       <div className="contents-container">
         <div className="up">
           <div>{Chatinfo.nickname}</div>

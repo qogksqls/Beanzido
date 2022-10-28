@@ -1,12 +1,13 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import "./Bean.scss";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import { CSSTransition } from "react-transition-group";
+import useColor from "components/hooks/useColor";
 
 type BeanProps = {
   nickname: string;
   content: string;
-  color: string;
+  color: number;
   img: string;
   createdAt: string;
   latitude: number;
@@ -22,9 +23,12 @@ function Bean({
   latitude,
   longitude,
 }: BeanProps) {
+  // console.log("콩");
   const [isOpen, setIsOpen] = useState(true);
   const beanRef = useRef<HTMLDivElement>(null);
+  const colorRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef(null);
+  const [indexToColor] = useColor();
   const controlBean = () => {
     const bean = beanRef.current;
     if (bean) {
@@ -32,6 +36,13 @@ function Bean({
     }
     setIsOpen(!isOpen);
   };
+  useEffect(() => {
+    const { current } = colorRef;
+    if (current !== null) {
+      current.style.color = indexToColor(color).color;
+      current.style.backgroundColor = indexToColor(color).backgroundColor;
+    }
+  }, []);
   return (
     <CustomOverlayMap
       position={{ lat: latitude, lng: longitude }}
@@ -40,7 +51,7 @@ function Bean({
       clickable
     >
       <div className="bean open" ref={beanRef} onClick={controlBean}>
-        <div className="nickname-container" style={{ backgroundColor: color }}>
+        <div className="nickname-container" ref={colorRef}>
           {nickname[0]}
         </div>
         <div className="contents-container">
@@ -67,4 +78,4 @@ function Bean({
   );
 }
 
-export default Bean;
+export default memo(Bean);

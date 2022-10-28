@@ -82,28 +82,29 @@ export default function CreateBean({
     setImgSrc(fileUrl);
   };
 
-  let today = new Date();
+  // let today = new Date();
 
-  let year = today.getFullYear(); // 년도
-  let month = today.getMonth() + 1; // 월
-  let date = today.getDate(); // 날짜
-  let day = today.getDay(); // 요일
-  let hours = today.getHours(); // 시
-  let minutes = today.getMinutes(); // 분
-  let seconds = today.getSeconds(); // 초
-  let milliseconds = today.getMilliseconds(); // 밀리초
-  let time = `${year}/${month}/${date} - ${hours}:${minutes}:${seconds}:${milliseconds}`;
+  // let year = today.getFullYear(); // 년도
+  // let month = today.getMonth() + 1; // 월
+  // let date = today.getDate(); // 날짜
+  // let day = today.getDay(); // 요일
+  // let hours = today.getHours(); // 시
+  // let minutes = today.getMinutes(); // 분
+  // let seconds = today.getSeconds(); // 초
+  // let milliseconds = today.getMilliseconds(); // 밀리초
+  // let time = `${year}/${month}/${date} - ${hours}:${minutes}:${seconds}:${milliseconds}`;
 
   function SaveBaen() {
     const beanInfo = {
       nickname: name,
       content: contentValue ? contentValue : "내용이 없습니다.",
-      color: indexToColor(beanColor).backgroundColor,
+      color: beanColor,
       img: imgSrc,
-      createdAt: time,
+      // createdAt: time,
       latitude: latitude,
       longitude: longitude,
     };
+    // console.log(beanInfo);
     sendMessage(JSON.stringify(beanInfo));
   }
 
