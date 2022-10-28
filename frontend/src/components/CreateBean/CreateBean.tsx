@@ -105,6 +105,7 @@ export default function CreateBean({
       longitude: longitude,
     };
     sendMessage(JSON.stringify(beanInfo));
+    setIsCreateBean(false);
   }
 
   return (
