@@ -55,10 +55,11 @@ function App() {
         <FeedbackButton setIsFeedbackButton={setIsFeedbackButton} />
       )}
 
-      <div style={{ position: "absolute", zIndex: 100 }}>
+      {/* <div style={{ position: "absolute", zIndex: 100 }}>
         {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
         <div>{beanList ? JSON.stringify(beanList) : ""}</div>
-      </div>
+        <div>{readyState}</div>
+      </div> */}
       {isCreateBean && (
         <CreateBean
           sendMessage={sendMessage}

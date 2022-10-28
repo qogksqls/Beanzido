@@ -13,13 +13,15 @@ type MapProps = {
 
 function KakaoMap({ MyPosition }: MapProps) {
   const [beanList, setBeanList] = useRecoilState(beanListState);
-  let vh = "100vh";
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
   useEffect(() => {
-    vh = window.innerHeight ? window.innerHeight + "px" : vh;
-  }, []);
-
+    setScreenSize();
+  });
   return (
-    <Map center={MyPosition} style={{ width: "100vw", height: vh }}>
+    <Map center={MyPosition} className="map">
       {beanList.map((BeanProps, index) => (
         <Bean
           nickname={BeanProps.nickname}
