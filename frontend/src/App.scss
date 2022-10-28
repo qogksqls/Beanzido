@@ -75,23 +75,32 @@
 }
 
 .feedback-button {
+  background-color: white;
   position: absolute;
   top: 2%;
   right: 1%;
-  // bottom: 85%;
-  // left: 90%;
   z-index: 89;
-  width: 80px;
-  height: 80px;
-  transition: all ease 0.2s 0s;
-  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  &:hover {
-    filter: brightness(1.05);
-    
-  }
-  &:active {
-    filter: brightness(0.9);
+  .feedback-button-img {
+    transition: all ease 0.2s 0s;
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+    cursor: pointer;
+  
+    &:hover {
+      filter: brightness(1.05);
+      
+    }
+    &:active {
+      filter: brightness(0.9);
+    }
   }
 }
 
