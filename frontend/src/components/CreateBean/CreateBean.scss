@@ -29,9 +29,9 @@ $breakpoint: 500px;
 .create-bean {
   position: absolute;
   top: 10%;
-  left: calc(50% - 183px);
+  left: calc(50% - 170px);
   z-index: 99;
-  width: 366px;
+  width: 340px;
   background-color: white;
   border-radius: 10px;
   .header {
@@ -170,9 +170,6 @@ $breakpoint: 500px;
         border-radius: 10px;
         width: 100%;
         cursor: pointer;
-        transform: rotateY(180deg);
-        -webkit-transform:rotateY(180deg); /* Safari and Chrome */
-        -moz-transform:rotateY(180deg); /* Firefox */
       }
     }
     .finish-button {
