@@ -5,7 +5,7 @@ export const beanListState = atom({
   default: [] as {
     nickname: string;
     content: string;
-    color: string;
+    color: number;
     img: string;
     createdAt: string;
     latitude: number;
