@@ -5,7 +5,7 @@ export const beanListState = atom({
   default: [] as {
     nickname: string;
     content: string;
-    color: number;
+    color: string;
     img: string;
     createdAt: string;
     latitude: number;
@@ -22,3 +22,12 @@ export const beanColorState = atom({
   key: "beanColorState",
   default: 0,
 });
+
+// export const locationState = atom({
+//   key: "locationState",
+//   default: {
+//     loaded: false,
+//     coordinates: { lat: 0, lng: 0 },
+//     error: { code: 0, message: "not loaded" },
+//   },
+// });
