@@ -9,7 +9,8 @@ import useGeoLocation from "components/hooks/useGeolocation";
 import CreateBean from "./components/CreateBean/CreateBean";
 import Sidebar from "components/Sidebar/Sidebar";
 import createButton from "./assets/img/chat-button.svg";
-import FeedbackButtonImg from "./assets/img/FeedbackButton.gif";
+import FeedbackButtonGif from "./assets/img/FeedbackButton.gif";
+import FeedbackButtonImg from "./assets/img/icons8-이처럼-80.png";
 import FeedbackButton from "components/FeedbackButton/FeedbackButton";
 
 function App() {
@@ -57,6 +58,12 @@ function App() {
         />
       </div>
       <div className="feedback-button">
+        <img
+          className="feedback-button-img"
+          onClick={() => setIsFeedbackButton(true)}
+          src={FeedbackButtonGif}
+          alt=""
+        />
         <img
           className="feedback-button-img"
           onClick={() => setIsFeedbackButton(true)}

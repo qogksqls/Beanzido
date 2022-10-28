@@ -17,46 +17,79 @@
 //   }
 // }
 
+@keyframes fadeInDown {
+  0% {
+      opacity: 0;
+      transform: translate3d(0, -100%, 0);
+  }
+  to {
+      opacity: 1;
+      transform: translateZ(0);
+  }
+}
+
+.feedback {
+  background: linear-gradient(to right, rgb(215, 215, 215), rgb(235, 237, 255), rgb(215, 215, 215));
+  position: relative;
+  animation: fadeInDown 0.7s;
+  background-color: #f5f5f5;
+  position: absolute;
+  z-index: 99;
+  width: 330px;
+  height: 60px;
+  border-radius: 10px;
+  top: 3%;
+  left: calc(50% - 165px);
+  transition: all .4s ease;
+
+  &:hover {
+    filter: brightness(1.05);
+  }
+  &:active{
+    filter:brightness(0.9);
+  }
+}
+
 .feedback-button-back {
-    background-color: rgba(0, 0, 0, 0);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 90;
+  background-color: rgba(0, 0, 0, 0);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 90;
+}
+
+.feedback-box {
+  position: absolute;
+  // top: 10%;
+  // right: calc(10% - 150px);
+  top: calc(2% + 60px);
+  right: 1%;
+  z-index: 99;
+  width: 300px;
+  height: 60px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.05);
+  }
+  &:active{
+    filter:brightness(0.9)
   }
 
-  .feedback-box {
+  &::after {
+    // 삼각형
+    border-top: 0px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #f5f5f5;
+    content: '';
     position: absolute;
-    // top: 10%;
-    // right: calc(10% - 150px);
-    top: calc(2% + 75px);
-    right: 1%;
-    z-index: 99;
-    width: 300px;
-    height: 60px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(1.05);
-    }
-    &:active{
-      filter:brightness(0.9)
-    }
-
-    &::after {
-      // 삼각형
-      border-top: 0px solid transparent;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-bottom: 10px solid #f5f5f5;
-      content: '';
-      position: absolute;
-      top: -10px;
-      right: 30px;
-    }
+    top: -10px;
+    right: 10px;
   }
+}
