@@ -26,6 +26,7 @@ function App() {
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl, {
     shouldReconnect: (closeEvent) => {
       // console.log("소켓 재 연결중...");
+      // console.log(readyState);
       return true;
     },
     reconnectAttempts: 10,
