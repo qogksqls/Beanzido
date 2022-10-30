@@ -75,12 +75,12 @@
 .feedback-button {
   background: linear-gradient(to right, rgb(220, 227, 91), rgb(69, 182, 73));
   position: absolute;
-  top: 2%;
-  right: 1%;
+  top: 20px;
+  right: 20px;
   z-index: 89;
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
+  width: 42px;
+  height: 42px;
+  border-radius: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
