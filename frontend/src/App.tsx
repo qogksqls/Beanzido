@@ -9,7 +9,7 @@ import CreateBean from "./components/CreateBean/CreateBean";
 import Sidebar from "components/Sidebar/Sidebar";
 import createButton from "./assets/img/chat-button.svg";
 import FeedbackButtonGif from "./assets/img/FeedbackButton.gif";
-import FeedbackButtonImg from "./assets/img/icons8-이처럼-80.png";
+import FeedbackButtonImg from "./assets/img/FeedbackButton.png";
 import FeedbackButton from "components/FeedbackButton/FeedbackButton";
 
 function App() {
