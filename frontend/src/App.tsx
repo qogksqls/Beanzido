@@ -38,15 +38,9 @@ function App() {
     if (lastMessage !== null) {
       if (lastMessage.data[0] == "{") {
         setBeanList([...beanList, JSON.parse(lastMessage.data)]);
-        // console.log(beanList);
       }
     }
   }, [lastMessage]);
-
-  const handleClickSendMessage = useCallback(
-    (bean: string) => sendMessage(bean),
-    []
-  );
 
   return (
     <div className="App">
