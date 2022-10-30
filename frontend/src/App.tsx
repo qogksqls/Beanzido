@@ -4,7 +4,6 @@ import { beanListState } from "store/atom";
 import "./App.scss";
 import KakaoMap from "components/KakaoMap";
 import useWebSocket, { ReadyState } from "react-use-websocket";
-
 import useGeoLocation from "components/hooks/useGeolocation";
 import CreateBean from "./components/CreateBean/CreateBean";
 import Sidebar from "components/Sidebar/Sidebar";
@@ -69,7 +68,6 @@ function App() {
       {isFeedbackButton && (
         <FeedbackButton setIsFeedbackButton={setIsFeedbackButton} />
       )}
-
       {/* <div style={{ position: "absolute", zIndex: 100 }}>
         {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
         <div>{beanList ? JSON.stringify(beanList) : ""}</div>
