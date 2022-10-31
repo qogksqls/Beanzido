@@ -1,7 +1,6 @@
-.bean.close {
+.cluster-bean.close {
   border-radius: 18px 18px 18px 1px;
 }
-
 
 .cluster-bean {
   position: absolute;
@@ -14,26 +13,40 @@
   display: flex;
   align-items: center;
   transition: all ease 500ms;
-  
-  .nickname-container {
-    width: 25px;
+
+  .nickname-cluster {
+    display: flex;
+    position: relative;
     height: 25px;
-    border-radius: 50%;
-    box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.25);
-    color: white;
-    font-size: 12px;
-    line-height: 25px;
-    & + .nickname-container {
-      transform: translateX(-5px);
-      & + .nickname-container {
-        transform: translateX(-10px);
+    &.three {
+      width: 55px;
+    }
+    &.two {
+      width: 40px;
+    }
+    .nickname-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.25);
+      color: white;
+      font-size: 12px;
+      line-height: 25px;
+      &.second {
+        left: 15px;
+      }
+      &.third {
+        left: 30px;
       }
     }
   }
-  
+
   .contents-container {
     text-overflow: clip;
-    &>div {
+    & > div {
       width: 120px;
       margin-left: 5px;
     }
@@ -41,7 +54,7 @@
       font-size: 8px;
       display: flex;
       width: 100%;
-      
+
       div {
         overflow: hidden;
         white-space: nowrap;
@@ -75,7 +88,7 @@
     opacity: 1;
     transition: all ease 500ms;
   }
-  
+
   div.fade-exit {
     height: 42px;
     width: 120px;
@@ -91,5 +104,4 @@
       display: none;
     }
   }
-  
 }

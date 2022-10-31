@@ -44,34 +44,42 @@ function ClusterBean({
     >
       <div className="cluster-bean open" ref={beanRef} onClick={controlBean}>
         <div
-          className="nickname-container"
-          style={{
-            color: indexToColor(color[0]).color,
-            backgroundColor: indexToColor(color[0]).backgroundColor,
-          }}
+          className={
+            color.length > 2 ? "nickname-cluster three" : "nickname-cluster two"
+          }
         >
-          {nickname[0][0]}
-        </div>
-        <div
-          className="nickname-container"
-          style={{
-            color: indexToColor(color[1]).color,
-            backgroundColor: indexToColor(color[1]).backgroundColor,
-          }}
-        >
-          {nickname[1][0]}
-        </div>
-        {color.length > 2 && (
+          {color.length > 2 && (
+            <div
+              className="nickname-container third"
+              style={{
+                color: indexToColor(color[0]).color,
+                backgroundColor: indexToColor(color[0]).backgroundColor,
+              }}
+            >
+              {nickname[0][0]}
+            </div>
+          )}
+          <div
+            className="nickname-container second"
+            style={{
+              color: indexToColor(color[color.length - 2]).color,
+              backgroundColor: indexToColor(color[color.length - 2])
+                .backgroundColor,
+            }}
+          >
+            {nickname[color.length - 2][0]}
+          </div>
           <div
             className="nickname-container"
             style={{
-              color: indexToColor(color[2]).color,
-              backgroundColor: indexToColor(color[2]).backgroundColor,
+              color: indexToColor(color[color.length - 1]).color,
+              backgroundColor: indexToColor(color[color.length - 1])
+                .backgroundColor,
             }}
           >
-            {nickname[2][0]}
+            {nickname[color.length - 1][0]}
           </div>
-        )}
+        </div>
         <div className="contents-container">
           <CSSTransition
             in={isOpen}

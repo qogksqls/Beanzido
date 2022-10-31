@@ -28,13 +28,13 @@ function Clusterer({ beanList }: ClusterProps) {
         ></Bean>
       ) : (
         <ClusterBean
-          nickname={beanList.map((bean) => bean.nickname)}
-          content={beanList[0].content}
-          color={beanList.map((bean) => bean.color)}
-          img={beanList[0].img}
-          createdAt={beanList[0].createdAt}
-          latitude={beanList[0].latitude}
-          longitude={beanList[0].longitude}
+          nickname={beanList.map((bean) => bean.nickname).slice(-3)}
+          content={beanList[beanList.length - 1].content}
+          color={beanList.map((bean) => bean.color).slice(-3)}
+          img={beanList[beanList.length - 1].img}
+          createdAt={beanList[beanList.length - 1].createdAt}
+          latitude={beanList[beanList.length - 1].latitude}
+          longitude={beanList[beanList.length - 1].longitude}
         ></ClusterBean>
       )}
     </>

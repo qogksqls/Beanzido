@@ -50,7 +50,7 @@ export const beanListState = atom({
     },
     {
       nickname: "괜찮은 김우창",
-      content: "컨텐츠입니다. 컨텐츠가 많습니다.",
+      content: "컨텐츠입니다. 컨텐츠가 많습니다.11",
       color: 1,
       img: "",
       createdAt: "",
@@ -59,7 +59,7 @@ export const beanListState = atom({
     },
     {
       nickname: "괜찮은 김우창",
-      content: "컨텐츠입니다. 컨텐츠가 많습니다.",
+      content: "컨텐츠입니다. 컨텐츠가 많습니다.22",
       color: 1,
       img: "",
       createdAt: "",
@@ -95,8 +95,17 @@ export const beanListState = atom({
     },
     {
       nickname: "괜찮은 김우창",
-      content: "컨텐츠입니다. 컨텐츠가 많습니다.",
-      color: 1,
+      content: "컨텐츠입니다. 컨텐츠가 많습니다.33",
+      color: 0,
+      img: "",
+      createdAt: "",
+      latitude: 37.5,
+      longitude: 127.038,
+    },
+    {
+      nickname: "괜찮은 김우창",
+      content: "컨텐츠입니다. 컨텐츠가 많습니다.33",
+      color: 5,
       img: "",
       createdAt: "",
       latitude: 37.5,
