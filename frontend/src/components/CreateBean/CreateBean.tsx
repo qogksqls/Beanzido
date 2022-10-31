@@ -13,14 +13,17 @@ import useColor from "components/hooks/useColor";
 import Webcam from "react-webcam";
 import useRandomName from "components/hooks/useRandomName";
 import BeanStyle from "components/BeanStyle/BeanStyle";
-import imageCompression from "browser-image-compression"
+import imageCompression from "browser-image-compression";
 
 import "./CreateBean.scss";
 import x from "../../assets/img/x.svg";
 import Camera from "../../assets/img/Camera.svg";
+import Camera_white from "../../assets/img/Camera_white.svg";
 import Img_box from "../../assets/img/Img_box.svg";
+import Img_box_white from "../../assets/img/Img_box_white.svg";
 import 새로고침 from "../../assets/img/새로고침.svg";
 import { SendMessage } from "react-use-websocket";
+import useGeolocation from "components/hooks/useGeolocation";
 
 type createBeanProps = {
   setIsCreateBean: Dispatch<SetStateAction<boolean>>;
@@ -84,31 +87,33 @@ export default function CreateBean({
   // };
 
   async function handleImageUpload(event: any) {
-
     const imageFile = event.target.files[0];
-    console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+    console.log("originalFile instanceof Blob", imageFile instanceof Blob); // true
     console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
-  
+
     const options = {
       maxSizeMB: 1,
       maxWidthOrHeight: 480,
-      useWebWorker: true
-    }
+      useWebWorker: true,
+    };
     try {
-      
       const compressedFile = await imageCompression(imageFile, options);
-      console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+      console.log(
+        "compressedFile instanceof Blob",
+        compressedFile instanceof Blob
+      ); // true
+      console.log(
+        `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
+      ); // smaller than maxSizeMB
       const reader = new FileReader();
-      reader.readAsDataURL(compressedFile)
+      reader.readAsDataURL(compressedFile);
       reader.onload = () => {
-        console.log(reader.result)   // base64
+        console.log(reader.result); // base64
         setImgSrc("" + reader.result);
-      }
+      };
     } catch (error) {
       console.log(error);
     }
-  
   }
   // let today = new Date();
 
@@ -122,7 +127,7 @@ export default function CreateBean({
   // let milliseconds = today.getMilliseconds(); // 밀리초
   // let time = `${year}/${month}/${date} - ${hours}:${minutes}:${seconds}:${milliseconds}`;
 
-  function SaveBaen() {
+  function SaveBean() {
     const beanInfo = {
       nickname: name,
       content: contentValue ? contentValue : "내용이 없습니다.",
@@ -132,11 +137,14 @@ export default function CreateBean({
       latitude: latitude,
       longitude: longitude,
     };
-    // console.log(beanInfo);
-    sendMessage(JSON.stringify(beanInfo));
-    setIsCreateBean(false);
+
+    if (contentValue || imgSrc) {
+      sendMessage(JSON.stringify(beanInfo));
+      setIsCreateBean(false);
+    } else {
+      alert("전할 말을 적어주세요.");
+    }
   }
-  
 
   return (
     <>
@@ -190,7 +198,11 @@ export default function CreateBean({
           ) : (
             <div className="camera-picture">
               <div className="camera-btn" onClick={OnCamera}>
-                <img className="camera-img" src={Camera} alt="" />
+                {[1, 5, 7, 8, 9].includes(beanColor) ? (
+                  <img className="camera-img" src={Camera_white} alt="" />
+                ) : (
+                  <img className="camera-img" src={Camera} alt="" />
+                )}
                 <div>
                   <h4>카메라(선택)</h4>
                   <p>사진 첨부 시 사진 촬영</p>
@@ -205,7 +217,12 @@ export default function CreateBean({
                   onChange={handleImageUpload}
                 />
                 <label htmlFor="picture" className="picture">
-                  <img className="picture-img" src={Img_box} alt="" />
+                  {[1, 5, 7, 8, 9].includes(beanColor) ? (
+                    <img className="picture-img" src={Img_box_white} alt="" />
+                  ) : (
+                    <img className="picture-img" src={Img_box} alt="" />
+                  )}
+
                   <div>
                     <h4>사진(선택)</h4>
                     <p>사진을 첨부할 수 있어요.</p>
@@ -214,7 +231,7 @@ export default function CreateBean({
               </div>
             </div>
           )}
-          <div className="finish-button" onClick={SaveBaen}>
+          <div className="finish-button" onClick={SaveBean}>
             <h3>글 작성 완료</h3>
           </div>
         </div>
