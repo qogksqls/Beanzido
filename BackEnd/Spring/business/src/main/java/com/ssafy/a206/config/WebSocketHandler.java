@@ -84,10 +84,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			e1.printStackTrace();
 		}
 		
+		String ip =session.getHandshakeHeaders().getHost().getHostName();
 		
-		
-		messageLogService.messageAdd(messageReq, session.getLocalAddress().getHostString());
-		MessageDTO dto = new MessageDTO(messageReq, session.getLocalAddress().getHostString());
+		messageLogService.messageAdd(messageReq, ip);
+		MessageDTO dto = new MessageDTO(messageReq, ip);
 		
 		redisService.setChatValues(dto,session.getId());
 		
