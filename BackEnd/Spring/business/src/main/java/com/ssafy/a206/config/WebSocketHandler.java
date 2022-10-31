@@ -4,9 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.a206.dto.MessageDTO;
-import com.ssafy.a206.repository.RedisChatRepository;
 import com.ssafy.a206.request.MessageReq;
 import com.ssafy.a206.service.MessageLogService;
+import com.ssafy.a206.serviceImpl.RedisService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.BinaryMessage;
@@ -25,11 +26,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	@Autowired
 	private MessageLogService messageLogService;
 	
-//	@Autowired
-//	private RedisService redisService;
-	
 	@Autowired
-	private RedisChatRepository redisChatRep;
+	private RedisService redisService;
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -85,16 +83,22 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		messageLogService.messageAdd(messageReq, session.getRemoteAddress().getHostString());
-		MessageDTO dto = new MessageDTO(messageReq, session.getRemoteAddress().getHostString());
 		
-		redisChatRep.save(dto);
 		
+		
+		messageLogService.messageAdd(messageReq, session.getRemoteAddress().getHostName());
+		MessageDTO dto = new MessageDTO(messageReq, session.getRemoteAddress().getHostName());
+		
+		redisService.setChatValues(dto,session.getId());
+		
+		String d = mapper.writeValueAsString(dto);
+		TextMessage newMessage = new TextMessage(d);
+		log.info("메시지 : {}", newMessage.getPayload());
 		sessions.values().forEach(s -> {
 
 
 			try {
-				s.sendMessage(message);
+				s.sendMessage(newMessage);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}

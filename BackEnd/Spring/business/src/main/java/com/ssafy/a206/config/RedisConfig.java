@@ -1,5 +1,7 @@
 package com.ssafy.a206.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,11 +9,14 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.convert.RedisCustomConversions;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import com.ssafy.a206.dto.MessageDTO;
+
 @Configuration
-@EnableRedisRepositories
+@EnableRedisRepositories(basePackageClasses = MessageDTO.class)
 public class RedisConfig {
 //	@Value("${REDIS_PORT_SESSION}")
 //	private int redisPortSession;
@@ -27,11 +32,11 @@ public class RedisConfig {
 
 	
 	@Bean
-	public RedisConnectionFactory redisConnectionFactory(int port) {
+	public RedisConnectionFactory redisChatConnectionFactory() {
 //		return new LettuceConnectionFactory(redisHost, redisPort);
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 		redisStandaloneConfiguration.setHostName(redisHost);
-		redisStandaloneConfiguration.setPort(port);
+		redisStandaloneConfiguration.setPort(redisPortChat);
         redisStandaloneConfiguration.setPassword(redisPassword); //redis에 비밀번호가 설정 되어 있는 경우 설정해주면 됩니다.
         LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration);
         return lettuceConnectionFactory;
@@ -46,10 +51,12 @@ public class RedisConfig {
 		//redis-cli를 통해 데이터 조회 시, 알아볼 수 없는 형태로 출력되는 것을 방지 
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.setValueSerializer(new StringRedisSerializer());
-		redisTemplate.setConnectionFactory(redisConnectionFactory(redisPortChat));
+		redisTemplate.setConnectionFactory(redisChatConnectionFactory());
 		
 		return redisTemplate;
 	}
+	
+
 	
 //	@Bean
 //	public RedisTemplate<String, WebSocketSession> redisTemplateSession(){

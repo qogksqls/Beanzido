@@ -1,23 +1,31 @@
 package com.ssafy.a206.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.ssafy.a206.request.MessageReq;
 import lombok.*;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.Id;
+
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
-@RedisHash("message")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageDTO {
-	@Id
-	private String id;
+	
 	private String content;
 	private String img;
 	private float latitude;
@@ -26,7 +34,9 @@ public class MessageDTO {
 	private String nickName;
 	private String location;
 	private String ip;
-	private Timestamp createdAt;
+	
+	@JsonFormat(shape = JsonFormat.Shape.NUMBER)
+	private Date createdAt;
 
 	public MessageDTO(MessageReq mes, String ip) {
 		super();
@@ -37,7 +47,7 @@ public class MessageDTO {
 		this.color = mes.getColor();
 		this.nickName = mes.getNickname();
 		this.location = mes.getLocation();
-		this.createdAt = new Timestamp(new Date().getTime());
+		this.createdAt = new Date();
 		this.ip = ip;
 	}
 	
