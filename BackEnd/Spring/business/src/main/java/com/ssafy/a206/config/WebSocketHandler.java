@@ -86,8 +86,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		
 		
 		
-		messageLogService.messageAdd(messageReq, session.getLocalAddress().getHostName());
-		MessageDTO dto = new MessageDTO(messageReq, session.getLocalAddress().getHostName());
+		messageLogService.messageAdd(messageReq, session.getLocalAddress().getHostString());
+		MessageDTO dto = new MessageDTO(messageReq, session.getLocalAddress().getHostString());
 		
 		redisService.setChatValues(dto,session.getId());
 		
