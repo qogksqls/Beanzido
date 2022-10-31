@@ -18,6 +18,7 @@ import my_location from "../assets/img/my_location.svg";
 
 function KakaoMap() {
   const [beanList, setBeanList] = useRecoilState(beanListState);
+  const [level, setLevel] = useState(3);
   const location = useGeolocation();
   const [clusterList, setClusterList] = useState(
     [] as {
@@ -57,6 +58,10 @@ function KakaoMap() {
     setScreenSize();
   }, []);
 
+  useEffect(() => {
+    setClusterList(getCluster(level, beanList));
+  }, [level, beanList]);
+
   return (
     <>
       {initialPosition.loaded && (
@@ -65,7 +70,7 @@ function KakaoMap() {
           isPanto={initialPosition.isPanto}
           className="map"
           onIdle={(map) => {
-            setClusterList(getCluster(map.getLevel(), beanList));
+            setLevel(map.getLevel());
             SetinitialPosition({
               lat: map.getCenter().getLat(),
               lng: map.getCenter().getLng(),
