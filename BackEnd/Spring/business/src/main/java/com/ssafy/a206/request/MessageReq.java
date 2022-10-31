@@ -21,7 +21,7 @@ public class MessageReq {
 	public MessageLog createMessageLog(String ip) {
 		Timestamp timestamp = new Timestamp(new Date().getTime());
 		
-		return new MessageLog(ip, content, img, timestamp, location, latitude, longitude, color, nickname);
+		return new MessageLog(ip, content, null, timestamp, location, latitude, longitude, color, nickname);
 	}
 	
 }
