@@ -34,7 +34,18 @@ function ClusterBean({
       bean.className = isOpen ? "cluster-bean close" : "cluster-bean open";
     }
     setIsOpen(!isOpen);
+    if (!isOpen) {
+      setTimeout(() => {
+        setIsOpen(false);
+      }, 3000);
+    }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => controlBean(), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <CustomOverlayMap
       position={{ lat: latitude, lng: longitude }}
