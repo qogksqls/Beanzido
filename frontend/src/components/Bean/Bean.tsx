@@ -29,12 +29,20 @@ function Bean({
   const colorRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef(null);
   const [indexToColor] = useColor();
+  
   const controlBean = () => {
     const bean = beanRef.current;
     if (bean) {
       bean.className = isOpen ? "bean close" : "bean open";
     }
     setIsOpen(!isOpen);
+    
+    console.log('줌 행동', isOpen)
+    
+    if (!isOpen) {
+      setTimeout(()=>{ setIsOpen(false)}, 3000);
+    }
+    
   };
   useEffect(() => {
     const { current } = colorRef;
@@ -43,6 +51,12 @@ function Bean({
       current.style.backgroundColor = indexToColor(color).backgroundColor;
     }
   }, []);
+
+  useEffect(()=>{
+    const timer = setTimeout(()=>controlBean(), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+  
   return (
     <CustomOverlayMap
       position={{ lat: latitude, lng: longitude }}
