@@ -23,6 +23,7 @@ import Img_box from "../../assets/img/Img_box.svg";
 import Img_box_white from "../../assets/img/Img_box_white.svg";
 import 새로고침 from "../../assets/img/새로고침.svg";
 import { SendMessage } from "react-use-websocket";
+import useGeolocation from "components/hooks/useGeolocation";
 
 type createBeanProps = {
   setIsCreateBean: Dispatch<SetStateAction<boolean>>;
@@ -125,6 +126,16 @@ export default function CreateBean({
   // let seconds = today.getSeconds(); // 초
   // let milliseconds = today.getMilliseconds(); // 밀리초
   // let time = `${year}/${month}/${date} - ${hours}:${minutes}:${seconds}:${milliseconds}`;
+
+  const location = useGeolocation();
+  var container = document.getElementById("map")! as HTMLElement,
+    options = {
+      center: new kakao.maps.LatLng(
+        location.coordinates.lat,
+        location.coordinates.lng
+      ),
+      level: 3,
+    };
 
   function SaveBaen() {
     const beanInfo = {
