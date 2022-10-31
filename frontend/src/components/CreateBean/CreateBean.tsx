@@ -23,6 +23,7 @@ import Img_box from "../../assets/img/Img_box.svg";
 import Img_box_white from "../../assets/img/Img_box_white.svg";
 import 새로고침 from "../../assets/img/새로고침.svg";
 import { SendMessage } from "react-use-websocket";
+import useGeolocation from "components/hooks/useGeolocation";
 
 type createBeanProps = {
   setIsCreateBean: Dispatch<SetStateAction<boolean>>;
