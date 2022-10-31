@@ -1,31 +1,88 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useRecoilState } from "recoil";
+import { beanListState } from "store/atom";
 import "./App.scss";
 import KakaoMap from "components/KakaoMap";
-import useGeoLocation from "assets/hooks/useGeolocation";
-import CreateBean from "./components/CreateBean/CreateBean"
-
-import createButton from "./assets/img/chat-button.svg"
+import useWebSocket, { ReadyState } from "react-use-websocket";
+import useGeoLocation from "components/hooks/useGeolocation";
+import CreateBean from "./components/CreateBean/CreateBean";
+import Sidebar from "components/Sidebar/Sidebar";
+import createButton from "./assets/img/chat-button.svg";
+import FeedbackButtonGif from "./assets/img/FeedbackButton.gif";
+import FeedbackButtonImg from "./assets/img/FeedbackButton.png";
+import FeedbackButton from "components/FeedbackButton/FeedbackButton";
 
 function App() {
+  const [isFeedbackButton, setIsFeedbackButton] = useState(false);
+  const [beanList, setBeanList] = useRecoilState(beanListState);
+  const [isCreateBean, setIsCreateBean] = useState(false);
+  const [isSideBar, setisSideBar] = useState(false);
   const location = useGeoLocation();
-  const [openCreateBean, setOpenCreateBean] = useState(false)
+  const socketurl = process.env.REACT_APP_SOCKET_URL
+    ? process.env.REACT_APP_SOCKET_URL
+    : "";
+  // const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl);
 
-  function OpenCreateBean() {
-    setOpenCreateBean(true)
-  }
-  function CloseCreateBean() {
-    setOpenCreateBean(false);
-  }
+  const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl, {
+    shouldReconnect: (closeEvent) => {
+      // console.log("소켓 재 연결중...");
+      // console.log(readyState);
+      return true;
+    },
+    reconnectAttempts: 10,
+    reconnectInterval: 3000,
+  });
+
+  useEffect(() => {
+    if (lastMessage !== null) {
+      if (lastMessage.data[0] == "{") {
+        setBeanList([...beanList, JSON.parse(lastMessage.data)]);
+      }
+    }
+  }, [lastMessage]);
 
   return (
     <div className="App">
-      <img
-        className="create-button"
-        onClick={OpenCreateBean}
-        src={createButton}
-        alt="chat-button" />
-      {openCreateBean && <CreateBean CloseCreateBean={CloseCreateBean} />}
-      <KakaoMap MyPosition={location.coordinates}></KakaoMap>
+      <div className="create-button">
+        <img
+          className="create-button-img"
+          onClick={() => setIsCreateBean(true)}
+          src={createButton}
+          alt="chat-button"
+        />
+      </div>
+      <div className="feedback-button">
+        <img
+          className="feedback-button-img"
+          onClick={() => setIsFeedbackButton(true)}
+          src={FeedbackButtonGif}
+          alt=""
+        />
+        <img
+          className="feedback-button-img"
+          onClick={() => setIsFeedbackButton(true)}
+          src={FeedbackButtonImg}
+          alt="feedback-button"
+        />
+      </div>
+      {isFeedbackButton && (
+        <FeedbackButton setIsFeedbackButton={setIsFeedbackButton} />
+      )}
+      {/* <div style={{ position: "absolute", zIndex: 100 }}>
+        {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
+        <div>{beanList ? JSON.stringify(beanList) : ""}</div>
+        <div>{readyState}</div>
+      </div> */}
+      {isCreateBean && (
+        <CreateBean
+          sendMessage={sendMessage}
+          setIsCreateBean={setIsCreateBean}
+          latitude={location.coordinates.lat}
+          longitude={location.coordinates.lng}
+        />
+      )}
+      {location.loaded && <KakaoMap />}
+      <Sidebar isSideBar={isSideBar} setisSideBar={setisSideBar} />
     </div>
   );
 }

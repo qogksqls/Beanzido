@@ -1,32 +1,34 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import "./Bean.scss";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import { CSSTransition } from "react-transition-group";
+import useColor from "components/hooks/useColor";
 
 type BeanProps = {
   nickname: string;
-  contents: string;
-  color: string;
-  img?: string;
+  content: string;
+  color: number;
+  img: string;
   createdAt: string;
-  Position: {
-    lat: number;
-    lng: number;
-  };
+  latitude: number;
+  longitude: number;
 };
 
 function Bean({
   nickname,
-  contents,
+  content,
   color,
   img,
   createdAt,
-  Position,
+  latitude,
+  longitude,
 }: BeanProps) {
+  // console.log("콩");
   const [isOpen, setIsOpen] = useState(true);
   const beanRef = useRef<HTMLDivElement>(null);
+  const colorRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef(null);
-
+  const [indexToColor] = useColor();
   const controlBean = () => {
     const bean = beanRef.current;
     if (bean) {
@@ -34,10 +36,22 @@ function Bean({
     }
     setIsOpen(!isOpen);
   };
+  useEffect(() => {
+    const { current } = colorRef;
+    if (current !== null) {
+      current.style.color = indexToColor(color).color;
+      current.style.backgroundColor = indexToColor(color).backgroundColor;
+    }
+  }, []);
   return (
-    <CustomOverlayMap position={Position} xAnchor={0} yAnchor={0} clickable>
+    <CustomOverlayMap
+      position={{ lat: latitude, lng: longitude }}
+      xAnchor={0}
+      yAnchor={0}
+      clickable
+    >
       <div className="bean open" ref={beanRef} onClick={controlBean}>
-        <div className="nickname-container" style={{ backgroundColor: color }}>
+        <div className="nickname-container" ref={colorRef}>
           {nickname[0]}
         </div>
         <div className="contents-container">
@@ -55,7 +69,7 @@ function Bean({
                 <div>{nickname}</div>
                 <div className="time">just now</div>
               </div>
-              <div className="down">{contents}</div>
+              <div className="down">{content}</div>
             </div>
           </CSSTransition>
         </div>
@@ -64,4 +78,4 @@ function Bean({
   );
 }
 
-export default Bean;
+export default memo(Bean);
