@@ -18,13 +18,21 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#f5f5f5",
   "viewport": "width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1",
   "description": "Beanzido - 익명의 지역 소통 커뮤니티",
-  "orientation": "any"
-
-
+  "orientation": "portrait-primary",
+  "shortcut": [
+    {
+      "name": "Beanzido",
+      "url":"/",
+      "description":"Beanzido - 익명의 지역 소통 커뮤니티"
+    
+    }
+  ],
+  "lang": "ko-KR",
+  "dir": "ltr"
 }
