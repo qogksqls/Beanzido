@@ -1,5 +1,4 @@
 import { useRecoilState } from "recoil";
-<<<<<<< frontend/src/components/KakaoMap.tsx
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import Clusterer from "./Clusterer/Clusterer";
 import Bean from "components/Bean/Bean";
