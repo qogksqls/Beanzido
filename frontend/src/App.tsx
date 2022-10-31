@@ -16,7 +16,7 @@ function App() {
   const [isFeedbackButton, setIsFeedbackButton] = useState(false);
   const [beanList, setBeanList] = useRecoilState(beanListState);
   const [isCreateBean, setIsCreateBean] = useState(false);
-  const [isSideBar, setisSideBar] = useState(false);
+  const [isSideBar, setisSideBar] = useState(true);
   const location = useGeoLocation();
   const socketurl = process.env.REACT_APP_SOCKET_URL
     ? process.env.REACT_APP_SOCKET_URL
