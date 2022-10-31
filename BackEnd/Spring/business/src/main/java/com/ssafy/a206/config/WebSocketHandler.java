@@ -86,6 +86,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		
 		String ip =session.getRemoteAddress().getHostString();
 		
+		log.info("session = {}",session.getHandshakeHeaders());
+		
 		messageLogService.messageAdd(messageReq, ip);
 		MessageDTO dto = new MessageDTO(messageReq, ip);
 		
