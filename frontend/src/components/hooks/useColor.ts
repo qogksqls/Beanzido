@@ -4,7 +4,7 @@ export default function useColor() {
   const indexToColor = useCallback((idx: number) => {
     const IndexToColor = [
       { name: "완두콩", backgroundColor: "#c7f2a4", color: "black" },
-      { name: "강낭콩", backgroundColor: "#F25F9B", color: "black" },
+      { name: "강낭콩", backgroundColor: "#e80081", color: "white" },
       { name: "쥐눈이콩", backgroundColor: "#A6A6A6", color: "black" },
       { name: "랜탈콩", backgroundColor: "#F57329", color: "black" },
       { name: "병아리콩", backgroundColor: "#FFE9A0", color: "black" },
