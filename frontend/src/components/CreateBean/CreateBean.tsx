@@ -122,7 +122,7 @@ export default function CreateBean({
   // let milliseconds = today.getMilliseconds(); // 밀리초
   // let time = `${year}/${month}/${date} - ${hours}:${minutes}:${seconds}:${milliseconds}`;
 
-  function SaveBaen() {
+  function SaveBean() {
     const beanInfo = {
       nickname: name,
       content: contentValue ? contentValue : "내용이 없습니다.",
@@ -214,7 +214,7 @@ export default function CreateBean({
               </div>
             </div>
           )}
-          <div className="finish-button" onClick={SaveBaen}>
+          <div className="finish-button" onClick={SaveBean}>
             <h3>글 작성 완료</h3>
           </div>
         </div>
