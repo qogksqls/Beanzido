@@ -1,18 +1,13 @@
 package com.ssafy.a206.dto;
 
 
-import javax.persistence.Id;
-
+import com.ssafy.a206.request.MessageReq;
+import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
 
-import com.ssafy.a206.request.MessageReq;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import javax.persistence.Id;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @RedisHash("message")
 @Getter
@@ -31,6 +26,7 @@ public class MessageDTO {
 	private String nickName;
 	private String location;
 	private String ip;
+	private Timestamp createdAt;
 
 	public MessageDTO(MessageReq mes, String ip) {
 		super();
@@ -41,6 +37,7 @@ public class MessageDTO {
 		this.color = mes.getColor();
 		this.nickName = mes.getNickname();
 		this.location = mes.getLocation();
+		this.createdAt = new Timestamp(new Date().getTime());
 		this.ip = ip;
 	}
 	

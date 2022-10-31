@@ -31,17 +31,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	@Autowired
 	private RedisChatRepository redisChatRep;
 	
-	
-	static int s;
-	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		log.info("세션 ID : {}", session.getId());
+		log.info("<OPEN>세션 ID : {}", session.getId());
+		log.info("session count : {}",sessions.size());
 		String sessionId = session.getId();
 		sessions.put(sessionId, session);
-		
-		
-		
 		sessions.values().forEach(s -> {
 
 			try {
@@ -55,7 +50,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		super.afterConnectionEstablished(session);
 	}
 
-	
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
 		log.info("세션 ID : {}", session.getId());
@@ -98,6 +92,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		
 		sessions.values().forEach(s -> {
 
+
 			try {
 				s.sendMessage(message);
 			} catch (Exception e) {
@@ -113,9 +108,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		log.info("세션 ID : {}", session.getId());
+		log.info("<CLOSE>세션 ID : {}", session.getId());
+		sessions.remove(session.getId());
+		log.info("session count : {}",sessions.size());
 		super.afterConnectionClosed(session, status);
 	}
+
 
 	@Override
 	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
