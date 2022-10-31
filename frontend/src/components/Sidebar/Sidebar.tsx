@@ -1,6 +1,6 @@
-import React, { useState, useRef, Dispatch, useEffect } from "react";
+import React, { useState, useRef, Dispatch } from "react";
 import { useRecoilState } from "recoil";
-import { beanListState } from "store/atom";
+import { beanListState, focusedState } from "store/atom";
 import { CSSTransition } from "react-transition-group";
 import { useSwipeable } from "react-swipeable";
 import ChatList from "components/ChatList/ChatList";
@@ -19,7 +19,8 @@ export default function Sidebar({ isSideBar, setisSideBar }: SideProps) {
   const [isFull, setIsFull] = useState(false);
   const [isFirst, setisFirst] = useState(true);
   const [isScroll, setIsScroll] = useState(false);
-  const [beanList, setBeanList] = useRecoilState(beanListState);
+  const [beanList] = useRecoilState(beanListState);
+  const [focused] = useRecoilState(focusedState);
 
   function closeSidebar() {
     document.documentElement.style.setProperty("--mobile-border", "10px");
@@ -160,7 +161,7 @@ export default function Sidebar({ isSideBar, setisSideBar }: SideProps) {
                 <ChatList chatList={beanList} />
               </div>
               <div className="scroll second">
-                <ChatList chatList={beanList} />
+                <ChatList chatList={focused} />
               </div>
             </div>
           </>

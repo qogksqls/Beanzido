@@ -10,19 +10,9 @@ type BeanProps = {
   color: number[];
   img: string;
   createdAt: string;
-  latitude: number;
-  longitude: number;
 };
 
-function ClusterBean({
-  nickname,
-  content,
-  color,
-  img,
-  createdAt,
-  latitude,
-  longitude,
-}: BeanProps) {
+function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
   const [isOpen, setIsOpen] = useState(true);
   const beanRef = useRef<HTMLDivElement>(null);
   const colorRef = useRef<HTMLDivElement>(null);
@@ -47,71 +37,64 @@ function ClusterBean({
   }, []);
 
   return (
-    <CustomOverlayMap
-      position={{ lat: latitude, lng: longitude }}
-      xAnchor={0}
-      yAnchor={0}
-      clickable
-    >
-      <div className="cluster-bean open" ref={beanRef} onClick={controlBean}>
+    <div className="cluster-bean open" ref={beanRef} onClick={controlBean}>
+      <div
+        className={
+          color.length > 2 ? "nickname-cluster three" : "nickname-cluster two"
+        }
+      >
+        {color.length > 2 && (
+          <div
+            className="nickname-container third"
+            style={{
+              color: indexToColor(color[0]).color,
+              backgroundColor: indexToColor(color[0]).backgroundColor,
+            }}
+          >
+            {nickname[0][0]}
+          </div>
+        )}
         <div
-          className={
-            color.length > 2 ? "nickname-cluster three" : "nickname-cluster two"
-          }
+          className="nickname-container second"
+          style={{
+            color: indexToColor(color[color.length - 2]).color,
+            backgroundColor: indexToColor(color[color.length - 2])
+              .backgroundColor,
+          }}
         >
-          {color.length > 2 && (
-            <div
-              className="nickname-container third"
-              style={{
-                color: indexToColor(color[0]).color,
-                backgroundColor: indexToColor(color[0]).backgroundColor,
-              }}
-            >
-              {nickname[0][0]}
-            </div>
-          )}
-          <div
-            className="nickname-container second"
-            style={{
-              color: indexToColor(color[color.length - 2]).color,
-              backgroundColor: indexToColor(color[color.length - 2])
-                .backgroundColor,
-            }}
-          >
-            {nickname[color.length - 2][0]}
-          </div>
-          <div
-            className="nickname-container"
-            style={{
-              color: indexToColor(color[color.length - 1]).color,
-              backgroundColor: indexToColor(color[color.length - 1])
-                .backgroundColor,
-            }}
-          >
-            {nickname[color.length - 1][0]}
-          </div>
+          {nickname[color.length - 2][0]}
         </div>
-        <div className="contents-container">
-          <CSSTransition
-            in={isOpen}
-            nodeRef={nodeRef}
-            timeout={500}
-            classNames="fade"
-            unmountOnExit
-            onEnter={() => controlBean}
-            onExited={() => controlBean}
-          >
-            <div ref={nodeRef}>
-              <div className="up">
-                <div>{nickname[0]}</div>
-                <div className="time">just now</div>
-              </div>
-              <div className="down">{content}</div>
-            </div>
-          </CSSTransition>
+        <div
+          className="nickname-container"
+          style={{
+            color: indexToColor(color[color.length - 1]).color,
+            backgroundColor: indexToColor(color[color.length - 1])
+              .backgroundColor,
+          }}
+        >
+          {nickname[color.length - 1][0]}
         </div>
       </div>
-    </CustomOverlayMap>
+      <div className="contents-container">
+        <CSSTransition
+          in={isOpen}
+          nodeRef={nodeRef}
+          timeout={500}
+          classNames="fade"
+          unmountOnExit
+          onEnter={() => controlBean}
+          onExited={() => controlBean}
+        >
+          <div ref={nodeRef}>
+            <div className="up">
+              <div>{nickname[0]}</div>
+              <div className="time">just now</div>
+            </div>
+            <div className="down">{content}</div>
+          </div>
+        </CSSTransition>
+      </div>
+    </div>
   );
 }
 

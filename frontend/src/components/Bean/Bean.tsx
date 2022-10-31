@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, memo } from "react";
 import "./Bean.scss";
-import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import { CSSTransition } from "react-transition-group";
 import useColor from "components/hooks/useColor";
 
@@ -10,19 +9,9 @@ type BeanProps = {
   color: number;
   img: string;
   createdAt: string;
-  latitude: number;
-  longitude: number;
 };
 
-function Bean({
-  nickname,
-  content,
-  color,
-  img,
-  createdAt,
-  latitude,
-  longitude,
-}: BeanProps) {
+function Bean({ nickname, content, color, img, createdAt }: BeanProps) {
   const [isOpen, setIsOpen] = useState(true);
   const beanRef = useRef<HTMLDivElement>(null);
   const colorRef = useRef<HTMLDivElement>(null);
@@ -56,37 +45,30 @@ function Bean({
   }, []);
 
   return (
-    <CustomOverlayMap
-      position={{ lat: latitude, lng: longitude }}
-      xAnchor={0}
-      yAnchor={0}
-      clickable
-    >
-      <div className="bean open" ref={beanRef} onClick={controlBean}>
-        <div className="nickname-container" ref={colorRef}>
-          {nickname[0]}
-        </div>
-        <div className="contents-container">
-          <CSSTransition
-            in={isOpen}
-            nodeRef={nodeRef}
-            timeout={500}
-            classNames="fade"
-            unmountOnExit
-            onEnter={() => controlBean}
-            onExited={() => controlBean}
-          >
-            <div ref={nodeRef}>
-              <div className="up">
-                <div>{nickname}</div>
-                <div className="time">just now</div>
-              </div>
-              <div className="down">{content}</div>
-            </div>
-          </CSSTransition>
-        </div>
+    <div className="bean open" ref={beanRef} onClick={controlBean}>
+      <div className="nickname-container" ref={colorRef}>
+        {nickname[0]}
       </div>
-    </CustomOverlayMap>
+      <div className="contents-container">
+        <CSSTransition
+          in={isOpen}
+          nodeRef={nodeRef}
+          timeout={500}
+          classNames="fade"
+          unmountOnExit
+          onEnter={() => controlBean}
+          onExited={() => controlBean}
+        >
+          <div ref={nodeRef}>
+            <div className="up">
+              <div>{nickname}</div>
+              <div className="time">just now</div>
+            </div>
+            <div className="down">{content}</div>
+          </div>
+        </CSSTransition>
+      </div>
+    </div>
   );
 }
 
