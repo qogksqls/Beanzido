@@ -38,13 +38,14 @@ $breakpoint: 500px;
   z-index: 90;
 }
 .create-bean {
+  --create-width: min(83%, 340px);
   position: relative;
-  animation: fadeInUp 1s;
+  animation: fadeInUp 0.5s ease;
   position: absolute;
   top: 17%;
-  left: calc(50% - 170px);
+  left: calc(50% - var(--create-width) / 2);
   z-index: 99;
-  width: 340px;
+  width: var(--create-width);
   background-color: white;
   border-radius: 10px;
   .header {
@@ -109,6 +110,7 @@ $breakpoint: 500px;
         border-radius: 5px;
         p {
           margin: auto;
+          font-weight: bold;
         }
         cursor: pointer;
       }
@@ -157,13 +159,14 @@ $breakpoint: 500px;
       .picture {
         display: flex;
         cursor: pointer;
+        align-items: center;
         h4 {
           margin: 0 0 0 10px;
           font-size: 15px;
         }
         p {
           margin: 2px 0 0 10px;
-          font-size: 13px;
+          font-size: 15px;
           color: #888888;
         }
         .picture-img {
@@ -179,6 +182,25 @@ $breakpoint: 500px;
       border: 1px solid var(--create-bean-color);
       border-radius: 5px;
       padding: 10px;
+      height: 150px;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+        background: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3.5px;
+        background-color: var(--create-bean-color);
+    
+        &:hover {
+          background-color: #adb5bd;
+        }
+      }
+      &::-webkit-scrollbar-track {
+        background: #ffffff;
+      }
       .capture {
         border-radius: 10px;
         width: 100%;
