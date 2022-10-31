@@ -1,12 +1,13 @@
 import React, { useState, useRef, Dispatch, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { beanListState } from "store/atom";
 import { CSSTransition } from "react-transition-group";
+import { useSwipeable } from "react-swipeable";
 import ChatList from "components/ChatList/ChatList";
 import "./Sidebar.scss";
 import openIcon from "assets/img/Expand_right_light.svg";
 import closeIcon from "assets/img/Expand_left_light.svg";
 import x from "assets/img/x.svg";
-// import { isMobile } from "react-device-detect";
-import { useSwipeable } from "react-swipeable";
 
 type SideProps = {
   isSideBar: boolean;
@@ -18,6 +19,7 @@ export default function Sidebar({ isSideBar, setisSideBar }: SideProps) {
   const [isFull, setIsFull] = useState(false);
   const [isFirst, setisFirst] = useState(true);
   const [isScroll, setIsScroll] = useState(false);
+  const [beanList, setBeanList] = useRecoilState(beanListState);
 
   function closeSidebar() {
     document.documentElement.style.setProperty("--mobile-border", "10px");
@@ -52,7 +54,7 @@ export default function Sidebar({ isSideBar, setisSideBar }: SideProps) {
       document.documentElement.style.setProperty("--inner-height", "300px");
       if (
         eventData.dir === "Up" &&
-        eventData.deltaY < (-1 / 6) * window.innerHeight
+        eventData.deltaY < (-1 / 8) * window.innerHeight
       ) {
         setIsFull(true);
         document.documentElement.style.setProperty("--mobile-border", "0");
@@ -62,7 +64,7 @@ export default function Sidebar({ isSideBar, setisSideBar }: SideProps) {
         );
       } else if (
         eventData.dir === "Down" &&
-        eventData.deltaY > (1 / 6) * window.innerHeight
+        eventData.deltaY > (1 / 8) * window.innerHeight
       ) {
         document.documentElement.style.setProperty(
           "--inner-height",
@@ -155,10 +157,10 @@ export default function Sidebar({ isSideBar, setisSideBar }: SideProps) {
             </div>
             <div className="scroll-container" {...sideHandlers}>
               <div className="scroll first">
-                <ChatList />
+                <ChatList chatList={beanList} />
               </div>
               <div className="scroll second">
-                <ChatList />
+                <ChatList chatList={beanList} />
               </div>
             </div>
           </>

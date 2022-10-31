@@ -1,10 +1,10 @@
 import { useRecoilState } from "recoil";
 import { Map } from "react-kakao-maps-sdk";
+import Clusterer from "./Clusterer/Clusterer";
 import Bean from "components/Bean/Bean";
 import { beanListState } from "store/atom";
 import { useEffect, useState, memo } from "react";
 import useGeolocation from "./hooks/useGeolocation";
-
 // type MapProps = {
 //   MyPosition: {
 //     lat: number;
@@ -15,6 +15,17 @@ import useGeolocation from "./hooks/useGeolocation";
 function KakaoMap() {
   const [beanList, setBeanList] = useRecoilState(beanListState);
   const location = useGeolocation();
+  const [clusterList, setClusterList] = useState(
+    [] as {
+      nickname: string;
+      content: string;
+      color: number;
+      img: string;
+      createdAt: string;
+      latitude: number;
+      longitude: number;
+    }[][]
+  );
   const [initialPosition, SetinitialPosition] = useState({
     lat: 0,
     lng: 0,
@@ -35,30 +46,98 @@ function KakaoMap() {
   }
   useEffect(() => {
     setScreenSize();
-  });
+  }, []);
+
   return (
     <>
       {initialPosition.loaded && (
         <Map
           center={{ lat: initialPosition.lat, lng: initialPosition.lng }}
           className="map"
+          onIdle={(map) => {
+            setClusterList(getCluster(map.getLevel(), beanList));
+          }}
         >
-          {beanList.map((BeanProps, index) => (
-            <Bean
-              nickname={BeanProps.nickname}
-              content={BeanProps.content}
-              color={BeanProps.color}
-              img={BeanProps.img}
-              createdAt={BeanProps.createdAt}
-              latitude={BeanProps.latitude}
-              longitude={BeanProps.longitude}
-              key={index}
-            ></Bean>
+          {clusterList.map((clusteredBeanList, idx) => (
+            <Clusterer beanList={clusteredBeanList} key={idx} />
           ))}
         </Map>
       )}
     </>
   );
+}
+
+function levelToDistance(num: number) {
+  if (num > 0) {
+    if (num < 5) {
+      if (num === 1) return 20;
+      else if (num === 2) return 30;
+      else if (num === 3) return 50;
+      else return 100;
+    } else {
+      return Math.pow(2, num - 5) * 250;
+    }
+  } else return 0;
+}
+
+function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+  if (lat1 === lat2 && lon1 === lon2) return 0;
+
+  var radLat1 = (Math.PI * lat1) / 180;
+  var radLat2 = (Math.PI * lat2) / 180;
+  var theta = lon1 - lon2;
+  var radTheta = (Math.PI * theta) / 180;
+  var dist =
+    Math.sin(radLat1) * Math.sin(radLat2) +
+    Math.cos(radLat1) * Math.cos(radLat2) * Math.cos(radTheta);
+  if (dist > 1) dist = 1;
+
+  dist = Math.acos(dist);
+  dist = (dist * 180) / Math.PI;
+  dist = dist * 60 * 1.1515 * 1.609344 * 1000;
+  if (dist < 100) dist = Math.round(dist / 10) * 10;
+  else dist = Math.round(dist / 100) * 100;
+
+  return dist;
+}
+
+function getCluster(
+  level: number,
+  beanList: {
+    nickname: string;
+    content: string;
+    color: number;
+    img: string;
+    createdAt: string;
+    latitude: number;
+    longitude: number;
+  }[]
+) {
+  var clustered = new Set();
+  var newClusterList = new Array();
+  beanList.forEach((bean1, idx1) => {
+    var tmp = new Array(bean1);
+    beanList.forEach((bean2, idx2) => {
+      if (bean1 !== bean2 && !clustered.has(idx1)) {
+        if (
+          getDistance(
+            bean1.latitude,
+            bean1.longitude,
+            bean2.latitude,
+            bean2.longitude
+          ) < levelToDistance(level)
+        ) {
+          tmp.push(bean2);
+          clustered.add(idx2);
+        }
+      }
+    });
+    if (!clustered.has(idx1)) {
+      newClusterList.push(tmp);
+    }
+    clustered.add(idx1);
+  });
+  return newClusterList;
 }
 
 export default memo(KakaoMap);
