@@ -34,7 +34,7 @@ export default function FeedbackButton({ setIsFeedbackButton }: FeedbackProps) {
           )
         }
       >
-        <h4>Beanzido를 위해 피드백을 남겨주세요!</h4>
+        <h5>Beanzido를 위해 피드백을 남겨주세요!</h5>
       </div>
       {/* <button
       className="feedback-button"
