@@ -1,13 +1,13 @@
 from fastapi import FastAPI
-import redistest
+# import redistest
 
 app = FastAPI()
 
 
 @app.get("/")
 async def root():
-
-    return redistest.getList()
+    return "dsf"
+    # return redistest.getList()
 
 
 @app.get("/hello/{name}")
