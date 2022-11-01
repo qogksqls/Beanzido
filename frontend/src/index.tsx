@@ -4,6 +4,8 @@ import { RecoilRoot } from "recoil";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import registerServiceWorker from "./serviceWorker";
+registerServiceWorker();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
