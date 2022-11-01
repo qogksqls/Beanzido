@@ -33,9 +33,8 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => controlBean(), 3000);
-    return () => clearTimeout(timer);
-  }, []);
+    controlBean();
+  }, [createdAt]);
 
   return (
     <div className="cluster-bean open" ref={beanRef} onClick={controlBean}>
@@ -88,7 +87,7 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
         >
           <div ref={nodeRef}>
             <div className="up">
-              <div>{nickname[0]}</div>
+              <div>{nickname[nickname.length - 1]}</div>
               <div className="time">just now</div>
             </div>
             <div className="down">{content}</div>
