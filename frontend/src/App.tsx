@@ -25,7 +25,6 @@ function App() {
   // const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl);
 
   const beanAPI = useBeanAPI();
-  console.log(beanAPI);
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl, {
     shouldReconnect: (closeEvent) => {
       // console.log("소켓 재 연결중...");
