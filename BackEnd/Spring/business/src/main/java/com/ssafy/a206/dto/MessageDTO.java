@@ -31,7 +31,7 @@ public class MessageDTO {
 	private float latitude;
 	private float longitude;
 	private int color;
-	private String nickName;
+	private String nickname;
 	private String location;
 	private String ip;
 	
@@ -45,7 +45,7 @@ public class MessageDTO {
 		this.latitude = mes.getLatitude();
 		this.longitude = mes.getLongitude();
 		this.color = mes.getColor();
-		this.nickName = mes.getNickname();
+		this.nickname = mes.getNickname();
 		this.location = mes.getLocation();
 		this.createdAt = new Date();
 		this.ip = ip;
