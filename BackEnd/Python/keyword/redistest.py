@@ -14,6 +14,9 @@ import pickle
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(BASE_DIR,".env"))
 
+nltk.download('averaged_perceptron_tagger')
+nltk.download('punkt')
+
 # 명사추출.
 sched = BackgroundScheduler(timezone='Asia/Seoul')
 hannanum = konlpy.tag.Hannanum()
