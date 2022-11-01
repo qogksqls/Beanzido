@@ -22,12 +22,13 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
     const bean = beanRef.current;
     if (bean) {
       bean.className = isOpen ? "cluster-bean close" : "cluster-bean open";
-    }
-    setIsOpen(!isOpen);
-    if (!isOpen) {
-      setTimeout(() => {
-        setIsOpen(false);
-      }, 3000);
+      setIsOpen(!isOpen);
+      if (!isOpen) {
+        setTimeout(() => {
+          bean.className = "cluster-bean close";
+          setIsOpen(false);
+        }, 3000);
+      }
     }
   };
 
@@ -87,7 +88,7 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
         >
           <div ref={nodeRef}>
             <div className="up">
-              <div>{nickname[0]}</div>
+              <div>{nickname[nickname.length - 1]}</div>
               <div className="time">just now</div>
             </div>
             <div className="down">{content}</div>

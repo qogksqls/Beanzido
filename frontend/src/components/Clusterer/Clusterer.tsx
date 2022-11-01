@@ -1,6 +1,7 @@
 import { useRecoilState } from "recoil";
 import { focusedState } from "store/atom";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
+import { useSwipeable } from "react-swipeable";
 import Bean from "components/Bean/Bean";
 import ClusterBean from "components/ClusterBean/ClusterBean";
 
@@ -18,6 +19,11 @@ type ClusterProps = {
 
 function Clusterer({ beanList }: ClusterProps) {
   const [, setFocused] = useRecoilState(focusedState);
+  const tapHandlers = useSwipeable({
+    onTap: (eventData) => {
+      console.log("오픈")
+    },
+  });
 
   return (
     <CustomOverlayMap
@@ -29,7 +35,7 @@ function Clusterer({ beanList }: ClusterProps) {
       yAnchor={0}
       clickable
     >
-      <div onClick={() => setFocused(beanList)}>
+      <div onClick={() => setFocused(beanList)} {...tapHandlers}>
         {beanList.length === 1 ? (
           <Bean
             nickname={beanList[0].nickname}

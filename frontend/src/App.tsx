@@ -5,6 +5,7 @@ import "./App.scss";
 import KakaoMap from "components/KakaoMap";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import useGeoLocation from "components/hooks/useGeolocation";
+import useBeanAPI from "components/hooks/useBeanAPI";
 import CreateBean from "./components/CreateBean/CreateBean";
 import Sidebar from "components/Sidebar/Sidebar";
 import createButton from "./assets/img/chat-button.svg";
@@ -23,6 +24,8 @@ function App() {
     : "";
   // const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl);
 
+  const beanAPI = useBeanAPI();
+  console.log(beanAPI);
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl, {
     shouldReconnect: (closeEvent) => {
       // console.log("소켓 재 연결중...");

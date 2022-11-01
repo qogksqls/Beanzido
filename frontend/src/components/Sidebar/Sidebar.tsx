@@ -33,7 +33,6 @@ export default function Sidebar({ isSideBar, setisSideBar }: SideProps) {
     setIsFull(false);
     setisSideBar(true);
   }
-
   const upHandlers = useSwipeable({
     onSwiping: (eventData) => {
       document.documentElement.style.setProperty("--inner-transition", "");
