@@ -1,10 +1,24 @@
+$breakpoint: 500px;
+
+@mixin mobile {
+  @media (max-width: #{$breakpoint - 1px}) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: #{$breakpoint}) {
+    @content;
+  }
+}
+
 .chat-list {
   padding: 0 20px;
+  display: flex;
+  flex-direction: column-reverse;
   touch-action: pan-y;
-  
   .chat-item ~ .chat-item {
-    border-top: solid 1px rgba(0, 0, 0, 0.25);
-    margin-top: 10px;
-    padding-top: 10px;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.25);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
   }
 }
