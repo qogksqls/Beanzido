@@ -24,9 +24,10 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
       bean.className = isOpen ? "cluster-bean close" : "cluster-bean open";
     }
     setIsOpen(!isOpen);
-    if (!isOpen) {
+    if (!isOpen && bean) {
       setTimeout(() => {
         setIsOpen(false);
+        bean.className = "cluster-bean close";
       }, 3000);
     }
   };
