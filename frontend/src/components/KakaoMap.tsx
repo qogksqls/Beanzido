@@ -13,17 +13,14 @@ import useGeolocation from "./hooks/useGeolocation";
 import "./KakaoMap.scss";
 
 import gps from "../assets/img/Gps.svg";
+import plus from "../assets/img/plus.svg";
+import minus from "../assets/img/minus.svg";
 import my_location from "../assets/img/my_location.svg";
-// type MapProps = {
-//   MyPosition: {
-//     lat: number;
-//     lng: number;
-//   };
-// };
 
 function KakaoMap() {
   const [beanList, setBeanList] = useRecoilState(beanListState);
   const [level, setLevel] = useState(3);
+  const [map, setMap] = useState<kakao.maps.Map>();
   const location = useGeolocation();
   const [clusterList, setClusterList] = useState(
     [] as {
@@ -83,7 +80,9 @@ function KakaoMap() {
               isPanto: false,
             });
           }}
-          level={3}
+          onCreate={(map) => {
+            setMap(map);
+          }}
         >
           <MapMarker // 마커를 생성합니다
             position={{
@@ -105,7 +104,7 @@ function KakaoMap() {
               },
             }}
           />
-          <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
+          {/* <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} /> */}
           <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
           {clusterList.map((clusteredBeanList, idx) => (
             <Clusterer beanList={clusteredBeanList} key={idx} />
@@ -123,6 +122,28 @@ function KakaoMap() {
                   isPanto: true,
                 });
               }}
+            />
+          </div>
+          <div className="zoom-control">
+            <img
+              className="plus-button"
+              onClick={() => {
+                if (map) {
+                  map.setLevel(level - 1, { animate: true });
+                }
+              }}
+              src={plus}
+              alt=""
+            />
+            <img
+              className="minus-button"
+              onClick={() => {
+                if (map) {
+                  map.setLevel(level + 1, { animate: true });
+                }
+              }}
+              src={minus}
+              alt=""
             />
           </div>
         </Map>

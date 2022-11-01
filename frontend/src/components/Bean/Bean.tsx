@@ -17,6 +17,34 @@ function Bean({ nickname, content, color, img, createdAt }: BeanProps) {
   const colorRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef(null);
   const [indexToColor] = useColor();
+  let today = new Date();
+  let elapsedTime: number = Math.trunc((today.getTime() - (+createdAt)) / 1000) - 10;
+
+  function elapsedText(elapsedTime: number) {
+    // 초 (밀리초)
+    const seconds = 1;
+    // 분
+    const minute = seconds * 60;
+    // 시
+    const hour = minute * 60;
+    // 일
+    const day = hour * 24;
+    
+    let elapsedText = "";
+    if (elapsedTime < (seconds + 10)) {
+      elapsedText = "방금 전";
+    } else if (elapsedTime < minute) {
+      elapsedText = elapsedTime + "초 전";
+    } else if (elapsedTime < hour) {
+      elapsedText = Math.trunc(elapsedTime / minute) + "분 전";
+    } else if (elapsedTime < day) {
+      elapsedText = Math.trunc(elapsedTime / hour) + "시간 전";
+    } else {
+      elapsedText = Math.trunc(elapsedTime / day) + "일 전";
+    }
+    
+    return elapsedText;
+  }
 
   const controlBean = () => {
     const bean = beanRef.current;
@@ -63,7 +91,7 @@ function Bean({ nickname, content, color, img, createdAt }: BeanProps) {
           <div ref={nodeRef}>
             <div className="up">
               <div>{nickname}</div>
-              <div className="time">just now</div>
+              <div className="time">{elapsedText(elapsedTime)}</div>
             </div>
             <div className="down">{content}</div>
           </div>
@@ -74,3 +102,7 @@ function Bean({ nickname, content, color, img, createdAt }: BeanProps) {
 }
 
 export default memo(Bean);
+function SimpleDateTimeFormat(date: { getTime: () => number; }, arg1: string): string {
+  throw new Error("Function not implemented.");
+}
+
