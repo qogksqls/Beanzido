@@ -54,7 +54,7 @@ public class MessageDTO implements Comparable<MessageDTO>{
 	@Override
 	public int compareTo(MessageDTO o) {
 		
-		return o.createdAt.compareTo(this.createdAt);
+		return this.createdAt.compareTo(o.createdAt);
 	}
 	
 	
