@@ -33,7 +33,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		log.info("<OPEN>세션 ID : {}", session.getId());
 		log.info("session count : {}",sessions.size());
-		log.info("info : {}",session.getHandshakeHeaders().get);
 		String sessionId = session.getId();
 		sessions.put(sessionId, session);
 		sessions.values().forEach(s -> {
