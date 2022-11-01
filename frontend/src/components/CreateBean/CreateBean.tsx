@@ -136,11 +136,21 @@ export default function CreateBean({
       // createdAt: time,
       latitude: latitude,
       longitude: longitude,
+      location: "",
     };
 
     if (contentValue || imgSrc) {
-      sendMessage(JSON.stringify(beanInfo));
-      setIsCreateBean(false);
+      const geocoder = new kakao.maps.services.Geocoder();
+      geocoder.coord2RegionCode(longitude, latitude, (result, status) => {
+        for (var i = 0; i < result.length; i++) {
+          if (result[i].region_type === "H") {
+            console.log(result[i].address_name);
+            beanInfo.location = result[i].address_name;
+            sendMessage(JSON.stringify(beanInfo));
+            setIsCreateBean(false);
+          }
+        }
+      });
     } else {
       alert("전할 말을 적어주세요.");
     }
