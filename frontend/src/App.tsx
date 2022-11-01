@@ -8,6 +8,7 @@ import useGeoLocation from "components/hooks/useGeolocation";
 import useBeanAPI from "components/hooks/useBeanAPI";
 import CreateBean from "./components/CreateBean/CreateBean";
 import Sidebar from "components/Sidebar/Sidebar";
+import Logo from "./assets/img/Logo.svg";
 import createButton from "./assets/img/chat-button.svg";
 import FeedbackButtonGif from "./assets/img/FeedbackButton.gif";
 import FeedbackButtonImg from "./assets/img/FeedbackButton.png";
@@ -45,6 +46,9 @@ function App() {
 
   return (
     <div className="App">
+      <div className="logo">
+        <img src={Logo} alt="로고" />
+      </div>
       <div className="create-button">
         <img
           className="create-button-img"
