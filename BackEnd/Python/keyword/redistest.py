@@ -2,16 +2,27 @@ import konlpy
 import redis
 import operator
 import json
+import nltk
+from collections import Counter
+import re
+import os
+from dotenv import load_dotenv
+import time
+from apscheduler.schedulers.background import BackgroundScheduler
 import pickle
 
-#명사추출.
-hannanum= konlpy.tag.Hannanum()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR,".env"))
+
+# 명사추출.
+sched = BackgroundScheduler(timezone='Asia/Seoul')
+hannanum = konlpy.tag.Hannanum()
 tf_keyword_rank = {}
 # print(hannanum.pos('아 배고파 점심메뉴 추천좀요'))
 
 # get redis connection
-rd_keyword = redis.StrictRedis(host='localhost', port=6379, db=0)
-rd_message = redis.StrictRedis(host='localhost', port=6379, db=0)
+rd_keyword = redis.StrictRedis(host=os.environ["SERVER_IP"], port=os.environ["REDIS_PORT_KEYWORD"], db=0)
+rd_message = redis.StrictRedis(host=os.environ["SERVER_IP"], port=os.environ["REDIS_PORT_MESSAGE"], db=0)
 
 
 # rd_keyword.set('노원구',json.dumps(nowon, ensure_ascii=False).encode('utf-8')
@@ -20,41 +31,70 @@ rd_message = redis.StrictRedis(host='localhost', port=6379, db=0)
 # 키워드 분석 : 1분마다update, 비동기, 백그라운드
 # 메세지가 몇 만개 이상일 때 key 조회 속도issue?
 
-class Message :
-    def __init__(self,location,content):
+class Message:
+    def __init__(self, location, content):
         self.location = location
         self.content = content
-def analyze():
-    words = {}
-    tf_words = {}
 
-    # messages = rd_message.get('messages').values()
-    messages=[Message('서울특별시 노원구 중계동','점심메뉴 추천 좀 부탁드립니다'), Message('서울특별시 강남구 역삼동','퇴근하고싶다 흑흑 점심메뉴'), Message('서울특별시 강남구 역삼동','점심메뉴 추천 좀 부탁드립니다')]
+
+@sched.scheduled_job('cron',minute='*/3', id='keyword')
+def analyze():
+    print("분석시작")
+    keys = rd_message.keys("*")
+    messages = []
+    words3 = {}
+    tf_words1 = {}
+    tf_words2 = {}
+    tf_words3 = {}
+
+    for key in keys:
+        messages.append(json.loads(rd_message.get(key).decode()))
 
     for message in messages:
-        # 지역별 dict, 카운트로 sort
-        # 지역 00구 까지. location 에서 region 뽑기.
-        region = message.location
-
-        if words.setdefault(region,' '):
-            words[region]+=" "+message.content
-        # else:
-        #     words[region]=message.content
-        # word = words.setdefault(region,'')
-    # tf추출
-    for region, words in words.items():
-        tf_words[region] = {}
+        region3 = message['location']
+        if words3.setdefault(region3, ' '):
+            words3[region3] += " " + message['content']
+    for region, words in words3.items():
+        tf_words3[region] = {}
         nouns = hannanum.nouns(words)
-        for noun in nouns:
-            tf_words[region].setdefault(noun, 0)
-            tf_words[region][noun] += 1
-        tf_words[region] = dict(sorted(tf_words[region].items(), key=operator.itemgetter(1),reverse=True))
-    print(tf_words)
+        print(nouns)
+        # 영어
+        compiler = re.compile('[^a-z | \\s]+')
+        words = compiler.sub("", words.lower())
+        for word, pos in nltk.pos_tag(nltk.word_tokenize(words)):
+            # print(word)
+            if pos == 'NN' or pos == 'NNP' or pos == 'NNS' or pos == 'NNPS':
+                nouns.append(word)
 
+        # tf_words3 = Counter(nouns)
+        for noun in nouns:
+            tf_words3[region].setdefault(noun, 0)
+            tf_words3[region][noun] += 1
+        tf_words3[region] = dict(sorted(tf_words3[region].items(), key=operator.itemgetter(1), reverse=True))
+
+    for region, tf in tf_words3.items():
+        t = region.split(' ')
+        t1 = t[0]
+        t2 = t[0] + ' ' + t[1]
+        tf_words2.setdefault(t2, Counter({}))
+        tf_words1.setdefault(t1, Counter({}))
+        tf_words1[t1] += Counter(tf)
+        tf_words2[t2] += Counter(tf)
+    # print(json.dumps(tf_words2,ensure_ascii=False))
+    # print(json.dumps(tf_words1,ensure_ascii=False))
+    rd_keyword.set('do', json.dumps(tf_words1, ensure_ascii=False))
+    rd_keyword.set('si', json.dumps(tf_words2, ensure_ascii=False))
+    rd_keyword.set('dong', json.dumps(tf_words3, ensure_ascii=False))
+    print("분석끝")
 
 # 시.도별 / 구별/ 동별 or  한번에
 def getList():
-    global tf_words
-    return tf_words
-
-analyze()
+    global tf_keyword_rank
+    print(tf_keyword_rank)
+    return tf_keyword_rank
+sched.start()
+# 'keyword' [1티어{'서울시':{}}
+# 2티어{'노원구':{},}
+# 3티어
+#
+# ]
