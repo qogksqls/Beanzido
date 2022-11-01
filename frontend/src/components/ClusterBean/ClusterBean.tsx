@@ -33,9 +33,8 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => controlBean(), 3000);
-    return () => clearTimeout(timer);
-  }, []);
+    controlBean();
+  }, [createdAt]);
 
   return (
     <div className="cluster-bean open" ref={beanRef} onClick={controlBean}>
