@@ -1,5 +1,10 @@
 import { useRecoilState } from "recoil";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import {
+  Map,
+  MapMarker,
+  MapTypeControl,
+  ZoomControl,
+} from "react-kakao-maps-sdk";
 import Clusterer from "./Clusterer/Clusterer";
 import Bean from "components/Bean/Bean";
 import { beanListState } from "store/atom";
@@ -47,7 +52,6 @@ function KakaoMap() {
         isPanto: false,
       });
     }
-    console.log(initialPosition);
   }, [location.loaded]);
 
   function setScreenSize() {
@@ -66,6 +70,7 @@ function KakaoMap() {
     <>
       {initialPosition.loaded && (
         <Map
+          id="map"
           center={{ lat: initialPosition.lat, lng: initialPosition.lng }}
           isPanto={initialPosition.isPanto}
           className="map"
@@ -78,7 +83,30 @@ function KakaoMap() {
               isPanto: false,
             });
           }}
+          level={3}
         >
+          <MapMarker // 마커를 생성합니다
+            position={{
+              // 마커가 표시될 위치입니다
+              lat: location.coordinates.lat,
+              lng: location.coordinates.lng,
+            }}
+            image={{
+              src: my_location,
+              size: {
+                width: 20,
+                height: 20,
+              }, // 마커이미지의 크기입니다
+              options: {
+                offset: {
+                  x: 10,
+                  y: 10,
+                }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+              },
+            }}
+          />
+          <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
+          <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
           {clusterList.map((clusteredBeanList, idx) => (
             <Clusterer beanList={clusteredBeanList} key={idx} />
           ))}
@@ -97,26 +125,6 @@ function KakaoMap() {
               }}
             />
           </div>
-          <MapMarker // 마커를 생성합니다
-            position={{
-              // 마커가 표시될 위치입니다
-              lat: location.coordinates.lat,
-              lng: location.coordinates.lng,
-            }}
-            image={{
-              src: my_location,
-              size: {
-                width: 20,
-                height: 20,
-              }, // 마커이미지의 크기입니다
-              options: {
-                offset: {
-                  x: 0,
-                  y: 0,
-                }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-              },
-            }}
-          />
         </Map>
       )}
     </>
