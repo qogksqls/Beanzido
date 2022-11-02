@@ -20,7 +20,7 @@ export default function useBeanAPI() {
         }[]
       >("https://beanzido.com/chat-server/chat/send");
       setBeanList(data);
-      console.log(data);
+      // console.log(data);
       return true;
     } catch (e) {
       return false;
