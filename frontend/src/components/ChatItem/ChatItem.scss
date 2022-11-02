@@ -1,0 +1,50 @@
+.chat-item {
+  display: flex;
+
+  .nickname-container {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.25);
+    color: white;
+    font-size: 16px;
+    line-height: 35px;
+    margin-top: 5px;
+  }
+  
+  .contents-container {
+    width: calc(100% - 45px);
+    margin-left: 10px;
+    &>div {
+      margin-left: 5px;
+    }
+    .up {
+      font-size: 12px;
+      display: flex;
+      width: 100%;
+      margin-bottom: 10px;
+      
+      div {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .time {
+        margin-left: 10px;
+        color: rgba(0, 0, 0, 0.4);
+      }
+    }
+    .down {
+      font-size: 16px;
+      text-align: start;
+      margin-bottom: 10px;
+    }
+    .chat-item-img {
+      text-align: start;
+      img {
+        width: 70%;
+      }
+    }
+  }
+}

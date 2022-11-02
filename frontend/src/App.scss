@@ -1,0 +1,119 @@
+@import "assets/css/variables.scss";
+
+.App {
+  text-align: center;
+  position: relative;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  max-height: 100vh;
+  overflow: hidden;
+  
+  @font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: 'GmarketSansMedium';
+}
+
+.transition-enter {
+  &.create-bean {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  &.feedback {
+    opacity: 0;
+    box-shadow: none;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+.transition-enter-active {
+  &.create-bean {
+    opacity: 1;
+    transform: translateZ(0);
+    transition: all ease 500ms;
+  }
+  &.feedback {
+    opacity: 1;
+    transform: translateZ(0);
+    box-shadow: 0px 0px 8px rgba(181, 96, 57, 0.8);
+    transition: all ease 500ms;
+  }
+}
+.transition-exit {
+  &.create-bean {
+    opacity: 1;
+    transform: translateZ(0);
+    box-shadow: 0px 0px 8px rgba(181, 96, 57, 0.8);
+    transition: all ease 500ms;
+  }
+  &.feedback {
+    opacity: 1;
+    transition: all ease 500ms;
+  }
+}
+.transition-exit-active {
+  &.create-bean {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+  &.feedback {
+    opacity: 0;
+    box-shadow: none;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@include desktop {
+  .transition-enter {
+    &.sidebar {
+      transform: translateX(-350px);
+    }
+  }
+  .transition-enter-active {
+    &.sidebar {
+      transform: translateX(0);
+      transition: all ease 500ms;
+    }
+  }
+  .transition-exit {
+    &.sidebar {
+      transform: translateX(0);
+      transition: all ease 500ms;
+
+    }
+  }
+  .transition-exit-active {
+    &.sidebar {
+      transform: translateX(-350px);
+    }
+  }
+}
+@include mobile {
+  .transition-enter {
+    &.sidebar {
+      transform: translateY(var(--inner-height));
+    }
+  }
+  .transition-enter-active {
+    &.sidebar {
+      transform: translateY(0);
+      transition: all ease 500ms;
+    }
+  }
+  .transition-exit {
+    &.sidebar {
+      transform: translateY(0);
+    }
+  }
+  .transition-exit-active {
+    &.sidebar {
+      transform: translateY(var(--inner-height));
+      transition: all ease 500ms;
+    }
+  }
+
+}
+
+
