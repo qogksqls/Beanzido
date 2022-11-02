@@ -21,7 +21,7 @@
   0% {
       opacity: 0;
       box-shadow: none;
-      transform: translate3d(0, -100%, 0);
+      transform: translate3d(-100%, 0, 0);
   }
   50% {
     box-shadow: none;
@@ -39,11 +39,11 @@
   animation: fadeInDown 0.7s;
   position: absolute;
   z-index: 99;
-  width: 120px;
-  height: 60px;
+  width: 130px;
+  height: 45px;
   border-radius: 10px;
-  top: 50px;
-  left: 80px;
+  top: 60px;
+  left: 60px;
   transition: all .4s ease;
   display: flex;
   align-items: center;
