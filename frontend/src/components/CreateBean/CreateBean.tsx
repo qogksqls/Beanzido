@@ -21,30 +21,23 @@ import Img_box_white from "../../assets/img/Img_box_white.svg";
 import 새로고침 from "../../assets/img/새로고침.svg";
 import { SendMessage } from "react-use-websocket";
 import useGeolocation from "components/hooks/useGeolocation";
-import KakaoMap from "../KakaoMap";
+import { useNavigate } from "react-router-dom";
 
 type createBeanProps = {
-  setIsCreateBean: Dispatch<SetStateAction<boolean>>;
   sendMessage: SendMessage;
-  latitude: number;
-  longitude: number;
 };
 
-export default function CreateBean({
-  setIsCreateBean,
-  sendMessage,
-  latitude,
-  longitude,
-}: createBeanProps) {
+export default function CreateBean({ sendMessage }: createBeanProps) {
   const [isBeanStyle, setIsBeanStyle] = useState(false);
   const { name, setRandomName } = useRandomName(); // nickname
   const [contentValue, setContentValue] = useState(""); // content
   function onContentChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setContentValue(e.currentTarget.value);
   }
-  const location = useGeolocation();
-  const [beanColor, setBeanColor] = useRecoilState(beanColorState);
+  const { coordinates } = useGeolocation();
+  const [beanColor] = useRecoilState(beanColorState);
   const [camera, setCamera] = useState(false);
+  const navigate = useNavigate();
   function OnCamera() {
     setCamera(true);
   }
@@ -113,23 +106,27 @@ export default function CreateBean({
       content: contentValue ? contentValue : "내용이 없습니다.",
       color: beanColor,
       img: imgSrc,
-      latitude: latitude,
-      longitude: longitude,
+      latitude: coordinates.lat,
+      longitude: coordinates.lng,
       location: "",
     };
 
     if (contentValue || imgSrc) {
       const geocoder = new kakao.maps.services.Geocoder();
-      geocoder.coord2RegionCode(longitude, latitude, (result, status) => {
-        for (var i = 0; i < result.length; i++) {
-          if (result[i].region_type === "H") {
-            // console.log(result[i].address_name);
-            beanInfo.location = result[i].address_name;
-            sendMessage(JSON.stringify(beanInfo));
-            setIsCreateBean(false);
+      geocoder.coord2RegionCode(
+        coordinates.lng,
+        coordinates.lat,
+        (result, status) => {
+          for (var i = 0; i < result.length; i++) {
+            if (result[i].region_type === "H") {
+              // console.log(result[i].address_name);
+              beanInfo.location = result[i].address_name;
+              sendMessage(JSON.stringify(beanInfo));
+              navigate("/");
+            }
           }
         }
-      });
+      );
     } else {
       alert("전할 메시지를 적어주세요.");
     }
@@ -137,20 +134,12 @@ export default function CreateBean({
 
   return (
     <>
-      <div
-        className="create-bean-back"
-        onClick={() => setIsCreateBean(false)}
-      ></div>
+      <div className="create-bean-back" onClick={() => navigate("/")}></div>
       <div className="create-bean">
         <div className="header">
           <h2>글 작성</h2>
         </div>
-        <img
-          className="x"
-          src={x}
-          alt=""
-          onClick={() => setIsCreateBean(false)}
-        />
+        <img className="x" src={x} alt="" onClick={() => navigate("/")} />
         <div className="content">
           <div className="name-style">
             <div className="name-refresh">
