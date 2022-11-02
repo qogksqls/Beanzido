@@ -36,6 +36,10 @@ export const beanColorState = atom({
   default: 0,
 });
 
+export const tapSidebarState = atom({
+  key: "tapSidebarState",
+  default: false,
+});
 // export const locationState = atom({
 //   key: "locationState",
 //   default: {

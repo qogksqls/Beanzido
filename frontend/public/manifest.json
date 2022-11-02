@@ -4,7 +4,17 @@
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "favicon16.png",
+      "sizes": "16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "favicon32.png",
+      "sizes": "32x32",
       "type": "image/x-icon"
     },
     {
@@ -15,12 +25,20 @@
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "maskable_icon_512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
+  "scope": ".",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#9EC63D",
   "background_color": "#f5f5f5",
   "viewport": "width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1",
   "description": "Beanzido - 익명의 지역 소통 커뮤니티",
@@ -28,11 +46,19 @@
   "shortcut": [
     {
       "name": "Beanzido",
-      "url":"/",
-      "description":"Beanzido - 익명의 지역 소통 커뮤니티"
-    
+      "url": "/",
+      "description": "Beanzido - 익명의 지역 소통 커뮤니티"
     }
   ],
   "lang": "ko-KR",
-  "dir": "ltr"
+  "dir": "ltr",
+  "display_override": [],
+  "categories": [
+    "entertainment",
+    "lifestyle",
+    "navigation",
+    "photo",
+    "social",
+    "travel"
+  ]
 }

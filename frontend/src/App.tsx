@@ -44,6 +44,10 @@ function App() {
     }
   }, [lastMessage]);
 
+  useEffect(() => {
+    setisSideBar(false);
+  }, []);
+
   return (
     <div className="App">
       <div className="logo">
