@@ -4,12 +4,9 @@ import React, {
   SetStateAction,
   useRef,
   useCallback,
-  useEffect,
-  ChangeEvent,
 } from "react";
 import { useRecoilState } from "recoil";
 import { beanColorState } from "store/atom";
-import useColor from "components/hooks/useColor";
 import Webcam from "react-webcam";
 import useRandomName from "components/hooks/useRandomName";
 import BeanStyle from "components/BeanStyle/BeanStyle";
@@ -24,6 +21,7 @@ import Img_box_white from "../../assets/img/Img_box_white.svg";
 import 새로고침 from "../../assets/img/새로고침.svg";
 import { SendMessage } from "react-use-websocket";
 import useGeolocation from "components/hooks/useGeolocation";
+import KakaoMap from "../KakaoMap";
 
 type createBeanProps = {
   setIsCreateBean: Dispatch<SetStateAction<boolean>>;
@@ -44,10 +42,8 @@ export default function CreateBean({
   function onContentChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setContentValue(e.currentTarget.value);
   }
-
+  const location = useGeolocation();
   const [beanColor, setBeanColor] = useRecoilState(beanColorState);
-  const [indexToColor] = useColor(); // color
-
   const [camera, setCamera] = useState(false);
   function OnCamera() {
     setCamera(true);
@@ -79,13 +75,6 @@ export default function CreateBean({
     );
   };
 
-  // const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const fileUrl = e.target.files
-  //     ? URL.createObjectURL(e.target.files[0])
-  //     : "";
-  //   setImgSrc(fileUrl);
-  // };
-
   async function handleImageUpload(event: any) {
     const imageFile = event.target.files[0];
     console.log("originalFile instanceof Blob", imageFile instanceof Blob); // true
@@ -115,17 +104,6 @@ export default function CreateBean({
       console.log(error);
     }
   }
-  // let today = new Date();
-
-  // let year = today.getFullYear(); // 년도
-  // let month = today.getMonth() + 1; // 월
-  // let date = today.getDate(); // 날짜
-  // let day = today.getDay(); // 요일
-  // let hours = today.getHours(); // 시
-  // let minutes = today.getMinutes(); // 분
-  // let seconds = today.getSeconds(); // 초
-  // let milliseconds = today.getMilliseconds(); // 밀리초
-  // let time = `${year}/${month}/${date} - ${hours}:${minutes}:${seconds}:${milliseconds}`;
 
   function SaveBean() {
     const beanInfo = {
@@ -133,7 +111,6 @@ export default function CreateBean({
       content: contentValue ? contentValue : "내용이 없습니다.",
       color: beanColor,
       img: imgSrc,
-      // createdAt: time,
       latitude: latitude,
       longitude: longitude,
       location: "",
@@ -152,7 +129,7 @@ export default function CreateBean({
         }
       });
     } else {
-      alert("전할 말을 적어주세요.");
+      alert("전할 메시지를 적어주세요.");
     }
   }
 
