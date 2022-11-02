@@ -28,7 +28,7 @@ export default function FeedbackButton({ setIsFeedbackButton }: FeedbackProps) {
         className="feedback"
         onClick={() =>
           window.open(
-            "https://forms.gle/wVx625841uUueh9Q9",
+            "https://forms.gle/dbpsXhqdLRpbFnrT6",
             "_blank",
             "noopener,noreferrer"
           )
