@@ -77,8 +77,8 @@ export default function CreateBean({
 
   async function handleImageUpload(event: any) {
     const imageFile = event.target.files[0];
-    console.log("originalFile instanceof Blob", imageFile instanceof Blob); // true
-    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+    // console.log("originalFile instanceof Blob", imageFile instanceof Blob);
+    // console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
 
     const options = {
       maxSizeMB: 1,
@@ -87,17 +87,17 @@ export default function CreateBean({
     };
     try {
       const compressedFile = await imageCompression(imageFile, options);
-      console.log(
-        "compressedFile instanceof Blob",
-        compressedFile instanceof Blob
-      ); // true
-      console.log(
-        `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
-      ); // smaller than maxSizeMB
+      // console.log(
+      //   "compressedFile instanceof Blob",
+      //   compressedFile instanceof Blob
+      // );
+      // console.log(
+      //   `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
+      // );
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
       reader.onload = () => {
-        console.log(reader.result); // base64
+        // console.log(reader.result);
         setImgSrc("" + reader.result);
       };
     } catch (error) {
@@ -121,7 +121,7 @@ export default function CreateBean({
       geocoder.coord2RegionCode(longitude, latitude, (result, status) => {
         for (var i = 0; i < result.length; i++) {
           if (result[i].region_type === "H") {
-            console.log(result[i].address_name);
+            // console.log(result[i].address_name);
             beanInfo.location = result[i].address_name;
             sendMessage(JSON.stringify(beanInfo));
             setIsCreateBean(false);

@@ -18,7 +18,8 @@ function Bean({ nickname, content, color, img, createdAt }: BeanProps) {
   const nodeRef = useRef(null);
   const [indexToColor] = useColor();
   let today = new Date();
-  let elapsedTime: number = Math.trunc((today.getTime() - (+createdAt)) / 1000) - 10;
+  let elapsedTime: number =
+    Math.trunc((today.getTime() - +createdAt) / 1000) - 10;
 
   function elapsedText(elapsedTime: number) {
     // 초 (밀리초)
@@ -29,9 +30,9 @@ function Bean({ nickname, content, color, img, createdAt }: BeanProps) {
     const hour = minute * 60;
     // 일
     const day = hour * 24;
-    
+
     let elapsedText = "";
-    if (elapsedTime < (seconds + 10)) {
+    if (elapsedTime < seconds + 10) {
       elapsedText = "방금 전";
     } else if (elapsedTime < minute) {
       elapsedText = elapsedTime + "초 전";
@@ -42,7 +43,7 @@ function Bean({ nickname, content, color, img, createdAt }: BeanProps) {
     } else {
       elapsedText = Math.trunc(elapsedTime / day) + "일 전";
     }
-    
+
     return elapsedText;
   }
 
@@ -102,7 +103,9 @@ function Bean({ nickname, content, color, img, createdAt }: BeanProps) {
 }
 
 export default memo(Bean);
-function SimpleDateTimeFormat(date: { getTime: () => number; }, arg1: string): string {
+function SimpleDateTimeFormat(
+  date: { getTime: () => number },
+  arg1: string
+): string {
   throw new Error("Function not implemented.");
 }
-

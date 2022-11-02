@@ -1,6 +1,7 @@
 import { useEffect, useRef, memo } from "react";
 import useColor from "components/hooks/useColor";
 import "./ChatItem.scss";
+import useTime from "components/hooks/useTime";
 
 type ChatProps = {
   Chatinfo: {
@@ -8,13 +9,14 @@ type ChatProps = {
     content: string;
     color: number;
     img?: string;
+    createdAt: string;
   };
 };
 
 function ChatItem({ Chatinfo }: ChatProps) {
   const colorRef = useRef<HTMLDivElement>(null);
+  const [elapsedText] = useTime(Chatinfo.createdAt);
   const [indexToColor] = useColor();
-  console.log("최적화 됐냐");
   useEffect(() => {
     const { current } = colorRef;
     if (current !== null) {
@@ -33,7 +35,7 @@ function ChatItem({ Chatinfo }: ChatProps) {
       <div className="contents-container">
         <div className="up">
           <div>{Chatinfo.nickname}</div>
-          <div className="time">just now</div>
+          <div className="time">{elapsedText}</div>
         </div>
         {Chatinfo.content == "내용이 없습니다." ? (
           <div></div>

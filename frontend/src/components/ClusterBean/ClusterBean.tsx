@@ -5,6 +5,7 @@ import { CSSTransition } from "react-transition-group";
 import useColor from "components/hooks/useColor";
 import { useSwipeable } from "react-swipeable";
 import { tapSidebarState } from "store/atom";
+import useTime from "components/hooks/useTime";
 
 type BeanProps = {
   nickname: string[];
@@ -17,9 +18,8 @@ type BeanProps = {
 function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [, setTapSidebar] = useRecoilState(tapSidebarState);
-
+  const [elapsedText] = useTime(createdAt);
   const beanRef = useRef<HTMLDivElement>(null);
-  const colorRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef(null);
   const [indexToColor] = useColor();
   const controlBean = () => {
@@ -107,7 +107,7 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
             <div ref={nodeRef}>
               <div className="up">
                 <div>{nickname[nickname.length - 1]}</div>
-                <div className="time">just now</div>
+                <div className="time">{elapsedText}</div>
               </div>
               <div className="down">{content}</div>
             </div>
