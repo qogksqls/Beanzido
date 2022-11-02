@@ -38,6 +38,13 @@
     .down {
       font-size: 16px;
       text-align: start;
+      margin-bottom: 10px;
+    }
+    .chat-item-img {
+      text-align: start;
+      img {
+        width: 70%;
+      }
     }
   }
 }

@@ -35,7 +35,14 @@ function ChatItem({ Chatinfo }: ChatProps) {
           <div>{Chatinfo.nickname}</div>
           <div className="time">just now</div>
         </div>
-        <div className="down">{Chatinfo.content}</div>
+        {Chatinfo.content == "내용이 없습니다." ? (
+          <div></div>
+        ) : (
+          <div className="down">{Chatinfo.content}</div>
+        )}
+        <div className="chat-item-img">
+          <img src={Chatinfo.img} alt="" />
+        </div>
       </div>
     </div>
   );
