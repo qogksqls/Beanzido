@@ -69,8 +69,10 @@ export default function CreateBean({
           ref={webcamRef}
           screenshotFormat="image/jpeg"
         />
-        <button onClick={capture}>촬영</button>
-        <button onClick={cancelCamera}>취소</button>
+        <div className="capture-buttons">
+          <div onClick={capture}>촬영</div>
+          <div onClick={cancelCamera}>취소</div>
+        </div>
       </div>
     );
   };
@@ -174,7 +176,16 @@ export default function CreateBean({
             />
           </div>
           {imgSrc ? (
-            <div className="capture-box">
+            <div
+              className="capture-box"
+              onClick={() => {
+                // eslint-disable-next-line no-restricted-globals
+                if (confirm("사진을 재설정 하시겠습니까?")) {
+                  setImgSrc("");
+                  cancelCamera();
+                }
+              }}
+            >
               <img
                 className="capture"
                 src={imgSrc}
@@ -184,38 +195,46 @@ export default function CreateBean({
             </div>
           ) : (
             <div className="camera-picture">
-              <div className="camera-btn" onClick={OnCamera}>
-                {[1, 5, 7, 8, 9].includes(beanColor) ? (
-                  <img className="camera-img" src={Camera_white} alt="" />
-                ) : (
-                  <img className="camera-img" src={Camera} alt="" />
-                )}
-                <div>
-                  <h4>카메라(선택)</h4>
-                  <p>사진 첨부 시 사진 촬영</p>
-                </div>
-              </div>
-              <div>
-                <input
-                  id="picture"
-                  type="file"
-                  style={{ display: "none" }}
-                  accept="image/jpg,image/png,image/jpeg,image/gif"
-                  onChange={handleImageUpload}
-                />
-                <label htmlFor="picture" className="picture">
+              {camera ? (
+                <WebcamCapture />
+              ) : (
+                <div className="camera-btn" onClick={OnCamera}>
                   {[1, 5, 7, 8, 9].includes(beanColor) ? (
-                    <img className="picture-img" src={Img_box_white} alt="" />
+                    <img className="camera-img" src={Camera_white} alt="" />
                   ) : (
-                    <img className="picture-img" src={Img_box} alt="" />
+                    <img className="camera-img" src={Camera} alt="" />
                   )}
-
                   <div>
-                    <h4>사진(선택)</h4>
-                    <p>사진을 첨부할 수 있어요.</p>
+                    <h4>카메라(선택)</h4>
+                    <p>사진 첨부 시 사진 촬영</p>
                   </div>
-                </label>
-              </div>
+                </div>
+              )}
+              {camera ? (
+                <></>
+              ) : (
+                <div>
+                  <input
+                    id="picture"
+                    type="file"
+                    style={{ display: "none" }}
+                    accept="image/jpg,image/png,image/jpeg,image/gif"
+                    onChange={handleImageUpload}
+                  />
+                  <label htmlFor="picture" className="picture">
+                    {[1, 5, 7, 8, 9].includes(beanColor) ? (
+                      <img className="picture-img" src={Img_box_white} alt="" />
+                    ) : (
+                      <img className="picture-img" src={Img_box} alt="" />
+                    )}
+
+                    <div>
+                      <h4>사진(선택)</h4>
+                      <p>사진을 첨부할 수 있어요.</p>
+                    </div>
+                  </label>
+                </div>
+              )}
             </div>
           )}
           <div className="finish-button" onClick={SaveBean}>
@@ -223,7 +242,6 @@ export default function CreateBean({
           </div>
         </div>
       </div>
-      {camera && <WebcamCapture />}
     </>
   );
 }
