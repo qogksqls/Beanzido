@@ -1,31 +1,22 @@
 import { useEffect, useRef, memo } from "react";
-import useColor from "components/hooks/useColor";
 import "./ChatItem.scss";
 import useTime from "components/hooks/useTime";
+import { ColoredBean } from "store/types";
 
 type ChatProps = {
-  Chatinfo: {
-    nickname: string;
-    content: string;
-    color: number;
-    img?: string;
-    createdAt: string;
-  };
+  Chatinfo: ColoredBean;
 };
 
 function ChatItem({ Chatinfo }: ChatProps) {
   const colorRef = useRef<HTMLDivElement>(null);
   const [elapsedText] = useTime(Chatinfo.createdAt);
-  const [indexToColor] = useColor();
   useEffect(() => {
     const { current } = colorRef;
     if (current !== null) {
-      current.style.color = indexToColor(Chatinfo.color).color;
-      current.style.backgroundColor = indexToColor(
-        Chatinfo.color
-      ).backgroundColor;
+      current.style.color = Chatinfo.color.color;
+      current.style.backgroundColor = Chatinfo.color.backgroundColor;
     }
-  }, []);
+  });
 
   return (
     <div className="chat-item">
@@ -37,7 +28,7 @@ function ChatItem({ Chatinfo }: ChatProps) {
           <div>{Chatinfo.nickname}</div>
           <div className="time">{elapsedText}</div>
         </div>
-        {Chatinfo.content == "내용이 없습니다." ? (
+        {Chatinfo.content === "내용이 없습니다." ? (
           <div></div>
         ) : (
           <div className="down">{Chatinfo.content}</div>

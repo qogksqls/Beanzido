@@ -2,17 +2,10 @@ import { useRecoilState } from "recoil";
 import { focusedState } from "store/atom";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import ClusterBean from "components/ClusterBean/ClusterBean";
+import { Bean } from "store/types";
 
 type ClusterProps = {
-  beanList: {
-    nickname: string;
-    content: string;
-    color: number;
-    img: string;
-    createdAt: string;
-    latitude: number;
-    longitude: number;
-  }[];
+  beanList: Bean[];
 };
 
 function Clusterer({ beanList }: ClusterProps) {

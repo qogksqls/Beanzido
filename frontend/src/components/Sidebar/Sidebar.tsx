@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef, Dispatch } from "react";
-import { useRecoilState } from "recoil";
-import { beanListState, focusedState, tapSidebarState } from "store/atom";
-import { CSSTransition } from "react-transition-group";
+import React, { useState, useEffect, useRef } from "react";
+import { useRecoilValue } from "recoil";
+import { beanListSelector, focusedListSelector } from "store/selector";
 import { useSwipeable } from "react-swipeable";
 import ChatList from "components/ChatList/ChatList";
 import "./Sidebar.scss";
@@ -17,9 +16,8 @@ export default function Sidebar() {
   const [isFull, setIsFull] = useState(false);
   const [isFirst, setisFirst] = useState(true);
   const [isScroll, setIsScroll] = useState(false);
-  const [beanList] = useRecoilState(beanListState);
-  const [focused] = useRecoilState(focusedState);
-  const [tapSidebar, setTapSidebar] = useRecoilState(tapSidebarState);
+  const coloredBeanList = useRecoilValue(beanListSelector);
+  const coloredFocusedList = useRecoilValue(focusedListSelector);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -184,10 +182,10 @@ export default function Sidebar() {
         </div>
         <div className="scroll-container" {...sideHandlers}>
           <div className="scroll first">
-            <ChatList chatList={beanList} />
+            <ChatList chatList={coloredBeanList} />
           </div>
           <div className="scroll second">
-            <ChatList chatList={focused} />
+            <ChatList chatList={coloredFocusedList} />
           </div>
         </div>
       </div>

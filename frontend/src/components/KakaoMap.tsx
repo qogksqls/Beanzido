@@ -1,24 +1,18 @@
 import { useRecoilState } from "recoil";
-import {
-  Map,
-  MapMarker,
-  MapTypeControl,
-  ZoomControl,
-} from "react-kakao-maps-sdk";
+import { Map, MapMarker, MapTypeControl } from "react-kakao-maps-sdk";
 import Clusterer from "./Clusterer/Clusterer";
-import Bean from "components/Bean/Bean";
 import { beanListState } from "store/atom";
-import { useEffect, useState, memo, useRef, useMemo, useCallback } from "react";
+import { useEffect, useState, memo } from "react";
 import useGeolocation from "./hooks/useGeolocation";
 import "./KakaoMap.scss";
-
 import gps from "../assets/img/Gps.svg";
 import plus from "../assets/img/plus.svg";
 import minus from "../assets/img/minus.svg";
 import my_location from "../assets/img/my_location.svg";
+import { Bean } from "store/types";
 
 function KakaoMap() {
-  const [beanList, setBeanList] = useRecoilState(beanListState);
+  const [beanList] = useRecoilState(beanListState);
   const [level, setLevel] = useState(3);
   const [map, setMap] = useState<kakao.maps.Map>();
   const location = useGeolocation();
@@ -199,7 +193,7 @@ function getCluster(
   }[]
 ) {
   var clustered = new Set();
-  var newClusterList = new Array();
+  var newClusterList: Bean[][] = [];
   beanList.forEach((bean1, idx1) => {
     var tmp = new Array(bean1);
     beanList.forEach((bean2, idx2) => {
