@@ -169,7 +169,7 @@ $breakpoint: 500px;
           justify-content: space-around;
           align-items: center;
           div {
-            background-color: #c7f2a4;
+            background-color: var(--create-bean-color);
             width: 80px;
             height: 45px;
             display: flex;
