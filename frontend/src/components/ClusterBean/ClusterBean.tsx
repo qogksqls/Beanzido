@@ -106,10 +106,16 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
           >
             <div ref={nodeRef}>
               <div className="up">
-                <div>{nickname[nickname.length - 1]}</div>
+                <div>
+                  <h4>{nickname[nickname.length - 1]}</h4>
+                </div>
                 <div className="time">{elapsedText}</div>
               </div>
-              <div className="down">{content}</div>
+              {content == "내용이 없습니다." ? (
+                <div className="down">사진을 보냈습니다.</div>
+              ) : (
+                <div className="down">{content}</div>
+              )}
             </div>
           </CSSTransition>
         </div>
