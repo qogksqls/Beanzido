@@ -1,40 +1,34 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { beanListState } from "store/atom";
 import "./App.scss";
-import KakaoMap from "components/KakaoMap";
-import useWebSocket, { ReadyState } from "react-use-websocket";
-import useGeoLocation from "components/hooks/useGeolocation";
+import useWebSocket from "react-use-websocket";
 import useBeanAPI from "components/hooks/useBeanAPI";
-import CreateBean from "./components/CreateBean/CreateBean";
-import Sidebar from "components/Sidebar/Sidebar";
-import Logo from "./assets/img/Logo.svg";
-import createButton from "./assets/img/chat-button.svg";
-import FeedbackButtonGif from "./assets/img/FeedbackButton.gif";
-import FeedbackButtonImg from "./assets/img/FeedbackButton.png";
+import useGeoLocation from "components/hooks/useGeolocation";
+import Main from "components/Main/Main";
+import CreateBean from "components/CreateBean/CreateBean";
 import FeedbackButton from "components/FeedbackButton/FeedbackButton";
+import Sidebar from "components/Sidebar/Sidebar";
+import KakaoMap from "components/KakaoMap";
+import Logo from "assets/img/Logo.svg";
 
 function App() {
-  const [isFeedbackButton, setIsFeedbackButton] = useState(false);
+  const beanAPI = useBeanAPI();
   const [beanList, setBeanList] = useRecoilState(beanListState);
-  const [isCreateBean, setIsCreateBean] = useState(false);
-  const [isSideBar, setisSideBar] = useState(true);
-  const location = useGeoLocation();
   const socketurl = process.env.REACT_APP_SOCKET_URL
     ? process.env.REACT_APP_SOCKET_URL
     : "";
-  // const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl);
-
-  const beanAPI = useBeanAPI();
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl, {
     shouldReconnect: (closeEvent) => {
-      // console.log("소켓 재 연결중...");
-      // console.log(readyState);
       return true;
     },
     reconnectAttempts: 10,
     reconnectInterval: 3000,
   });
+  const location = useLocation();
+  const { loaded } = useGeoLocation();
 
   useEffect(() => {
     if (lastMessage !== null) {
@@ -44,55 +38,26 @@ function App() {
     }
   }, [lastMessage]);
 
-  useEffect(() => {
-    setisSideBar(false);
-  }, []);
-
   return (
     <div className="App">
+      {loaded && <KakaoMap />}
       <div className="logo">
         <img src={Logo} alt="로고" />
       </div>
-      <div className="create-button">
-        <img
-          className="create-button-img"
-          onClick={() => setIsCreateBean(true)}
-          src={createButton}
-          alt="chat-button"
-        />
-      </div>
-      <div className="feedback-button">
-        <img
-          className="feedback-button-img"
-          onClick={() => setIsFeedbackButton(true)}
-          src={FeedbackButtonGif}
-          alt=""
-        />
-        <img
-          className="feedback-button-img"
-          onClick={() => setIsFeedbackButton(true)}
-          src={FeedbackButtonImg}
-          alt="feedback-button"
-        />
-      </div>
-      {isFeedbackButton && (
-        <FeedbackButton setIsFeedbackButton={setIsFeedbackButton} />
-      )}
-      {/* <div style={{ position: "absolute", zIndex: 100 }}>
-        {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
-        <div>{beanList ? JSON.stringify(beanList) : ""}</div>
-        <div>{readyState}</div>
-      </div> */}
-      {isCreateBean && (
-        <CreateBean
-          sendMessage={sendMessage}
-          setIsCreateBean={setIsCreateBean}
-          latitude={location.coordinates.lat}
-          longitude={location.coordinates.lng}
-        />
-      )}
-      {location.loaded && <KakaoMap />}
-      <Sidebar isSideBar={isSideBar} setisSideBar={setisSideBar} />
+      <TransitionGroup component={null}>
+        <CSSTransition key={location.key} classNames="transition" timeout={500}>
+          <Routes location={location}>
+            <Route path="/" element={<Main />}>
+              <Route path="sidebar" element={<Sidebar />} />
+              <Route
+                path="create"
+                element={<CreateBean sendMessage={sendMessage} />}
+              />
+              <Route path="feedback" element={<FeedbackButton />} />
+            </Route>
+          </Routes>
+        </CSSTransition>
+      </TransitionGroup>
     </div>
   );
 }

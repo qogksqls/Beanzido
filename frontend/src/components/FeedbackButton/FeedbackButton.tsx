@@ -1,17 +1,12 @@
-import React, { useState, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
+import { useNavigate } from "react-router-dom";
 import "./FeedbackButton.scss";
 
-type FeedbackProps = {
-  setIsFeedbackButton: Dispatch<SetStateAction<boolean>>;
-};
-
-export default function FeedbackButton({ setIsFeedbackButton }: FeedbackProps) {
+export default function FeedbackButton() {
+  const navigate = useNavigate();
   return (
     <>
-      <div
-        className="feedback-button-back"
-        onClick={() => setIsFeedbackButton(false)}
-      ></div>
+      <div className="feedback-button-back" onClick={() => navigate("/")}></div>
       {/* <div
         className="feedback-box"
         onClick={() =>

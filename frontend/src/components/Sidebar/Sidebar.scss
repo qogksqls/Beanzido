@@ -1,16 +1,5 @@
-$breakpoint: 500px;
+@import "assets/css/variables.scss";
 
-@mixin mobile {
-  @media (max-width: #{$breakpoint - 1px}) {
-    @content;
-  }
-}
-
-@mixin desktop {
-  @media (min-width: #{$breakpoint}) {
-    @content;
-  }
-}
 html {
   --inner-height: 300px;
   --mobile-border: 10px;
@@ -47,7 +36,7 @@ html {
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
     overflow: hidden;
   }
-  .handle {
+  .slide-handle {
     position: absolute;
   }
 }
@@ -105,7 +94,7 @@ html {
     .scroll-container {
       height: calc(var(--vh, 1vh) * 100 - 30px);
     }
-    .handle {
+    .slide-handle {
       display: none;
     }
   }
@@ -153,8 +142,10 @@ html {
           border-bottom: none;
           border-top-left-radius: 10px;
           border-top-right-radius: 10px;
+          &::after {
+            content: "";
+          }
           cursor: pointer;
-
           &:hover {
             filter: brightness(1.1);
           }
@@ -204,7 +195,7 @@ html {
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
     }
-    .handle {
+    .slide-handle {
       display: flex;
       align-items: center;
   
@@ -228,20 +219,5 @@ html {
         height: 24px;
       }
     }
-  }
-  .sidebar.slide-enter {
-    transform: translateX(-350px);
-  }
-  .sidebar.slide-enter-active {
-    transform: translateX(0);
-    transition: all ease 500ms;
-  }
-  .sidebar.slide-exit {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  .sidebar.slide-exit-active {
-    transform: translateX(-350px);
-    transition: all ease 500ms;
   }
 }
