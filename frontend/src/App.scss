@@ -59,13 +59,13 @@
   justify-content: center;
   align-items: center;
   background-color: #ffffffe3;
-  width: 100px;
-  height: 85px;
-  border-radius: 20px;
+  width: 70px;
+  height: 50px;
+  border-radius: 10px;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.4);
   img {
-    width: 80px;
-    min-width: 80px;
+    width: 50px;
+    min-width: 50px;
     opacity: 1.5;
     animation: img-loading 1000ms ease;
   }
@@ -84,7 +84,7 @@
   align-items: center;
   width: 60px;
   height: 60px;
-  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.4);
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: all ease 0.2s 0s;
   &:hover {
@@ -103,8 +103,8 @@
   // background: linear-gradient(to right, rgb(220, 227, 91), rgb(69, 182, 73));
   background-color: white;
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  top: 3px;
+  left: 85px;
   z-index: 89;
   width: 42px;
   height: 42px;
@@ -113,7 +113,7 @@
   justify-content: center;
   align-items: center;
   transition: all ease 0.2s 0s;
-  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   .feedback-button-img {
     width: 32px;
