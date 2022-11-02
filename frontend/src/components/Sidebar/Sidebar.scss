@@ -72,6 +72,9 @@ html {
     .header {
       height: 40px;
       position: relative;
+      .side-logo, .switch-container {
+        display: none;
+      }
       .close { 
         position: absolute;
         top: 6px;
@@ -103,11 +106,7 @@ html {
       height: calc(var(--vh, 1vh) * 100 - 30px);
     }
     .handle {
-      // display: none;
-      transform: rotate(270deg);
-      transform-origin: left top;
-      top: 0px;
-      right: calc(50%);
+      display: none;
     }
   }
 
@@ -135,21 +134,69 @@ html {
     top: 0;
     left: 0;
     .header {
-      display: none;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      padding: 0px 10px;
+      border-bottom: solid 1px rgba(0, 0, 0, 0.25);
+      .switch-container {
+        display: flex;
+        align-items: flex-end;
+
+        .switch {
+          width: 80px;
+          height: 30px;
+          background-color: #f5f5f5;
+          padding-top: 10px;
+          border: solid 1px rgba(0, 0, 0, 0.25);
+          border-bottom: none;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+          cursor: pointer;
+
+          &:hover {
+            filter: brightness(1.1);
+          }
+          &:active {
+            filter: brightness(0.9);
+          }
+        }
+
+        &.first {
+          .all {
+            filter: brightness(0.9);
+          }
+        }
+        &.second {
+          .focus {
+            filter: brightness(0.9);
+          }
+        }
+      }
+      .side-logo {
+        height: 60px;
+        margin-bottom: 30px;
+      }
+      .swipe-handle, .close {
+        display: none;
+      }
     }
-    .scroll {
-      height: 100%;
-      &::-webkit-scrollbar {
-        width: 15px;
-      }
-      &::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, 0.25);
-        border-radius: 15px;
-        background-clip: padding-box;
-        border: 4px solid transparent;
-      }
-      &::-webkit-scrollbar-track {
-        background-color: transparent;
+    .scroll-container {
+      height: calc(100% - 90px);
+      .scroll {
+        &::-webkit-scrollbar {
+          width: 15px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: rgba(0, 0, 0, 0.25);
+          border-radius: 15px;
+          background-clip: padding-box;
+          border: 4px solid transparent;
+        }
+        &::-webkit-scrollbar-track {
+          background-color: transparent;
+        }
       }
     }
     .inner {
