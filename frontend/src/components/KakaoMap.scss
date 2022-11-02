@@ -1,0 +1,64 @@
+.gps {
+	background-color: #f5f5f5;
+	position: fixed;
+	--max-height: max(calc(10% - 40px), 30px);
+	bottom: var(--max-height);
+	left: 10px;
+	z-index: 88;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+	cursor: pointer;
+	&:hover {
+		filter: brightness(1.05);
+	}
+	img {
+		width: 40px;
+	}
+}
+
+.my-location {
+	position: fixed;
+	top: 50%;
+	right: 50%;
+	z-index: 100;
+}
+
+.zoom-control {
+	// background-color: #f5f5f5;
+	position: fixed;
+	bottom: 100px;
+	left: 10px;
+	width: 50px;
+	z-index: 88;
+	display: flex;
+	flex-direction: column;
+	cursor: pointer;
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 5px;
+	overflow: hidden;
+	.plus-button {
+		background-color: #f5f5f5;
+		&:hover {
+			filter: brightness(1.05);
+		}
+		&:active{
+		  filter:brightness(0.9);
+		}
+		border-bottom: 1px solid rgba(177, 177, 177, 0.71);
+	}
+	.minus-button {
+		background-color: #f5f5f5;
+		&:hover {
+			filter: brightness(1.05);
+		}
+		&:active{
+		  filter:brightness(0.9);
+		}
+		border-radius: 5px 5px 0 0;
+	}
+}
