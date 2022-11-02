@@ -134,7 +134,6 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
 
   return (
     <>
-      <div className="create-bean-back" onClick={() => navigate("/")}></div>
       <div className="create-bean">
         <div className="header">
           <h2>글 작성</h2>
@@ -231,6 +230,7 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
           </div>
         </div>
       </div>
+      <div className="create-bean-back" onClick={() => navigate("/")}></div>
     </>
   );
 }

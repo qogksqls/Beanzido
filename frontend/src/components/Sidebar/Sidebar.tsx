@@ -22,29 +22,21 @@ export default function Sidebar() {
   const [tapSidebar, setTapSidebar] = useRecoilState(tapSidebarState);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (isSideBar) {
-  //     document.documentElement.style.setProperty("--inner-height", "300px");
-  //     setIsFull(false);
-  //   } else {
-  //     document.documentElement.style.setProperty("--mobile-border", "10px");
-  //     setIsFull(false);
-  //   }
-  // }, [isSideBar]);
+  useEffect(() => {
+    document.documentElement.style.setProperty("--inner-height", "300px");
+    document.documentElement.style.setProperty(
+      "--scroll-width-default",
+      "100%"
+    );
+    setisFirst(false);
+    setIsFull(false);
 
-  // useEffect(() => {
-  //   if (tapSidebar) {
-  //     if (!isSideBar) {
-  //       setisSideBar(true);
-  //       setisFirst(false);
-  //       document.documentElement.style.setProperty(
-  //         "--scroll-width-default",
-  //         "100%"
-  //       );
-  //     }
-  //     setTapSidebar(false);
-  //   }
-  // }, [tapSidebar]);
+    return () => {
+      document.documentElement.style.setProperty("--mobile-border", "15px");
+      document.documentElement.style.setProperty("--inner-height", "300px");
+      setIsFull(false);
+    };
+  }, []);
 
   function switchChat(target: number) {
     if (target === 1) {
@@ -182,7 +174,7 @@ export default function Sidebar() {
               <img src={chat} alt="상세보기" />
             </div>
           </div>
-          {!isFull && <div className="swipe-handle"></div>}
+          {!isFull && <div className="swipe-handle" {...upHandlers}></div>}
           <img
             className="close"
             src={x}
@@ -190,7 +182,7 @@ export default function Sidebar() {
             alt="close"
           />
         </div>
-        <div className="scroll-container">
+        <div className="scroll-container" {...sideHandlers}>
           <div className="scroll first">
             <ChatList chatList={beanList} />
           </div>

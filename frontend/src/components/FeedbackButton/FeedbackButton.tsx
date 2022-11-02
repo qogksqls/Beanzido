@@ -6,7 +6,6 @@ export default function FeedbackButton() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="feedback-button-back" onClick={() => navigate("/")}></div>
       {/* <div
         className="feedback-box"
         onClick={() =>
@@ -36,6 +35,7 @@ export default function FeedbackButton() {
       onClick={() => window.open('https://forms.gle/wVx625841uUueh9Q9', '_blank', 'noopener,noreferrer')}>
         FeedBack!
       </button> */}
+      <div className="feedback-button-back" onClick={() => navigate("/")}></div>
     </>
   );
 }
