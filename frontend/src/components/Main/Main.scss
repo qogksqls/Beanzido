@@ -35,6 +35,19 @@
   }
 }
 
+@keyframes feedback-ani1 {
+  0% {
+    top: 90%;
+    left: 0%;
+  }
+}
+@keyframes feedback-ani2 {
+  0% {
+    top: calc(50%  - 40px);
+    left: calc(50%  - 180px);
+  }
+}
+
 .logo {
   position: fixed;
   top: 3px;
@@ -58,8 +71,8 @@
   background-color: #f5f5f5;
   border-radius: 30px;
   position: absolute;
-  z-index: 89;
-  bottom: 5%;
+  z-index: 111;
+  bottom: 6%;
   left: calc(50% - 30px);
   display: flex;
   justify-content: center;
@@ -81,49 +94,124 @@
   }
 }
 
-.feedback-button {
-  // background: linear-gradient(to right, rgb(220, 227, 91), rgb(69, 182, 73));
-  background-color: #f5f5f5;
-  position: absolute;
-  top: 60px;
-  left: 10px;
-  z-index: 89;
-  width: 42px;
-  height: 42px;
-  border-radius: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all ease 0.2s 0s;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  .feedback-button-img {
-    width: 32px;
-    height: 32px;
-    border-radius: 20px;
-    position:absolute;
-    background: white;
-    transition: all ease 0.2s 0s;
-    filter: brightness(0.96);
-    &:hover {
-      opacity: 0;
-    }
-  }
-  &:hover {
-    filter: brightness(1.05);
-  }
-  &:active {
-    filter: brightness(0.9);
-  }
-}
-
 .map { 
   width: 100%;
   height: 100%;
 }
 
-
 @include desktop {
+  .sidebar-fix {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 110;
+    width: 80px;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    .side-logo {
+      border-bottom: 1px solid rgba(0,0,0,.15);
+      img {
+        width: 80%;
+        height: 80px;
+      }
+    }
+    .switch-container {
+      .switch {
+        background-color: white;
+        cursor: pointer;
+        img {
+          width: 40%;
+          height: 70px;
+        }
+        &:hover {
+          background-color: #f5f5f5;
+          border-right: 1px solid rgba(0, 0, 0, 0.15);
+        }
+      }
+      &.first {
+        .all {
+          background-color: #f5f5f5;
+          border-right: 1px solid rgba(0, 0, 0, 0.15);
+        }
+      }
+      &.second {
+        .focus {
+          background-color: #f5f5f5;
+          border-right: 1px solid rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+  }
+  .feedback-button {
+    position: absolute;
+    bottom: 0;
+    z-index: 110;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all ease 1s 0s;
+    animation: feedback-ani2 100ms ease;
+    background-color: white;
+    cursor: pointer;
+    div {
+      opacity: 0;
+    }
+
+    .feedback-button-img {
+      width: 40px;
+      height: 40px;
+      position:absolute;
+      // transition: all ease 0.2s 0s;
+      &:hover {
+        opacity: 0;
+      }
+    }
+    &:hover {
+      filter: brightness(0.9);
+    }
+    &:active {
+      filter: brightness(0.9);
+    }
+  }
+
+  .feedback-button-center {
+    position: fixed;
+    top: calc(50%  - 40px);
+    left: calc(50%  - 180px);
+    z-index: 99;
+    width: 360px;
+    height: 80px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all ease 1s 0s;
+    animation: feedback-ani1 800ms ease;
+    border-radius: 15px;
+    cursor: pointer;
+    
+    div {
+      animation: text 1800ms ease;
+    }
+
+    .feedback-button-img {
+      width: 40px;
+      height: 40px;
+      position:absolute;
+      left: 20px;
+    }
+    
+    .feedback-close {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+    }
+  }
+
   .handle {
     position: absolute;
     z-index: 80;
@@ -134,14 +222,14 @@
     height: 50px;
   
     top: calc(50% - 50px);
-    left: 0;
+    left: 80px;
   
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.25);
-    border-left: none;
+    // border-left: none;
   
-    background-color: #f5f5f5;
+    background-color: #ffffff;
   
     cursor: pointer;
   
@@ -155,5 +243,131 @@
 @include mobile {
   .handle {
     display: none;
+  }
+  .sidebar-fix {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 110;
+    width: 100%;
+    height: 80px;
+    background-color: white;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    .side-logo {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      height: 70px;
+      width: 50%;
+      // border-right: 1px solid rgba(0,0,0,.15);
+      img {
+        width: 60px;
+        height: 80%;
+        margin: auto 10px;
+      }
+    }
+    .switch-container {
+      width: 40%;
+      display: flex;
+      justify-content: flex-end;
+      .switch {
+        width: 45%;
+        background-color: white;
+        cursor: pointer;
+        img {
+          width: 30px;
+          height: 70px;
+        }
+
+        &:hover {
+          background-color: #f5f5f5;
+          border-right: 1px solid rgba(0, 0, 0, 0.15);
+        }
+      }
+
+      &.first {
+        .all {
+          background-color: #f5f5f5;
+          border-right: 1px solid rgba(0, 0, 0, 0.15);
+        }
+      }
+      &.second {
+        .focus {
+          background-color: #f5f5f5;
+          border-right: 1px solid rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+  }
+  
+  .feedback-button {
+    // position: absolute;
+    bottom: 0;
+    z-index: 110;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all ease 1s 0s;
+    animation: feedback-ani2 100ms ease;
+    background-color: white;
+    cursor: pointer;
+    div {
+      opacity: 0;
+    }
+
+    .feedback-button-img {
+      width: 40px;
+      height: 40px;
+      position:absolute;
+      // transition: all ease 0.2s 0s;
+      &:hover {
+        opacity: 0;
+      }
+    }
+    &:hover {
+      filter: brightness(0.9);
+    }
+    &:active {
+      filter: brightness(0.9);
+    }
+  }
+
+  .feedback-button-center {
+    position: fixed;
+    top: calc(50%  - 40px);
+    left: calc(50%  - 180px);
+    z-index: 99;
+    width: 360px;
+    height: 80px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all ease 1s 0s;
+    animation: feedback-ani1 800ms ease;
+    border-radius: 15px;
+    cursor: pointer;
+    
+    div {
+      animation: text 1800ms ease;
+    }
+
+    .feedback-button-img {
+      width: 40px;
+      height: 40px;
+      position:absolute;
+      left: 20px;
+    }
+    
+    .feedback-close {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+    }
   }
 }

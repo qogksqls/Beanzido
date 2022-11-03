@@ -21,14 +21,37 @@ html {
       height: 100%;
       overflow: overlay;
       touch-action: pan-y;
+      overflow-x: hidden;
     }
     .scroll.first {
       left: calc(0px + calc(var(--scroll-width) - var(--scroll-width-default)));
       transition: var(--scroll-transition);
+      .empty-list {
+        position: absolute;
+        // top: 30%;
+        left: calc(50% - 160px);
+        z-index: 110;
+        width: 300px;
+        img {
+          width: 100px;
+          margin-top: 30px;
+        }
+      }
     }
     .scroll.second {
       left: calc(100% + calc(var(--scroll-width) - var(--scroll-width-default)));
       transition: var(--scroll-transition);
+      .empty-list {
+        position: absolute;
+        // top: 30%;
+        left: calc(50% - 160px);
+        z-index: 110;
+        width: 300px;
+        img {
+          width: 100px;
+          margin-top: 30px;
+        }
+      }
     }
   }
   .inner {
@@ -121,7 +144,7 @@ html {
   .sidebar {
     height: calc(var(--vh, 1vh) * 100);
     top: 0;
-    left: 0;
+    left: 80px;
     .header {
       display: flex;
       justify-content: space-between;
