@@ -1,13 +1,19 @@
-import { useEffect, useRef, memo } from "react";
+import { useEffect, useRef, useState, memo, Component } from "react";
 import "./ChatItem.scss";
 import useTime from "components/hooks/useTime";
 import { ColoredBean } from "store/types";
-
+import useTargetLocation from "components/hooks/useTargetLocation"
 type ChatProps = {
   Chatinfo: ColoredBean;
 };
 
 function ChatItem({ Chatinfo }: ChatProps) {
+  const [initialPosition, SetinitialPosition] = useState({
+    lat: Chatinfo.latitude,
+    lng: Chatinfo.longitude,
+    loaded: true,
+    isPanto: true,
+  });
   const colorRef = useRef<HTMLDivElement>(null);
   const [elapsedText] = useTime(Chatinfo.createdAt);
   useEffect(() => {
@@ -19,7 +25,16 @@ function ChatItem({ Chatinfo }: ChatProps) {
   });
 
   return (
-    <div className="chat-item">
+    <div className="chat-item" onClick={() => {
+      console.log('위치로 이동')
+      SetinitialPosition({
+        lat: Chatinfo.latitude,
+        lng: Chatinfo.longitude,
+        loaded: true,
+        isPanto: true,
+      });
+      console.log(initialPosition)
+    }}>
       <div className="nickname-container" ref={colorRef}>
         {Chatinfo.nickname[0]}
       </div>
