@@ -4,13 +4,17 @@ import { beanListState, focusedState, tapSidebarState } from "store/atom";
 import { CSSTransition } from "react-transition-group";
 import { useSwipeable } from "react-swipeable";
 import ChatList from "components/ChatList/ChatList";
+import FeedbackButton from "components/FeedbackButton/FeedbackButton";
 import "./Sidebar.scss";
+
 import openIcon from "assets/img/Expand_right_light.svg";
 import closeIcon from "assets/img/Expand_left_light.svg";
 import x from "assets/img/x.svg";
 import logo from "assets/img/Logo.svg";
 import chat from "assets/img/Chat.svg";
 import bigChat from "assets/img/Chat_alt.svg";
+import FeedbackButtonGif from "../../assets/img/FeedbackButton.gif";
+import FeedbackButtonImg from "../../assets/img/FeedbackButton.png";
 
 type SideProps = {
   isSideBar: boolean;
@@ -25,6 +29,7 @@ export default function Sidebar({ isSideBar, setisSideBar }: SideProps) {
   const [beanList] = useRecoilState(beanListState);
   const [focused] = useRecoilState(focusedState);
   const [tapSidebar, setTapSidebar] = useRecoilState(tapSidebarState);
+  const [isFeedbackButton, setIsFeedbackButton] = useState(false);
 
   useEffect(() => {
     if (isSideBar) {
@@ -53,12 +58,14 @@ export default function Sidebar({ isSideBar, setisSideBar }: SideProps) {
   function switchChat(target: number) {
     if (target === 1) {
       setisFirst(true);
+      setisSideBar(true);
       document.documentElement.style.setProperty(
         "--scroll-width-default",
         "0px"
       );
     } else {
       setisFirst(false);
+      setisSideBar(true);
       document.documentElement.style.setProperty(
         "--scroll-width-default",
         "100%"
@@ -166,52 +173,65 @@ export default function Sidebar({ isSideBar, setisSideBar }: SideProps) {
       }
     },
   });
+
   return (
-    <div className="sidebar" ref={nodeRef}>
-      <CSSTransition
-        in={isSideBar}
-        nodeRef={nodeRef}
-        timeout={500}
-        classNames="slide"
-      >
-        <div className="inner">
-          <div className="header">
-            <img src={logo} className="side-logo" alt="logo" />
-            <div
-              className={
-                isFirst ? "switch-container first" : "switch-container second"
-              }
-            >
-              <div className="switch all" onClick={() => switchChat(1)}>
-                <img src={bigChat} alt="전체보기" />
-              </div>
-              <div className="switch focus" onClick={() => switchChat(2)}>
-                <img src={chat} alt="상세보기" />
-              </div>
-            </div>
-            {!isFull && <div className="swipe-handle" {...upHandlers}></div>}
-            <img
-              className="close"
-              src={x}
-              onClick={() => setisSideBar(false)}
-              alt="close"
-            />
+    <div>
+      <div className="sidebar-fix">
+        <div className="side-logo">
+          <img
+            src={logo}
+            alt="logo"
+            onClick={() => {
+              alert("일해라 황태희");
+            }}
+          />
+        </div>
+        <div
+          className={
+            isFirst ? "switch-container first" : "switch-container second"
+          }
+        >
+          <div className="switch all" onClick={() => switchChat(1)}>
+            <img src={bigChat} alt="전체보기" />
           </div>
-          <div className="scroll-container" {...sideHandlers}>
-            <div className="scroll first">
-              <ChatList chatList={beanList} />
-            </div>
-            <div className="scroll second">
-              <ChatList chatList={focused} />
-            </div>
+          <div className="switch focus" onClick={() => switchChat(2)}>
+            <img src={chat} alt="상세보기" />
           </div>
         </div>
-      </CSSTransition>
-      <div className="handle" onClick={() => setisSideBar(!isSideBar)}>
-        <img
-          src={isSideBar ? closeIcon : openIcon}
-          alt={isSideBar ? "close" : "open"}
-        />
+      </div>
+      <div className="sidebar" ref={nodeRef}>
+        <CSSTransition
+          in={isSideBar}
+          nodeRef={nodeRef}
+          timeout={500}
+          classNames="slide"
+        >
+          <div className="inner">
+            <div className="header">
+              {!isFull && <div className="swipe-handle" {...upHandlers}></div>}
+              <img
+                className="close"
+                src={x}
+                onClick={() => setisSideBar(false)}
+                alt="close"
+              />
+            </div>
+            <div className="scroll-container" {...sideHandlers}>
+              <div className="scroll first">
+                <ChatList chatList={beanList} />
+              </div>
+              <div className="scroll second">
+                <ChatList chatList={focused} />
+              </div>
+            </div>
+          </div>
+        </CSSTransition>
+        <div className="handle" onClick={() => setisSideBar(!isSideBar)}>
+          <img
+            src={isSideBar ? closeIcon : openIcon}
+            alt={isSideBar ? "close" : "open"}
+          />
+        </div>
       </div>
     </div>
   );

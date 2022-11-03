@@ -48,6 +48,23 @@ function App() {
     setisSideBar(false);
   }, []);
 
+  function clickFeedback() {
+    const temp = document.getElementsByClassName("feedback-button");
+    if (temp[0] === undefined) {
+      window.open(
+        "https://forms.gle/dbpsXhqdLRpbFnrT6",
+        "_blank",
+        "noopener,noreferrer"
+      );
+      document.getElementsByClassName("feedback-button-center")[0].className =
+        "feedback-button";
+    } else {
+      temp[0].className = "feedback-button-center";
+    }
+
+    // setIsFeedbackButton(true);
+  }
+
   return (
     <div className="App">
       <div className="logo">
@@ -61,19 +78,10 @@ function App() {
           alt="chat-button"
         />
       </div>
-      <div className="feedback-button">
-        <img
-          className="feedback-button-img"
-          onClick={() => setIsFeedbackButton(true)}
-          src={FeedbackButtonGif}
-          alt=""
-        />
-        <img
-          className="feedback-button-img"
-          onClick={() => setIsFeedbackButton(true)}
-          src={FeedbackButtonImg}
-          alt="feedback-button"
-        />
+      <div className="feedback-button" onClick={clickFeedback}>
+        <img className="feedback-button-img" src={FeedbackButtonImg} alt="" />
+        <img className="feedback-button-img" src={FeedbackButtonGif} alt="" />
+        <div>클릭 시 피드백 페이지로 이동</div>
       </div>
       {isFeedbackButton && (
         <FeedbackButton setIsFeedbackButton={setIsFeedbackButton} />
