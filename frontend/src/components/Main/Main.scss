@@ -40,11 +40,19 @@
     top: 90%;
     left: 0%;
   }
+  100% {
+    top: 35%;
+    left: calc(50%  - 180px);
+  }
 }
 @keyframes feedback-ani2 {
   0% {
-    top: calc(50%  - 40px);
+    top: 35%;
     left: calc(50%  - 180px);
+  }
+  100% {
+    top: 90%;
+    left: 0%;
   }
 }
 
@@ -180,7 +188,7 @@
 
   .feedback-button-center {
     position: fixed;
-    top: calc(50%  - 40px);
+    top: 35%;
     left: calc(50%  - 180px);
     z-index: 99;
     width: 360px;
@@ -339,7 +347,7 @@
 
   .feedback-button-center {
     position: fixed;
-    top: calc(50%  - 40px);
+    top: 35%;
     left: calc(50%  - 180px);
     z-index: 99;
     width: 360px;
