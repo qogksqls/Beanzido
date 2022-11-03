@@ -10,6 +10,7 @@ import logo from "assets/img/Logo.svg";
 import chat from "assets/img/Chat.svg";
 import bigChat from "assets/img/Chat_alt.svg";
 import { useNavigate } from "react-router-dom";
+import bean from "../../assets/img/logo192.png"
 
 export default function Sidebar() {
   const nodeRef = useRef(null);
@@ -19,7 +20,7 @@ export default function Sidebar() {
   const coloredBeanList = useRecoilValue(beanListSelector);
   const coloredFocusedList = useRecoilValue(focusedListSelector);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     document.documentElement.style.setProperty("--inner-height", "300px");
     document.documentElement.style.setProperty(
@@ -36,21 +37,21 @@ export default function Sidebar() {
     };
   }, []);
 
-  function switchChat(target: number) {
-    if (target === 1) {
-      setisFirst(true);
-      document.documentElement.style.setProperty(
-        "--scroll-width-default",
-        "0px"
-      );
-    } else {
-      setisFirst(false);
-      document.documentElement.style.setProperty(
-        "--scroll-width-default",
-        "100%"
-      );
-    }
-  }
+  // function switchChat(target: number) {
+  //   if (target === 1) {
+  //     setisFirst(true);
+  //     document.documentElement.style.setProperty(
+  //       "--scroll-width-default",
+  //       "0px"
+  //     );
+  //   } else {
+  //     setisFirst(false);
+  //     document.documentElement.style.setProperty(
+  //       "--scroll-width-default",
+  //       "100%"
+  //     );
+  //   }
+  // }
 
   const upHandlers = useSwipeable({
     onSwiping: (eventData) => {
@@ -159,7 +160,7 @@ export default function Sidebar() {
       </div>
       <div className="inner">
         <div className="header">
-          <img src={logo} className="side-logo" alt="logo" />
+          {/* <img src={logo} className="side-logo" alt="logo" />
           <div
             className={
               isFirst ? "switch-container first" : "switch-container second"
@@ -171,7 +172,7 @@ export default function Sidebar() {
             <div className="switch focus" onClick={() => switchChat(2)}>
               <img src={chat} alt="상세보기" />
             </div>
-          </div>
+          </div> */}
           {!isFull && <div className="swipe-handle" {...upHandlers}></div>}
           <img
             className="close"
@@ -183,9 +184,21 @@ export default function Sidebar() {
         <div className="scroll-container" {...sideHandlers}>
           <div className="scroll first">
             <ChatList chatList={coloredBeanList} />
+      {coloredBeanList.length > 0 ? <div></div> :
+        <div className="empty-list">
+          보고 싶은 콩을 클릭하주세요.
+          <img src={bean} alt="" />
+        </div>
+      }
           </div>
           <div className="scroll second">
-            <ChatList chatList={coloredFocusedList} />
+          <ChatList chatList={coloredFocusedList} />
+      {coloredFocusedList.length > 0 ? <div></div> :
+        <div className="empty-list">
+          보고 싶은 콩을 클릭하주세요.
+          <img src={bean} alt="" />
+        </div>
+      }
           </div>
         </div>
       </div>
