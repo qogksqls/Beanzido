@@ -3,7 +3,6 @@ package com.ssafy.a206.filter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,15 +10,12 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
 public class BadWordFilter {
 	private List<String> keywords;
-	@Value("${BADWORD_PATH}")
-	private String path;
-	public BadWordFilter() throws FileNotFoundException, IOException, ParseException {
+
+	public BadWordFilter(String path) throws FileNotFoundException, IOException, ParseException {
 		super();
 		Object ob = new JSONParser().parse(new FileReader(path));
 		JSONObject js = (JSONObject) ob;
