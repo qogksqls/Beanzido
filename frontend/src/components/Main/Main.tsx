@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
 import { beanListState } from "store/atom";
 import { Outlet } from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./Main.scss";
 import openIcon from "assets/img/Expand_right_light.svg";
 import x from "assets/img/x.svg";
@@ -20,8 +21,26 @@ import chat from "assets/img/Chat.svg";
 
 function Main() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [beanList, setBeanList] = useRecoilState(beanListState);
   const [isFirst, setisFirst] = useState(true);
-
+  const socketurl = process.env.REACT_APP_SOCKET_URL
+    ? process.env.REACT_APP_SOCKET_URL
+    : "";
+  const { sendMessage, lastMessage, readyState } = useWebSocket(socketurl, {
+    shouldReconnect: (closeEvent) => {
+      return true;
+    },
+    reconnectAttempts: 10,
+    reconnectInterval: 3000,
+  });
+  useEffect(() => {
+    if (lastMessage !== null) {
+      if (lastMessage.data[0] == "{") {
+        setBeanList([...beanList, JSON.parse(lastMessage.data)]);
+      }
+    }
+  }, [lastMessage]);
   function switchChat(target: number) {
     if (window.location.pathname === "/") {
       navigate("/sidebar");
@@ -73,7 +92,23 @@ function Main() {
 
   return (
     <>
-      <Outlet />
+      <TransitionGroup component={null}>
+        <CSSTransition
+          classNames="transition"
+          timeout={500}
+          key={location.key}
+          onEnter={() => console.log(location.pathname)}
+        >
+          <Routes location={location}>
+            <Route path="sidebar" element={<Sidebar />} />
+            <Route
+              path="create"
+              element={<CreateBean sendMessage={sendMessage} />}
+            />
+            <Route path="feedback" element={<FeedbackButton />} />
+          </Routes>
+        </CSSTransition>
+      </TransitionGroup>
       <div className="create-button">
         <img
           className="create-button-img"
