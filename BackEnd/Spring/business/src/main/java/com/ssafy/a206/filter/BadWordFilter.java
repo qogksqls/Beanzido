@@ -11,15 +11,16 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BadWordFilter {
 	private List<String> keywords;
-
+	@Value("${BADWORD_PATH}")
+	private String path;
 	public BadWordFilter() throws FileNotFoundException, IOException, ParseException {
 		super();
-		String path = System.getProperty("user.dir") + "\\src\\main\\java\\com\\ssafy\\a206\\filter\\badword.json";
 		Object ob = new JSONParser().parse(new FileReader(path));
 		JSONObject js = (JSONObject) ob;
 		keywords = (List<String>) js.get("badwords");
