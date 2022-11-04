@@ -24,7 +24,8 @@ import java.util.Date;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessageDTO {
+public class MessageDTO implements Comparable<MessageDTO>{
+	
 	private String content;
 	private String img;
 	private float latitude;
@@ -52,6 +53,12 @@ public class MessageDTO {
 		this.ip = ip;
 		this.imgFilter="";
 		this.contentFilter=false;
+	}
+
+	@Override
+	public int compareTo(MessageDTO o) {
+		
+		return this.createdAt.compareTo(o.createdAt);
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.ssafy.a206.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ public class MessageController {
 	@GetMapping("/send")
 	public List<MessageDTO> send() {
 		List<MessageDTO> list = redisService.getChatAll();
+		Collections.sort(list);
 		return list;
 	}
 	

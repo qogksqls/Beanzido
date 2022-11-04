@@ -1,0 +1,7 @@
+uvicorn
+fastapi
+konlpy
+nltk
+apscheduler
+python-dotenv
+redis
