@@ -34,6 +34,8 @@ public class MessageDTO implements Comparable<MessageDTO>{
 	private String nickname;
 	private String location;
 	private String ip;
+	private String imgFilter;
+	private boolean contentFilter;
 	
 	@JsonFormat(shape = JsonFormat.Shape.NUMBER)
 	private Date createdAt;
@@ -49,6 +51,8 @@ public class MessageDTO implements Comparable<MessageDTO>{
 		this.location = mes.getLocation();
 		this.createdAt = new Date();
 		this.ip = ip;
+		this.imgFilter="";
+		this.contentFilter=false;
 	}
 
 	@Override
@@ -56,7 +60,6 @@ public class MessageDTO implements Comparable<MessageDTO>{
 		
 		return this.createdAt.compareTo(o.createdAt);
 	}
-	
 	
 }
 
