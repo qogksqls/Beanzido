@@ -25,7 +25,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageDTO {
-	
 	private String content;
 	private String img;
 	private float latitude;
@@ -34,6 +33,8 @@ public class MessageDTO {
 	private String nickname;
 	private String location;
 	private String ip;
+	private String imgFilter;
+	private boolean contentFilter;
 	
 	@JsonFormat(shape = JsonFormat.Shape.NUMBER)
 	private Date createdAt;
@@ -49,8 +50,9 @@ public class MessageDTO {
 		this.location = mes.getLocation();
 		this.createdAt = new Date();
 		this.ip = ip;
+		this.imgFilter="";
+		this.contentFilter=false;
 	}
-	
 	
 }
 
