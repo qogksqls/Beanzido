@@ -20,7 +20,7 @@ import software.amazon.awssdk.utils.BinaryUtils;
 public class ImageFilter {
 	@Autowired
 	private RekognitionClient rekClient;
-	
+
 	public String detectModLabels(String sourceImage) {
 
 		try {
@@ -36,11 +36,13 @@ public class ImageFilter {
 			List<ModerationLabel> labels = moderationLabelsResponse.moderationLabels();
 
 			for (ModerationLabel label : labels) {
-				if(label.parentName().equals("Explicit Nudity")) {
+				if (label.parentName().equals("Explicit Nudity")) {
+					return "성적인 이미지가 포함되어 있습니다.";
+				} else if (label.parentName().equals("Suggestive")) {
 					return "선정적인 이미지가 포함되어 있습니다.";
-				}else if(label.parentName().equals("Violence")) {
+				} else if (label.parentName().equals("Violence")) {
 					return "폭력적인 이미지가 포함되어 있습니다.";
-				}else if(label.parentName().equals("Visually Disturbing")) {
+				} else if (label.parentName().equals("Visually Disturbing")) {
 					return "혐오스러운 이미지가 포함되어 있습니다.";
 				}
 			}
