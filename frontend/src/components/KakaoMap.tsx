@@ -25,6 +25,7 @@ function KakaoMap() {
       createdAt: string;
       latitude: number;
       longitude: number;
+      location: string;
     }[][]
   );
   const [initialPosition, SetinitialPosition] = useState({
@@ -190,6 +191,7 @@ function getCluster(
     createdAt: string;
     latitude: number;
     longitude: number;
+    location: string;
   }[]
 ) {
   var clustered = new Set();

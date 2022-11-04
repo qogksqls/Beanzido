@@ -42,6 +42,8 @@ $breakpoint: 500px;
     color: var(--create-text-color);
     border-radius: 10px 10px 0 0;
     padding: 10px;
+    display: flex;
+    justify-content: center;
     h2 {
       margin: auto;
     }
@@ -54,7 +56,6 @@ $breakpoint: 500px;
       content: '';
       position: absolute;
       top: 50px;
-      left: calc(50% - 5px);
     }
   }
 

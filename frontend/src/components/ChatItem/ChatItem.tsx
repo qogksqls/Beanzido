@@ -28,6 +28,7 @@ function ChatItem({ Chatinfo }: ChatProps) {
           <div>{Chatinfo.nickname}</div>
           <div className="time">{elapsedText}</div>
         </div>
+        <div className="location">{Chatinfo.location}</div>
         {Chatinfo.content === "내용이 없습니다." ? (
           <div></div>
         ) : (
