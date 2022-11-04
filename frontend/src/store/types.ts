@@ -6,9 +6,11 @@ export type Bean = {
   createdAt: string;
   latitude: number;
   longitude: number;
+  location: string;
 };
 
 export type ColoredBean = {
+  location: string;
   nickname: string;
   content: string;
   color: {
