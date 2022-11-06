@@ -75,7 +75,7 @@ function Main() {
         "ani-img searchAni";
       temp[0].className = "block";
     }
-    console.log(temp[0].className);
+    // console.log(temp[0].className);
   }
   function clickFeedback() {
     const temp = document.getElementsByClassName("feedback-button");
@@ -101,7 +101,7 @@ function Main() {
           classNames="transition"
           timeout={500}
           key={location.key}
-          onEnter={() => console.log(location.pathname)}
+          // onEnter={() => console.log(location.pathname)}
         >
           <Routes location={location}>
             <Route path="sidebar" element={<Sidebar />} />

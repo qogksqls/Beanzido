@@ -29,10 +29,14 @@ function ChatItem({ Chatinfo }: ChatProps) {
           <div className="time">{elapsedText}</div>
         </div>
         <div className="location">{Chatinfo.location}</div>
-        {Chatinfo.content === "내용이 없습니다." ? (
+        {Chatinfo.content === "" ? (
           <div></div>
         ) : (
-          <div className="down">{Chatinfo.content}</div>
+          <div className="down">
+            <div style={{ whiteSpace: "pre-line" }}>
+              {Chatinfo.content.replaceAll("<br/>", "\r\n")}
+            </div>
+          </div>
         )}
         <div className="chat-item-img">
           <img src={Chatinfo.img} alt="" />
