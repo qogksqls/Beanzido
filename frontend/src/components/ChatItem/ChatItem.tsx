@@ -1,6 +1,8 @@
 import { useEffect, useRef, memo } from "react";
 import "./ChatItem.scss";
 import useTime from "components/hooks/useTime";
+import Lottie from "lottie-react";
+import locationAni from "assets/img/location.json";
 import { ColoredBean } from "store/types";
 
 type ChatProps = {
@@ -28,10 +30,18 @@ function ChatItem({ Chatinfo }: ChatProps) {
           <div>{Chatinfo.nickname}</div>
           <div className="time">{elapsedText}</div>
         </div>
-        {Chatinfo.content === "내용이 없습니다." ? (
+        <div className="location">
+          <Lottie animationData={locationAni} className="location-img" />
+          {Chatinfo.location}
+        </div>
+        {Chatinfo.content === "" ? (
           <div></div>
         ) : (
-          <div className="down">{Chatinfo.content}</div>
+          <div className="down">
+            <div style={{ whiteSpace: "pre-line" }}>
+              {Chatinfo.content.replaceAll("<br/>", "\r\n")}
+            </div>
+          </div>
         )}
         <div className="chat-item-img">
           <img src={Chatinfo.img} alt="" />

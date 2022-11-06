@@ -107,10 +107,14 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
                 </div>
                 <div className="time">{elapsedText}</div>
               </div>
-              {content === "내용이 없습니다." ? (
+              {content === "" ? (
                 <div className="down">사진을 보냈습니다.</div>
               ) : (
-                <div className="down">{content}</div>
+                <div className="down">
+                  <div style={{ whiteSpace: "pre-line" }}>
+                    {content.replaceAll("<br/>", "\r\n")}
+                  </div>
+                </div>
               )}
             </div>
           </CSSTransition>
@@ -125,7 +129,7 @@ function getColor(color: number[]) {
     { name: "완두콩", backgroundColor: "#c7f2a4", color: "black" },
     { name: "강낭콩", backgroundColor: "#e80081", color: "white" },
     { name: "쥐눈이콩", backgroundColor: "#A6A6A6", color: "black" },
-    { name: "랜틸콩", backgroundColor: "#F57329", color: "black" },
+    { name: "렌틸콩", backgroundColor: "#F57329", color: "black" },
     { name: "병아리콩", backgroundColor: "#FFE9A0", color: "black" },
     { name: "녹두", backgroundColor: "#377E19", color: "white" },
     { name: "땅콩", backgroundColor: "#E6BD46", color: "black" },

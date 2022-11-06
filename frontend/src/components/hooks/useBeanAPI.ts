@@ -19,6 +19,7 @@ export default function useBeanAPI() {
           createdAt: string;
           latitude: number;
           longitude: number;
+          location: string;
         }[]
       >(`https://${Url}/chat-server/chat/send`);
       setBeanList(data);
