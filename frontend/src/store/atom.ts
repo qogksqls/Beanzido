@@ -21,9 +21,9 @@ export const beanColorState = atom({
   default: getRandomInt(0, 10),
 });
 
-export const tapSidebarState = atom({
-  key: "tapSidebarState",
-  default: false,
+export const sidebarState = atom({
+  key: "sidebarState",
+  default: 0,
 });
 
 // export const locationState = atom({
