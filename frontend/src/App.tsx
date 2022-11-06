@@ -7,14 +7,12 @@ import "./App.scss";
 import useBeanAPI from "components/hooks/useBeanAPI";
 import useGeoLocation from "components/hooks/useGeolocation";
 import Main from "components/Main/Main";
-
+import Nav from "components/Nav/Nav";
 import KakaoMap from "components/KakaoMap";
 import Logo from "assets/img/Logo.svg";
 
 function App() {
-  const beanAPI = useBeanAPI();
-  const [beanList, setBeanList] = useRecoilState(beanListState);
-
+  useBeanAPI();
   const location = useLocation();
   const { loaded } = useGeoLocation();
 
@@ -24,7 +22,7 @@ function App() {
       <div className="logo">
         <img src={Logo} alt="로고" />
       </div>
-
+      <Nav />
       <Routes location={location}>
         <Route path="/*" element={<Main />} />
       </Routes>

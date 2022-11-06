@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useRecoilValue } from "recoil";
+import { useState, useEffect, useRef } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { sidebarState } from "store/atom";
 import { beanListSelector, focusedListSelector } from "store/selector";
 import { useSwipeable } from "react-swipeable";
 import ChatList from "components/ChatList/ChatList";
@@ -10,24 +11,21 @@ import logo from "assets/img/Logo.svg";
 import chat from "assets/img/Chat.svg";
 import bigChat from "assets/img/Chat_alt.svg";
 import { useNavigate } from "react-router-dom";
-import bean from "../../assets/img/logo192.png"
+import bean from "../../assets/img/logo192.png";
 
 export default function Sidebar() {
   const nodeRef = useRef(null);
   const [isFull, setIsFull] = useState(false);
   const [isFirst, setisFirst] = useState(true);
   const [isScroll, setIsScroll] = useState(false);
+  const [sidebar, setSidebar] = useRecoilState(sidebarState);
   const coloredBeanList = useRecoilValue(beanListSelector);
   const coloredFocusedList = useRecoilValue(focusedListSelector);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     document.documentElement.style.setProperty("--inner-height", "300px");
-    document.documentElement.style.setProperty(
-      "--scroll-width-default",
-      "100%"
-    );
-    setisFirst(false);
+
     setIsFull(false);
 
     return () => {
@@ -36,23 +34,19 @@ export default function Sidebar() {
       setIsFull(false);
     };
   }, []);
-
-  // function switchChat(target: number) {
-  //   if (target === 1) {
-  //     setisFirst(true);
-  //     document.documentElement.style.setProperty(
-  //       "--scroll-width-default",
-  //       "0px"
-  //     );
-  //   } else {
-  //     setisFirst(false);
-  //     document.documentElement.style.setProperty(
-  //       "--scroll-width-default",
-  //       "100%"
-  //     );
-  //   }
-  // }
-
+  useEffect(() => {
+    if (sidebar === 0) {
+      document.documentElement.style.setProperty(
+        "--scroll-width-default",
+        "0px"
+      );
+    } else {
+      document.documentElement.style.setProperty(
+        "--scroll-width-default",
+        "100%"
+      );
+    }
+  }, [sidebar]);
   const upHandlers = useSwipeable({
     onSwiping: (eventData) => {
       document.documentElement.style.setProperty("--inner-transition", "");
@@ -136,20 +130,12 @@ export default function Sidebar() {
         eventData.dir === "Left" &&
         eventData.deltaX < (-1 / 4) * window.innerWidth
       ) {
-        setisFirst(false);
-        document.documentElement.style.setProperty(
-          "--scroll-width-default",
-          "100%"
-        );
+        setSidebar(1);
       } else if (
         eventData.dir === "Right" &&
         eventData.deltaX > (1 / 4) * window.innerWidth
       ) {
-        setisFirst(true);
-        document.documentElement.style.setProperty(
-          "--scroll-width-default",
-          "0px"
-        );
+        setSidebar(0);
       }
     },
   });
@@ -160,19 +146,6 @@ export default function Sidebar() {
       </div>
       <div className="inner">
         <div className="header">
-          {/* <img src={logo} className="side-logo" alt="logo" />
-          <div
-            className={
-              isFirst ? "switch-container first" : "switch-container second"
-            }
-          >
-            <div className="switch all" onClick={() => switchChat(1)}>
-              <img src={bigChat} alt="전체보기" />
-            </div>
-            <div className="switch focus" onClick={() => switchChat(2)}>
-              <img src={chat} alt="상세보기" />
-            </div>
-          </div> */}
           {!isFull && <div className="swipe-handle" {...upHandlers}></div>}
           <img
             className="close"
@@ -184,21 +157,25 @@ export default function Sidebar() {
         <div className="scroll-container" {...sideHandlers}>
           <div className="scroll first">
             <ChatList chatList={coloredBeanList} />
-      {coloredBeanList.length > 0 ? <div></div> :
-        <div className="empty-list">
-          보고 싶은 콩을 클릭하주세요.
-          <img src={bean} alt="" />
-        </div>
-      }
+            {coloredBeanList.length > 0 ? (
+              <div></div>
+            ) : (
+              <div className="empty-list">
+                빈지도에 채팅이 없습니다...
+                <img src={bean} alt="" />
+              </div>
+            )}
           </div>
           <div className="scroll second">
-          <ChatList chatList={coloredFocusedList} />
-      {coloredFocusedList.length > 0 ? <div></div> :
-        <div className="empty-list">
-          보고 싶은 콩을 클릭하주세요.
-          <img src={bean} alt="" />
-        </div>
-      }
+            <ChatList chatList={coloredFocusedList} />
+            {coloredFocusedList.length > 0 ? (
+              <div></div>
+            ) : (
+              <div className="empty-list">
+                보고 싶은 콩을 클릭하주세요.
+                <img src={bean} alt="" />
+              </div>
+            )}
           </div>
         </div>
       </div>
