@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { sidebarState } from "store/atom";
 import "./Nav.scss";
@@ -13,27 +13,13 @@ import locationAni from "assets/img/location.json";
 import searchAni from "assets/img/search.json";
 import chat from "assets/img/Chat.svg";
 import logo from "assets/img/Logo.svg";
-import x from "assets/img/x.svg";
 
 export default function Nav() {
   const navigate = useNavigate();
   const [sidebar, setSidebar] = useRecoilState(sidebarState);
   const [isKeyword, setIsKeyword] = useState(false);
+  const location = useLocation();
 
-  // function switchImg() {
-  //   const temp = document.getElementsByClassName("aroundTheWorld");
-  //   if (temp[0] === undefined) {
-  //     document.getElementsByClassName("block")[0].className =
-  //       "ani-img aroundTheWorld";
-  //     document.getElementsByClassName("ani-img searchAni")[0].className =
-  //       "block";
-  //   } else {
-  //     document.getElementsByClassName("block")[0].className =
-  //       "ani-img searchAni";
-  //     temp[0].className = "block";
-  //   }
-  //   console.log(temp[0].className);
-  // }
   return (
     <nav>
       <div className="bottom-bar">
@@ -107,22 +93,14 @@ export default function Nav() {
             <img src={chat} alt="상세보기" />
           </div>
         </div>
-        <div className="feedback-button" onClick={() => navigate("/feedback")}>
-          <Lottie className="feedback-button-img" animationData={likeAni} />
-          {/* <img className="feedback-button-img" src={FeedbackButtonGif} alt="" /> */}
-          <p>클릭 시 피드백 페이지로 이동</p>
+        {location.pathname !== "/feedback" && (
           <div
-            className="feedback-close"
-            onClick={() => {
-              document.getElementsByClassName(
-                "feedback-button-center"
-              )[0].className = "feedback-button";
-              navigate("/");
-            }}
+            className="feedback-button"
+            onClick={() => navigate("/feedback")}
           >
-            <img src={x} alt="" />
+            <Lottie className="feedback-button-img" animationData={likeAni} />
           </div>
-        </div>
+        )}
       </div>
     </nav>
   );

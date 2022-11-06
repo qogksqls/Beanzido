@@ -1,0 +1,42 @@
+.feedback-button {
+  position: absolute;
+  bottom: 0;
+  z-index: 110;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  cursor: pointer;
+  animation: feedbackIn 500ms ease;
+  p {
+    opacity: 0;
+  }
+  img {
+    opacity: 0;
+  }
+
+  .feedback-button-img {
+    width: 40px;
+    height: 40px;
+  }
+  &:hover {
+    filter: brightness(0.9);
+  }
+  &:active {
+    filter: brightness(0.9);
+  }
+}
+
+@keyframes feedbackIn {
+  0% {
+    opacity: 0;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

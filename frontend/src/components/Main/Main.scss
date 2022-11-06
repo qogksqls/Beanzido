@@ -35,27 +35,6 @@
   }
 }
 
-@keyframes feedback-ani1 {
-  0% {
-    top: 90%;
-    left: 0%;
-  }
-  100% {
-    top: 35%;
-    left: calc(50%  - 180px);
-  }
-}
-@keyframes feedback-ani2 {
-  0% {
-    top: 35%;
-    left: calc(50%  - 180px);
-  }
-  100% {
-    top: 90%;
-    left: 0%;
-  }
-}
-
 .logo {
   position: fixed;
   top: 3px;
@@ -158,76 +137,6 @@
       }
     }
   }
-  .feedback-button {
-    position: absolute;
-    bottom: 0;
-    z-index: 110;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all ease 1s 0s;
-    animation: feedback-ani2 100ms ease;
-    background-color: white;
-    cursor: pointer;
-    p {
-      opacity: 0;
-    }
-    img {
-      opacity: 0;
-    }
-
-    .feedback-button-img {
-      width: 40px;
-      height: 40px;
-      position:absolute;
-      // transition: all ease 0.2s 0s;
-      &:hover {
-        opacity: 0;
-      }
-    }
-    &:hover {
-      filter: brightness(0.9);
-    }
-    &:active {
-      filter: brightness(0.9);
-    }
-  }
-
-  .feedback-button-center {
-    position: fixed;
-    top: 35%;
-    left: calc(50%  - 180px);
-    z-index: 99;
-    width: 360px;
-    height: 80px;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all ease 1s 0s;
-    animation: feedback-ani1 800ms ease;
-    border-radius: 15px;
-    cursor: pointer;
-    
-    div {
-      animation: text 1800ms ease;
-    }
-
-    .feedback-button-img {
-      width: 40px;
-      height: 40px;
-      position:absolute;
-      left: 20px;
-    }
-    
-    .feedback-close {
-      position: absolute;
-      top: 3px;
-      right: 3px;
-    }
-  }
 
   .handle {
     position: absolute;
@@ -244,9 +153,9 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.25);
-    // border-left: none;
+    border-left: none;
   
-    background-color: #ffffff;
+    background-color: #f5f5f5;
   
     cursor: pointer;
   
@@ -258,6 +167,9 @@
 }
 
 @include mobile {
+  .sidebar-fix {
+    display: none;
+  }
   .create-button {
     display: none;
   }
@@ -287,74 +199,6 @@
     }
     img {
       width: 40px;
-    }
-  }
-  
-  .feedback-button {
-    // position: absolute;
-    bottom: 0;
-    z-index: 110;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all ease 1s 0s;
-    animation: feedback-ani2 100ms ease;
-    background-color: white;
-    cursor: pointer;
-    div {
-      opacity: 0;
-    }
-
-    .feedback-button-img {
-      width: 40px;
-      height: 40px;
-      position:absolute;
-      // transition: all ease 0.2s 0s;
-      &:hover {
-        opacity: 0;
-      }
-    }
-    &:hover {
-      filter: brightness(0.9);
-    }
-    &:active {
-      filter: brightness(0.9);
-    }
-  }
-
-  .feedback-button-center {
-    position: fixed;
-    top: 35%;
-    left: calc(50%  - 180px);
-    z-index: 99;
-    width: 360px;
-    height: 80px;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all ease 1s 0s;
-    animation: feedback-ani1 800ms ease;
-    border-radius: 15px;
-    cursor: pointer;
-    
-    div {
-      animation: text 1800ms ease;
-    }
-
-    .feedback-button-img {
-      width: 40px;
-      height: 40px;
-      position:absolute;
-      left: 20px;
-    }
-    
-    .feedback-close {
-      position: absolute;
-      top: 3px;
-      right: 3px;
     }
   }
 }

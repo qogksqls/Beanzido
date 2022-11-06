@@ -45,54 +45,6 @@ function Main() {
       }
     }
   }, [lastMessage]);
-  // function switchChat(target: number) {
-  //   if (window.location.pathname === "/") {
-  //     navigate("/sidebar");
-  //   }
-  //   if (target === 1) {
-  //     setisFirst(true);
-  //     document.documentElement.style.setProperty(
-  //       "--scroll-width-default",
-  //       "0px"
-  //     );
-  //   } else {
-  //     setisFirst(false);
-  //     document.documentElement.style.setProperty(
-  //       "--scroll-width-default",
-  //       "100%"
-  //     );
-  //   }
-  // }
-  // function switchImg() {
-  //   const temp = document.getElementsByClassName("aroundTheWorld");
-  //   if (temp[0] === undefined) {
-  //     document.getElementsByClassName("block")[0].className =
-  //       "ani-img aroundTheWorld";
-  //     document.getElementsByClassName("ani-img searchAni")[0].className =
-  //       "block";
-  //   } else {
-  //     document.getElementsByClassName("block")[0].className =
-  //       "ani-img searchAni";
-  //     temp[0].className = "block";
-  //   }
-  //   console.log(temp[0].className);
-  // }
-  function clickFeedback() {
-    const temp = document.getElementsByClassName("feedback-button");
-    if (temp[0] === undefined) {
-      window.open(
-        "https://forms.gle/dbpsXhqdLRpbFnrT6",
-        "_blank",
-        "noopener,noreferrer"
-      );
-      document.getElementsByClassName("feedback-button-center")[0].className =
-        "feedback-button";
-    } else {
-      temp[0].className = "feedback-button-center";
-    }
-
-    // navigate("/feedback")
-  }
 
   return (
     <>
@@ -108,35 +60,6 @@ function Main() {
           </Routes>
         </CSSTransition>
       </TransitionGroup>
-
-      {/* <div className="bottom-bar">
-        <Lottie
-          animationData={bubbleChat}
-          className="ani-img bubleChat"
-          onClick={() => switchChat(2)}
-        />
-        <img
-          className="create-button-img"
-          onClick={() => navigate("/create")}
-          src={createButton}
-          alt="chat-button"
-        />
-        <div onClick={switchImg}>
-          <Lottie
-            animationData={aroundTheWorld}
-            className="ani-img aroundTheWorld"
-          />
-          <Lottie animationData={searchAni} className="block" />
-        </div>
-      </div>
-      <div
-        className="handle"
-        onClick={() => {
-          navigate("/sidebar");
-        }}
-      >
-        <img src={openIcon} alt="open" />
-      </div> */}
     </>
   );
 }
