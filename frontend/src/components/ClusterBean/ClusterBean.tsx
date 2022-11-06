@@ -107,10 +107,14 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
                 </div>
                 <div className="time">{elapsedText}</div>
               </div>
-              {content === "내용이 없습니다." ? (
+              {content === "" ? (
                 <div className="down">사진을 보냈습니다.</div>
               ) : (
-                <div className="down">{content}</div>
+                <div className="down">
+                  <div style={{ whiteSpace: "pre-line" }}>
+                    {content.replaceAll("<br/>", "\r\n")}
+                  </div>
+                </div>
               )}
             </div>
           </CSSTransition>
