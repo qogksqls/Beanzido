@@ -1,31 +1,6 @@
 .chat-item {
   display: flex;
   cursor: pointer;
-  .location {
-    width: 0;
-    height: 0;
-    color: transparent;
-  }
-  &:hover {
-    .location {
-      color: black;
-      transition: all ease-in-out 1s;
-      position: absolute;
-      top: 0;
-      left: calc(100% - 140px);
-      z-index: 100;
-      background-color: white;
-      width: 150px;
-      height: 80px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 20px;
-      &:hover {
-        // background-color: ;
-      }
-    }
-  }
 
   .nickname-container {
     width: 35px;
@@ -47,9 +22,9 @@
     }
     .up {
       font-size: 12px;
+      font-weight: bold;
       display: flex;
       width: 100%;
-      margin-bottom: 10px;
       
       div {
         overflow: hidden;
@@ -60,6 +35,18 @@
       .time {
         margin-left: 10px;
         color: rgba(0, 0, 0, 0.4);
+      }
+    }
+    .location {
+      font-size: 10px;
+      text-align: start;
+      margin: 4px 8px 0px 8px;
+      display: flex;
+      align-items: center;
+      .location-img {
+        width: 20px;
+        margin-right: 8px;
+        animation-duration: 5s;
       }
     }
     .down {
