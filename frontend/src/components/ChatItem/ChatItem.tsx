@@ -3,6 +3,7 @@ import "./ChatItem.scss";
 import useTime from "components/hooks/useTime";
 import Lottie from "lottie-react";
 import locationAni from "assets/img/location.json";
+import locationImg from "assets/img/location.svg";
 import { ColoredBean } from "store/types";
 
 type ChatProps = {
@@ -31,7 +32,8 @@ function ChatItem({ Chatinfo }: ChatProps) {
           <div className="time">{elapsedText}</div>
         </div>
         <div className="location">
-          <Lottie animationData={locationAni} className="location-img" />
+          {/* <Lottie animationData={locationAni} className="location-img" /> */}
+          <img src={locationImg} className="location-img" alt="" />
           {Chatinfo.location}
         </div>
         {Chatinfo.content === "" ? (
