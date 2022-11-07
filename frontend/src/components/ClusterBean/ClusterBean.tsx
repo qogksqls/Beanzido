@@ -9,11 +9,17 @@ type BeanProps = {
   nickname: string[];
   content: string;
   color: number[];
-  img: string;
   createdAt: string;
+  contentFilter: boolean;
 };
 
-function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
+function ClusterBean({
+  nickname,
+  content,
+  color,
+  contentFilter,
+  createdAt,
+}: BeanProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [elapsedText] = useTime(createdAt);
   const beanRef = useRef<HTMLDivElement>(null);
@@ -40,16 +46,14 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
     controlBean();
   }, [createdAt]);
 
-  const tapHandlers = useSwipeable({
-    onTap: (eventData) => {
-      if (isOpen && location.pathname !== "/sidebar") {
-        navigate("/sidebar");
-      }
-    },
-  });
-
   return (
-    <div {...tapHandlers}>
+    <div
+      onClick={() => {
+        if (isOpen && location.pathname !== "/sidebar") {
+          navigate("/sidebar");
+        }
+      }}
+    >
       <div className="cluster-bean open" ref={beanRef} onClick={controlBean}>
         <div
           className={
@@ -114,7 +118,9 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
               ) : (
                 <div className="down">
                   <div style={{ whiteSpace: "pre-line" }}>
-                    {content.replaceAll("<br/>", "\r\n")}
+                    {contentFilter
+                      ? "부적절한 단어가 포함되어 있습니다."
+                      : content.replaceAll("<br/>", "\r\n")}
                   </div>
                 </div>
               )}

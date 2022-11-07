@@ -1,25 +1,23 @@
-export type Bean = {
+type BeanBase = {
   nickname: string;
   content: string;
-  color: number;
   img: string;
   createdAt: string;
   latitude: number;
   longitude: number;
   location: string;
+  imgFilter: string;
+  contentFilter: boolean;
 };
 
-export type ColoredBean = {
-  location: string;
-  nickname: string;
-  content: string;
+export type Bean = BeanBase & {
+  color: number;
+};
+
+export type ColoredBean = BeanBase & {
   color: {
     name: string;
     backgroundColor: string;
     color: string;
   };
-  img: string;
-  createdAt: string;
-  latitude: number;
-  longitude: number;
 };

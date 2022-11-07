@@ -2,6 +2,7 @@ import { useCallback, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { beanListState } from "store/atom";
 import axios from "axios";
+import { Bean } from "store/types";
 
 export default function useBeanAPI() {
   const [, setBeanList] = useRecoilState(beanListState);
@@ -10,18 +11,9 @@ export default function useBeanAPI() {
 
   const fetchData = useCallback(async () => {
     try {
-      const { data } = await axios.get<
-        {
-          nickname: string;
-          content: string;
-          color: number;
-          img: string;
-          createdAt: string;
-          latitude: number;
-          longitude: number;
-          location: string;
-        }[]
-      >(`https://${Url}/chat-server/chat/send`);
+      const { data } = await axios.get<Bean[]>(
+        `https://${Url}/chat-server/chat/send`
+      );
       setBeanList(data);
       // console.log(data);
       return true;
