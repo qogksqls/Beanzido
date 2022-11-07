@@ -40,7 +40,7 @@ class Message:
         self.content = content
 
 
-@sched.scheduled_job('cron',minute='*/3', id='keyword')
+@sched.scheduled_job('cron',minute='*/5', id='keyword')
 def analyze():
     print("분석시작")
     keys = rd_message.keys("*")
@@ -59,6 +59,9 @@ def analyze():
             words3[region3] += " " + message['content']
     for region, words in words3.items():
         tf_words3[region] = {}
+        if words.strip()=='':
+            print(words)
+            continue
         nouns = hannanum.nouns(words)
         # print(nouns)
         # 영어
@@ -74,7 +77,6 @@ def analyze():
             tf_words3[region].setdefault(noun, 0)
             tf_words3[region][noun] += 1
         tf_words3[region] = dict(sorted(tf_words3[region].items(), key=operator.itemgetter(1), reverse=True))
-
     for region, tf in tf_words3.items():
         try:
             t = region.split(' ')
@@ -94,10 +96,6 @@ def analyze():
     print("분석끝")
 
 # 시.도별 / 구별/ 동별 or  한번에
-def getList():
-    global tf_keyword_rank
-    print(tf_keyword_rank)
-    return tf_keyword_rank
 sched.start()
 # 'keyword' [1티어{'서울시':{}}
 # 2티어{'노원구':{},}
