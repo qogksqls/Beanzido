@@ -82,7 +82,10 @@ export default function Nav() {
               className={
                 isKeyword ? "ani-img searchAni" : "ani-img aroundTheWorld"
               }
-              onClick={() => setIsKeyword(!isKeyword)}
+              onClick={() => {
+                alert("추가 예정인 기능입니다. 기대해주세요.");
+                setIsKeyword(!isKeyword);
+              }}
             />
           </div>
           <div
