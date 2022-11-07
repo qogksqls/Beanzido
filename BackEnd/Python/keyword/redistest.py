@@ -60,7 +60,7 @@ def analyze():
     for region, words in words3.items():
         tf_words3[region] = {}
         nouns = hannanum.nouns(words)
-        print(nouns)
+        # print(nouns)
         # 영어
         compiler = re.compile('[^a-z | \\s]+')
         words = compiler.sub("", words.lower())
@@ -76,13 +76,16 @@ def analyze():
         tf_words3[region] = dict(sorted(tf_words3[region].items(), key=operator.itemgetter(1), reverse=True))
 
     for region, tf in tf_words3.items():
-        t = region.split(' ')
-        t1 = t[0]
-        t2 = t[0] + ' ' + t[1]
-        tf_words2.setdefault(t2, Counter({}))
-        tf_words1.setdefault(t1, Counter({}))
-        tf_words1[t1] += Counter(tf)
-        tf_words2[t2] += Counter(tf)
+        try:
+            t = region.split(' ')
+            t1 = t[0]
+            t2 = t[0] + ' ' + t[1]
+            tf_words2.setdefault(t2, Counter({}))
+            tf_words1.setdefault(t1, Counter({}))
+            tf_words1[t1] += Counter(tf)
+            tf_words2[t2] += Counter(tf)
+        except:
+            continue
     # print(json.dumps(tf_words2,ensure_ascii=False))
     # print(json.dumps(tf_words1,ensure_ascii=False))
     rd_keyword.set('do', json.dumps(tf_words1, ensure_ascii=False))
