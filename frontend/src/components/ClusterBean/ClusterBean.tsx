@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, memo } from "react";
 import "./ClusterBean.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { useSwipeable } from "react-swipeable";
 import useTime from "components/hooks/useTime";
@@ -20,6 +20,8 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
   const nodeRef = useRef(null);
   const colorList = getColor(color);
   const navigate = useNavigate();
+  const location = useLocation();
+
   function controlBean() {
     const bean = beanRef.current;
     if (bean) {
@@ -40,7 +42,7 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
 
   const tapHandlers = useSwipeable({
     onTap: (eventData) => {
-      if (isOpen) {
+      if (isOpen && location.pathname !== "/sidebar") {
         navigate("/sidebar");
       }
     },
@@ -107,10 +109,14 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
                 </div>
                 <div className="time">{elapsedText}</div>
               </div>
-              {content === "내용이 없습니다." ? (
+              {content === "" ? (
                 <div className="down">사진을 보냈습니다.</div>
               ) : (
-                <div className="down">{content}</div>
+                <div className="down">
+                  <div style={{ whiteSpace: "pre-line" }}>
+                    {content.replaceAll("<br/>", "\r\n")}
+                  </div>
+                </div>
               )}
             </div>
           </CSSTransition>
@@ -125,7 +131,7 @@ function getColor(color: number[]) {
     { name: "완두콩", backgroundColor: "#c7f2a4", color: "black" },
     { name: "강낭콩", backgroundColor: "#e80081", color: "white" },
     { name: "쥐눈이콩", backgroundColor: "#A6A6A6", color: "black" },
-    { name: "랜틸콩", backgroundColor: "#F57329", color: "black" },
+    { name: "렌틸콩", backgroundColor: "#F57329", color: "black" },
     { name: "병아리콩", backgroundColor: "#FFE9A0", color: "black" },
     { name: "녹두", backgroundColor: "#377E19", color: "white" },
     { name: "땅콩", backgroundColor: "#E6BD46", color: "black" },

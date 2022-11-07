@@ -103,7 +103,9 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
   function SaveBean() {
     const beanInfo = {
       nickname: name,
-      content: contentValue ? contentValue : "내용이 없습니다.",
+      content: contentValue
+        ? contentValue.replace(/(?:\r\n|\r|\n)/g, "<br/>")
+        : "",
       color: beanColor,
       img: imgSrc,
       latitude: coordinates.lat,

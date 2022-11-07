@@ -1,5 +1,11 @@
 .chat-item {
   display: flex;
+  background-color: white;
+  padding: 10px;
+  border-radius: 22px 22px 22px 2px;
+  margin-bottom: 20px;
+  box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
 
   .nickname-container {
     width: 35px;
@@ -9,10 +15,11 @@
     color: white;
     font-size: 16px;
     line-height: 35px;
-    margin-top: 5px;
+    // margin-top: 5px;
   }
   
   .contents-container {
+    position: relative;
     width: calc(100% - 45px);
     margin-left: 10px;
     &>div {
@@ -20,9 +27,9 @@
     }
     .up {
       font-size: 12px;
+      font-weight: bold;
       display: flex;
       width: 100%;
-      margin-bottom: 10px;
       
       div {
         overflow: hidden;
@@ -33,6 +40,21 @@
       .time {
         margin-left: 10px;
         color: rgba(0, 0, 0, 0.4);
+      }
+    }
+    .location {
+      font-size: 10px;
+      text-align: start;
+      margin: 4px 8px 4px 4px;
+      display: flex;
+      align-items: center;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      // width: 100px;
+      .location-img {
+        width: 14px;
+        margin-right: 0px;
+        animation-duration: 5s;
       }
     }
     .down {

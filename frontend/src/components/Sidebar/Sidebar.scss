@@ -5,6 +5,7 @@ html {
   --mobile-border: 10px;
   --scroll-width: 0px;
   --scroll-width-default: 0px;
+  --scroll-transition: all ease 300ms;
 }
 
 .sidebar {
@@ -22,35 +23,30 @@ html {
       overflow: overlay;
       touch-action: pan-y;
       overflow-x: hidden;
-    }
-    .scroll.first {
-      left: calc(0px + calc(var(--scroll-width) - var(--scroll-width-default)));
-      transition: var(--scroll-transition);
+      .scroll-description {
+        padding: 0px 20px 20px 30px;
+        text-align: start;
+        font-size: 1.3rem;
+        font-weight: bold;
+      }
       .empty-list {
-        position: absolute;
-        // top: 30%;
-        left: calc(50% - 160px);
-        z-index: 110;
-        width: 300px;
+        padding: 30px 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 1.1rem;
         img {
-          width: 100px;
-          margin-top: 30px;
+          width: 80px;
+          margin-bottom: 10px;
         }
       }
-    }
-    .scroll.second {
-      left: calc(100% + calc(var(--scroll-width) - var(--scroll-width-default)));
-      transition: var(--scroll-transition);
-      .empty-list {
-        position: absolute;
-        // top: 30%;
-        left: calc(50% - 160px);
-        z-index: 110;
-        width: 300px;
-        img {
-          width: 100px;
-          margin-top: 30px;
-        }
+      &.first {
+        left: calc(0px + calc(var(--scroll-width) - var(--scroll-width-default)));
+        transition: var(--scroll-transition);
+      }
+      &.second {
+        left: calc(100% + calc(var(--scroll-width) - var(--scroll-width-default)));
+        transition: var(--scroll-transition);
       }
     }
   }
@@ -115,7 +111,7 @@ html {
       }
     }
     .scroll-container {
-      height: calc(var(--vh, 1vh) * 100 - 30px);
+      height: calc(var(--inner-height) - 40px);
     }
     .slide-handle {
       display: none;
@@ -146,58 +142,17 @@ html {
     top: 0;
     left: 80px;
     .header {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      padding: 0px 10px;
-      border-bottom: solid 1px rgba(0, 0, 0, 0.25);
-      .switch-container {
-        display: flex;
-        align-items: flex-end;
-
-        .switch {
-          width: 80px;
-          height: 30px;
-          background-color: #f5f5f5;
-          padding-top: 10px;
-          border: solid 1px rgba(0, 0, 0, 0.25);
-          border-bottom: none;
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
-          &::after {
-            content: "";
-          }
-          cursor: pointer;
-          &:hover {
-            filter: brightness(1.1);
-          }
-          &:active {
-            filter: brightness(0.9);
-          }
-        }
-
-        &.first {
-          .all {
-            filter: brightness(0.9);
-          }
-        }
-        &.second {
-          .focus {
-            filter: brightness(0.9);
-          }
-        }
+      .swipe-handle {
+        display: none;
       }
-      .side-logo {
-        height: 60px;
-        margin-bottom: 30px;
-      }
-      .swipe-handle, .close {
+      .close {
         display: none;
       }
     }
     .scroll-container {
-      height: calc(100% - 90px);
+      height: calc(100% - 50px);
+      margin-top: 30px;
+      margin-bottom: 30px;
       .scroll {
         &::-webkit-scrollbar {
           width: 15px;
