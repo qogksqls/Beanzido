@@ -4,6 +4,7 @@ import useTime from "components/hooks/useTime";
 import Lottie from "lottie-react";
 import locationAni from "assets/img/location.json";
 import locationImg from "assets/img/location.svg";
+import filtered from "assets/img/filtered.png";
 import { ColoredBean } from "store/types";
 
 type ChatProps = {
@@ -41,12 +42,14 @@ function ChatItem({ Chatinfo }: ChatProps) {
         ) : (
           <div className="down">
             <div style={{ whiteSpace: "pre-line" }}>
-              {Chatinfo.content.replaceAll("<br/>", "\r\n")}
+              {Chatinfo.contentFilter
+                ? "부적절한 단어가 포함되어 있습니다."
+                : Chatinfo.content.replaceAll("<br/>", "\r\n")}
             </div>
           </div>
         )}
         <div className="chat-item-img">
-          <img src={Chatinfo.img} alt="" />
+          <img src={Chatinfo.imgFilter ? filtered : Chatinfo.img} alt="" />
         </div>
       </div>
     </div>
