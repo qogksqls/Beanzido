@@ -12,6 +12,7 @@ import chat from "assets/img/Chat.svg";
 import bigChat from "assets/img/Chat_alt.svg";
 import { useNavigate } from "react-router-dom";
 import bean from "../../assets/img/logo192.png";
+import sadBean from "assets/img/bean-sad.svg";
 
 export default function Sidebar() {
   const nodeRef = useRef(null);
@@ -34,6 +35,7 @@ export default function Sidebar() {
       setIsFull(false);
     };
   }, []);
+
   useEffect(() => {
     if (sidebar === 0) {
       document.documentElement.style.setProperty(
@@ -161,19 +163,22 @@ export default function Sidebar() {
               <div></div>
             ) : (
               <div className="empty-list">
-                빈지도에 채팅이 없습니다...
-                <img src={bean} alt="" />
+                <img src={sadBean} alt="" />
+                빈지도에 콩이 없습니다...
               </div>
             )}
           </div>
           <div className="scroll second">
+            <div className="scroll-description">
+              보고 싶은 콩을 클릭해주세요.
+            </div>
             <ChatList chatList={coloredFocusedList} />
             {coloredFocusedList.length > 0 ? (
               <div></div>
             ) : (
               <div className="empty-list">
-                보고 싶은 콩을 클릭하주세요.
-                <img src={bean} alt="" />
+                <img src={sadBean} alt="" />
+                보고 있는 콩이 없습니다...
               </div>
             )}
           </div>

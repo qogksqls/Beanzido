@@ -5,6 +5,7 @@ html {
   --mobile-border: 10px;
   --scroll-width: 0px;
   --scroll-width-default: 0px;
+  --scroll-transition: all ease 300ms;
 }
 
 .sidebar {
@@ -22,35 +23,30 @@ html {
       overflow: overlay;
       touch-action: pan-y;
       overflow-x: hidden;
-    }
-    .scroll.first {
-      left: calc(0px + calc(var(--scroll-width) - var(--scroll-width-default)));
-      transition: var(--scroll-transition);
+      .scroll-description {
+        padding: 0px 20px 20px 30px;
+        text-align: start;
+        font-size: 1.3rem;
+        font-weight: bold;
+      }
       .empty-list {
-        position: absolute;
-        // top: 30%;
-        left: calc(50% - 160px);
-        z-index: 110;
-        width: 300px;
+        padding: 30px 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 1.1rem;
         img {
-          width: 100px;
-          margin-top: 30px;
+          width: 80px;
+          margin-bottom: 10px;
         }
       }
-    }
-    .scroll.second {
-      left: calc(100% + calc(var(--scroll-width) - var(--scroll-width-default)));
-      transition: var(--scroll-transition);
-      .empty-list {
-        position: absolute;
-        // top: 30%;
-        left: calc(50% - 160px);
-        z-index: 110;
-        width: 300px;
-        img {
-          width: 100px;
-          margin-top: 30px;
-        }
+      &.first {
+        left: calc(0px + calc(var(--scroll-width) - var(--scroll-width-default)));
+        transition: var(--scroll-transition);
+      }
+      &.second {
+        left: calc(100% + calc(var(--scroll-width) - var(--scroll-width-default)));
+        transition: var(--scroll-transition);
       }
     }
   }

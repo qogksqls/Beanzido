@@ -13,28 +13,25 @@ import locationAni from "assets/img/location.json";
 import searchAni from "assets/img/search.json";
 import chat from "assets/img/Chat.svg";
 import logo from "assets/img/Logo.svg";
+import bottomBar from "assets/img/bottom-bar.svg";
 
 export default function Nav() {
-  const navigate = useNavigate();
   const [sidebar, setSidebar] = useRecoilState(sidebarState);
   const [isKeyword, setIsKeyword] = useState(false);
+  const navigate = useNavigate();
   const location = useLocation();
 
   return (
     <nav>
       <div className="bottom-bar">
-        <Lottie
-          animationData={bubbleChat}
-          className="ani-img bubleChat"
-          onClick={() => navigate("/sidebar")}
-        />
-        <img
-          className="create-button-img"
-          onClick={() => navigate("/create")}
-          src={createButton}
-          alt="chat-button"
-        />
-        <div onClick={() => setIsKeyword(!isKeyword)}>
+        <div className="button-container" onClick={() => navigate("/sidebar")}>
+          <Lottie animationData={bubbleChat} className="ani-img bubleChat" />
+        </div>
+        <img className="barImage" src={bottomBar} alt="navImage" />
+        <div
+          className="button-container"
+          onClick={() => setIsKeyword(!isKeyword)}
+        >
           <Lottie
             animationData={isKeyword ? searchAni : aroundTheWorld}
             className={
@@ -74,10 +71,21 @@ export default function Nav() {
             sidebar === 0 ? "switch-container first" : "switch-container second"
           }
         >
+          <div className="switch">
+            <Lottie
+              animationData={isKeyword ? searchAni : aroundTheWorld}
+              className={
+                isKeyword ? "ani-img searchAni" : "ani-img aroundTheWorld"
+              }
+              onClick={() => setIsKeyword(!isKeyword)}
+            />
+          </div>
           <div
             className="switch all"
             onClick={() => {
-              navigate("/sidebar");
+              if (location.pathname !== "/sidebar") {
+                navigate("/sidebar");
+              }
               setSidebar(0);
             }}
           >
@@ -86,7 +94,9 @@ export default function Nav() {
           <div
             className="switch focus"
             onClick={() => {
-              navigate("/sidebar");
+              if (location.pathname !== "/sidebar") {
+                navigate("/sidebar");
+              }
               setSidebar(1);
             }}
           >
