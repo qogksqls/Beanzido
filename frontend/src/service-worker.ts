@@ -13,6 +13,7 @@ import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
+import { CacheableResponsePlugin } from "workbox-cacheable-response";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -53,8 +54,7 @@ registerRoute(
   createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html")
 );
 
-// An example runtime caching route for requests that aren't handled by the
-// precache, in this case same-origin .png requests like those from in public/
+// 폰트 캐싱
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
   ({ url }) =>
@@ -65,6 +65,24 @@ registerRoute(
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
+      new ExpirationPlugin({ maxEntries: 50 }),
+    ],
+  })
+);
+
+// 이미지 캐싱
+registerRoute(
+  // Add in any other file extensions or routing criteria as needed.
+  ({ request }) => request.destination === "image",
+  // Customize this strategy as needed, e.g., by changing to CacheFirst.
+  new StaleWhileRevalidate({
+    cacheName: "image-cache",
+    plugins: [
+      // Ensure that once this runtime cache reaches a maximum size the
+      // least-recently used images are removed.
+      new CacheableResponsePlugin({
+        statuses: [200],
+      }),
       new ExpirationPlugin({ maxEntries: 50 }),
     ],
   })
