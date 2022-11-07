@@ -111,7 +111,7 @@ html {
       }
     }
     .scroll-container {
-      height: calc(var(--vh, 1vh) * 100 - 30px);
+      height: calc(var(--inner-height) - 40px);
     }
     .slide-handle {
       display: none;

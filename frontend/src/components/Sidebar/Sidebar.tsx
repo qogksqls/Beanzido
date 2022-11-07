@@ -52,14 +52,26 @@ export default function Sidebar() {
   const upHandlers = useSwipeable({
     onSwiping: (eventData) => {
       document.documentElement.style.setProperty("--inner-transition", "");
-      if (
-        eventData.deltaY < 270 &&
-        eventData.deltaY > 300 - window.innerHeight
-      ) {
-        document.documentElement.style.setProperty(
-          "--inner-height",
-          `${300 - eventData.deltaY}px`
-        );
+      if (isFull) {
+        if (
+          eventData.deltaY > -50 &&
+          eventData.deltaY < -50 + window.innerHeight
+        ) {
+          document.documentElement.style.setProperty(
+            "--inner-height",
+            `calc(var(--vh, 1vh) * 100 - ${eventData.deltaY + 50}px)`
+          );
+        }
+      } else {
+        if (
+          eventData.deltaY < 270 &&
+          eventData.deltaY > 300 - window.innerHeight
+        ) {
+          document.documentElement.style.setProperty(
+            "--inner-height",
+            `${300 - eventData.deltaY}px`
+          );
+        }
       }
     },
     onSwiped: (eventData) => {
@@ -67,25 +79,38 @@ export default function Sidebar() {
         "--inner-transition",
         "all ease 300ms"
       );
-      document.documentElement.style.setProperty("--inner-height", "300px");
+      if (isFull) {
+        document.documentElement.style.setProperty(
+          "--inner-height",
+          "calc(var(--vh, 1vh) * 100 - 50px)"
+        );
+      } else {
+        document.documentElement.style.setProperty("--inner-height", "300px");
+      }
       if (
         eventData.dir === "Up" &&
         eventData.deltaY < (-1 / 8) * window.innerHeight
       ) {
         setIsFull(true);
-        document.documentElement.style.setProperty("--mobile-border", "0");
         document.documentElement.style.setProperty(
           "--inner-height",
-          "calc(var(--vh, 1vh) * 100)"
+          "calc(var(--vh, 1vh) * 100 - 50px)"
         );
       } else if (
         eventData.dir === "Down" &&
         eventData.deltaY > (1 / 8) * window.innerHeight
       ) {
-        document.documentElement.style.setProperty(
-          "--inner-height",
-          `${300 - eventData.deltaY}px`
-        );
+        if (isFull) {
+          document.documentElement.style.setProperty(
+            "--inner-height",
+            `calc(var(--vh, 1vh) * 100 - ${eventData.deltaY + 50}px)`
+          );
+        } else {
+          document.documentElement.style.setProperty(
+            "--inner-height",
+            `${300 - eventData.deltaY}px`
+          );
+        }
         navigate("/");
       }
     },
@@ -148,7 +173,7 @@ export default function Sidebar() {
       </div>
       <div className="inner">
         <div className="header">
-          {!isFull && <div className="swipe-handle" {...upHandlers}></div>}
+          <div className="swipe-handle" {...upHandlers} />
           <img
             className="close"
             src={x}
