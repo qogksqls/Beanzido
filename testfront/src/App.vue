@@ -118,7 +118,7 @@ export default {
       img : this.img,
       latitude : 36.22,
       longitude : 36.22,
-      color : '1',
+      color :1,
       nickname : '부들 부들',
       location : '서울'
       

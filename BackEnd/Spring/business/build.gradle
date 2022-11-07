@@ -23,6 +23,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation platform('software.amazon.awssdk:bom:2.15.0')
+	implementation 'software.amazon.awssdk:rekognition'
+	implementation 'software.amazon.awssdk:s3'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-core'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+	
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
