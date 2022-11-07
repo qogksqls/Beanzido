@@ -188,7 +188,7 @@ export default function Sidebar() {
             <div className="scroll-description">
               <div className="description-header">
                 <div style={{ marginRight: "5px" }}>전국</div>
-                모든 콩들의 대화내용입니다.
+                모든 콩들의 대화 내용입니다.
               </div>
             </div>
             <ChatList chatList={coloredBeanList} />
@@ -212,7 +212,7 @@ export default function Sidebar() {
                     />
                     <div>{coloredFocusedList[0].location}</div>에 있는
                   </div>
-                  콩들의 대화내용입니다.
+                  콩들의 대화 내용입니다.
                 </div>
               )}
             </div>
