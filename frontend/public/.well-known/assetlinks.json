@@ -1,6 +1,6 @@
 [{
-        "relation": ["delegate_permission/common.handle_all_urls"],
-        "target" : { "namespace": "android_app", "package_name": "com.beanzido.twa",
-                     "sha256_cert_fingerprints": ["C9:F9:70:26:37:B1:7C:76:DE:31:FE:F2:F9:F5:9E:78:3F:7A:05:99:68:50:6B:DC:38:63:B7:C3:48:E1:E1:1A"] }
-      }
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.beanzido.twa",
+                   "sha256_cert_fingerprints": ["C9:F9:70:26:37:B1:7C:76:DE:31:FE:F2:F9:F5:9E:78:3F:7A:05:99:68:50:6B:DC:38:63:B7:C3:48:E1:E1:1A"] }
+    }
 ]
