@@ -31,7 +31,10 @@ export default function Nav() {
         <img className="barImage" src={bottomBar} alt="navImage" />
         <div
           className="button-container"
-          onClick={() => setIsKeyword(!isKeyword)}
+          onClick={() => {
+            alert("추가 예정인 기능입니다. 기대해주세요.");
+            setIsKeyword(!isKeyword);
+          }}
         >
           <Lottie
             animationData={isKeyword ? searchAni : aroundTheWorld}
