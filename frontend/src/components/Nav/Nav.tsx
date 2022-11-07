@@ -68,7 +68,11 @@ export default function Nav() {
         </div>
         <div
           className={
-            sidebar === 0 ? "switch-container first" : "switch-container second"
+            location.pathname === "/sidebar"
+              ? sidebar === 0
+                ? "switch-container first"
+                : "switch-container second"
+              : "switch-container"
           }
         >
           <div className="switch">

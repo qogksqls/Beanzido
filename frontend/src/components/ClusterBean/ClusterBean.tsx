@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, memo } from "react";
 import "./ClusterBean.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { useSwipeable } from "react-swipeable";
 import useTime from "components/hooks/useTime";
@@ -20,6 +20,8 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
   const nodeRef = useRef(null);
   const colorList = getColor(color);
   const navigate = useNavigate();
+  const location = useLocation();
+
   function controlBean() {
     const bean = beanRef.current;
     if (bean) {
@@ -40,7 +42,7 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
 
   const tapHandlers = useSwipeable({
     onTap: (eventData) => {
-      if (isOpen) {
+      if (isOpen && location.pathname !== "/sidebar") {
         navigate("/sidebar");
       }
     },
