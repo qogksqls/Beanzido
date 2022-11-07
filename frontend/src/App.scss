@@ -23,7 +23,7 @@
     transform: translate3d(0, 100%, 0);
   }
   &.feedback {
-    top: 90%;
+    top: calc(100% - 80px);
     left: 0%;
     width: 80px;
   }
@@ -61,7 +61,7 @@
     transform: scale(0.1);
   }
   &.feedback {
-    top: 90%;
+    top: calc(100% - 80px);
     left: 0%;
     width: 80px;
   }
