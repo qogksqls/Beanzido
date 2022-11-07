@@ -2,17 +2,10 @@ import { useRecoilState } from "recoil";
 import { focusedState } from "store/atom";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import ClusterBean from "components/ClusterBean/ClusterBean";
+import { Bean } from "store/types";
 
 type ClusterProps = {
-  beanList: {
-    nickname: string;
-    content: string;
-    color: number;
-    img: string;
-    createdAt: string;
-    latitude: number;
-    longitude: number;
-  }[];
+  beanList: Bean[];
 };
 
 function Clusterer({ beanList }: ClusterProps) {
@@ -33,8 +26,8 @@ function Clusterer({ beanList }: ClusterProps) {
           nickname={beanList.map((bean) => bean.nickname).slice(-3)}
           content={beanList[beanList.length - 1].content}
           color={beanList.map((bean) => bean.color).slice(-3)}
-          img={beanList[beanList.length - 1].img}
           createdAt={beanList[beanList.length - 1].createdAt}
+          contentFilter={beanList[beanList.length - 1].contentFilter}
         ></ClusterBean>
       </div>
     </CustomOverlayMap>

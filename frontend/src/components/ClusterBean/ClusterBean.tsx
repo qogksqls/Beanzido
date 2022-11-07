@@ -1,30 +1,34 @@
 import { useState, useEffect, useRef, memo } from "react";
 import "./ClusterBean.scss";
-import { useRecoilState } from "recoil";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import useColor from "components/hooks/useColor";
 import { useSwipeable } from "react-swipeable";
-import { tapSidebarState } from "store/atom";
 import useTime from "components/hooks/useTime";
 
 type BeanProps = {
   nickname: string[];
   content: string;
   color: number[];
-  img: string;
   createdAt: string;
+  contentFilter: boolean;
 };
 
-function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
+function ClusterBean({
+  nickname,
+  content,
+  color,
+  contentFilter,
+  createdAt,
+}: BeanProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [, setTapSidebar] = useRecoilState(tapSidebarState);
   const [elapsedText] = useTime(createdAt);
   const beanRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef(null);
-  const [indexToColor] = useColor();
+  const colorList = getColor(color);
   const navigate = useNavigate();
-  const controlBean = () => {
+  const location = useLocation();
+
+  function controlBean() {
     const bean = beanRef.current;
     if (bean) {
       bean.className = isOpen ? "cluster-bean close" : "cluster-bean open";
@@ -36,22 +40,20 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
         bean.className = "cluster-bean close";
       }, 3000);
     }
-  };
+  }
 
   useEffect(() => {
     controlBean();
   }, [createdAt]);
 
-  const tapHandlers = useSwipeable({
-    onTap: (eventData) => {
-      if (isOpen) {
-        navigate("/sidebar");
-      }
-    },
-  });
-
   return (
-    <div {...tapHandlers}>
+    <div
+      onClick={() => {
+        if (isOpen && location.pathname !== "/sidebar") {
+          navigate("/sidebar");
+        }
+      }}
+    >
       <div className="cluster-bean open" ref={beanRef} onClick={controlBean}>
         <div
           className={
@@ -66,8 +68,8 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
             <div
               className="nickname-container third"
               style={{
-                color: indexToColor(color[0]).color,
-                backgroundColor: indexToColor(color[0]).backgroundColor,
+                color: colorList[0].color,
+                backgroundColor: colorList[0].backgroundColor,
               }}
             >
               {nickname[0][0]}
@@ -77,9 +79,8 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
             <div
               className="nickname-container second"
               style={{
-                color: indexToColor(color[color.length - 2]).color,
-                backgroundColor: indexToColor(color[color.length - 2])
-                  .backgroundColor,
+                color: colorList[color.length - 2].color,
+                backgroundColor: colorList[color.length - 2].backgroundColor,
               }}
             >
               {nickname[color.length - 2][0]}
@@ -88,9 +89,8 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
           <div
             className="nickname-container"
             style={{
-              color: indexToColor(color[color.length - 1]).color,
-              backgroundColor: indexToColor(color[color.length - 1])
-                .backgroundColor,
+              color: colorList[color.length - 1].color,
+              backgroundColor: colorList[color.length - 1].backgroundColor,
             }}
           >
             {nickname[color.length - 1][0]}
@@ -113,10 +113,16 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
                 </div>
                 <div className="time">{elapsedText}</div>
               </div>
-              {content == "내용이 없습니다." ? (
+              {content === "" ? (
                 <div className="down">사진을 보냈습니다.</div>
               ) : (
-                <div className="down">{content}</div>
+                <div className="down">
+                  <div style={{ whiteSpace: "pre-line" }}>
+                    {contentFilter
+                      ? "부적절한 단어가 포함되어 있습니다."
+                      : content.replaceAll("<br/>", "\r\n")}
+                  </div>
+                </div>
               )}
             </div>
           </CSSTransition>
@@ -124,6 +130,26 @@ function ClusterBean({ nickname, content, color, img, createdAt }: BeanProps) {
       </div>
     </div>
   );
+}
+
+function getColor(color: number[]) {
+  const IndexToColor = [
+    { name: "완두콩", backgroundColor: "#c7f2a4", color: "black" },
+    { name: "강낭콩", backgroundColor: "#e80081", color: "white" },
+    { name: "쥐눈이콩", backgroundColor: "#A6A6A6", color: "black" },
+    { name: "렌틸콩", backgroundColor: "#F57329", color: "black" },
+    { name: "병아리콩", backgroundColor: "#FFE9A0", color: "black" },
+    { name: "녹두", backgroundColor: "#377E19", color: "white" },
+    { name: "땅콩", backgroundColor: "#E6BD46", color: "black" },
+    { name: "검은콩", backgroundColor: "#4E4E4E", color: "white" },
+    { name: "팥", backgroundColor: "#CC3737", color: "white" },
+    { name: "젤리빈", backgroundColor: "#375E97", color: "white" },
+  ];
+  return color.map((idx) => {
+    const backgroundColor: string = IndexToColor[idx].backgroundColor;
+    const newColor: string = IndexToColor[idx].color;
+    return { color: newColor, backgroundColor: backgroundColor };
+  });
 }
 
 export default memo(ClusterBean);
