@@ -18,7 +18,7 @@ function KakaoMap() {
   const [map, setMap] = useState<kakao.maps.Map>();
   const location = useGeolocation();
   const [searchParams] = useSearchParams();
-  console.log(searchParams.get("keyword"));
+  // console.log(searchParams.get("keyword"));
   const [clusterList, setClusterList] = useState([] as Bean[][]);
   const [initialPosition, SetinitialPosition] = useState({
     lat: 0,

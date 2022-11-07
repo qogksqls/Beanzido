@@ -27,7 +27,7 @@ function Main() {
   useEffect(() => {
     if (lastMessage !== null) {
       if (lastMessage.data[0] == "{") {
-        console.log(JSON.parse(lastMessage.data));
+        // console.log(JSON.parse(lastMessage.data));
         setBeanList([...beanList, JSON.parse(lastMessage.data)]);
       }
     }
