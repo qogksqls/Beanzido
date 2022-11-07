@@ -10,6 +10,7 @@ import aroundTheWorld from "assets/img/around-the-world.json";
 import bubbleChat from "assets/img/bubble-chat.json";
 import likeAni from "assets/img/like.json";
 import locationAni from "assets/img/location.json";
+import pinAni from "assets/img/pin.json";
 import searchAni from "assets/img/search.json";
 import chat from "assets/img/Chat.svg";
 import logo from "assets/img/Logo.svg";
@@ -104,7 +105,7 @@ export default function Nav() {
               setSidebar(1);
             }}
           >
-            <img src={chat} alt="상세보기" />
+            <Lottie animationData={pinAni} className="ani-img pin" />
           </div>
         </div>
         {location.pathname !== "/feedback" && (

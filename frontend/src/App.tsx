@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { beanListState } from "store/atom";
 import "./App.scss";
@@ -15,12 +15,13 @@ function App() {
   useBeanAPI();
   const location = useLocation();
   const { loaded } = useGeoLocation();
+  const navigate = useNavigate();
 
   return (
     <div className="App">
       {loaded && <KakaoMap />}
       <div className="logo">
-        <img src={Logo} alt="로고" />
+        <img src={Logo} alt="로고" onClick={() => navigate("/feedback")} />
       </div>
       <Nav />
       <Routes location={location}>

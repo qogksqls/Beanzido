@@ -13,6 +13,8 @@ import bigChat from "assets/img/Chat_alt.svg";
 import { useNavigate } from "react-router-dom";
 import bean from "../../assets/img/logo192.png";
 import sadBean from "assets/img/bean-sad.svg";
+import Lottie from "lottie-react";
+import locationAni from "assets/img/location.json";
 
 export default function Sidebar() {
   const nodeRef = useRef(null);
@@ -183,19 +185,36 @@ export default function Sidebar() {
         </div>
         <div className="scroll-container" {...sideHandlers}>
           <div className="scroll first">
+            <div className="scroll-description">
+              <div className="description-header">
+                <div style={{ marginRight: "5px" }}>전국</div>
+                모든 콩들의 대화내용입니다.
+              </div>
+            </div>
             <ChatList chatList={coloredBeanList} />
             {coloredBeanList.length > 0 ? (
               <div></div>
             ) : (
               <div className="empty-list">
                 <img src={sadBean} alt="" />
-                빈지도에 콩이 없습니다...
+                "Beanzido에 콩이 하나도 없어요..."
               </div>
             )}
           </div>
           <div className="scroll second">
             <div className="scroll-description">
-              보고 싶은 콩을 클릭해주세요.
+              {coloredFocusedList.length > 0 && (
+                <div>
+                  <div className="description-header">
+                    <Lottie
+                      animationData={locationAni}
+                      className="location-img"
+                    />
+                    <div>{coloredFocusedList[0].location}</div>에 있는
+                  </div>
+                  콩들의 대화내용입니다.
+                </div>
+              )}
             </div>
             <ChatList chatList={coloredFocusedList} />
             {coloredFocusedList.length > 0 ? (
@@ -203,7 +222,7 @@ export default function Sidebar() {
             ) : (
               <div className="empty-list">
                 <img src={sadBean} alt="" />
-                보고 있는 콩이 없습니다...
+                "Beanzido에 심어진 콩을 클릭해봐"
               </div>
             )}
           </div>
