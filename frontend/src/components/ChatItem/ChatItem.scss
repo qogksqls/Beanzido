@@ -1,5 +1,8 @@
 .chat-item {
   display: flex;
+  background-color: white;
+  padding: 10px;
+  border-radius: 22px 22px 22px 2px;
   cursor: pointer;
 
   .nickname-container {
@@ -10,7 +13,7 @@
     color: white;
     font-size: 16px;
     line-height: 35px;
-    margin-top: 5px;
+    // margin-top: 5px;
   }
   
   .contents-container {
@@ -40,12 +43,15 @@
     .location {
       font-size: 10px;
       text-align: start;
-      margin: 4px 8px 0px 8px;
+      margin: 4px 8px 4px 4px;
       display: flex;
       align-items: center;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      // width: 100px;
       .location-img {
-        width: 20px;
-        margin-right: 8px;
+        width: 14px;
+        margin-right: 0px;
         animation-duration: 5s;
       }
     }
