@@ -38,6 +38,7 @@
     cursor: pointer;
     &:hover {
       filter: brightness(0.95);
+      font-weight: bold;
     }
     &:active {
       filter: brightness(0.9);

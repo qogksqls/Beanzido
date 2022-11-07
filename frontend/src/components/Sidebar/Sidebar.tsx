@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef, Dispatch } from "react";
-import { useRecoilState } from "recoil";
-import { beanListState, focusedState, tapSidebarState } from "store/atom";
-import { CSSTransition } from "react-transition-group";
+import { useState, useEffect, useRef } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { sidebarState } from "store/atom";
+import { beanListSelector, focusedListSelector } from "store/selector";
 import { useSwipeable } from "react-swipeable";
 import ChatList from "components/ChatList/ChatList";
 import "./Sidebar.scss";
@@ -11,24 +11,24 @@ import logo from "assets/img/Logo.svg";
 import chat from "assets/img/Chat.svg";
 import bigChat from "assets/img/Chat_alt.svg";
 import { useNavigate } from "react-router-dom";
+import bean from "../../assets/img/logo192.png";
+import sadBean from "assets/img/bean-sad.svg";
+import Lottie from "lottie-react";
+import locationAni from "assets/img/location.json";
 
 export default function Sidebar() {
   const nodeRef = useRef(null);
   const [isFull, setIsFull] = useState(false);
   const [isFirst, setisFirst] = useState(true);
   const [isScroll, setIsScroll] = useState(false);
-  const [beanList] = useRecoilState(beanListState);
-  const [focused] = useRecoilState(focusedState);
-  const [tapSidebar, setTapSidebar] = useRecoilState(tapSidebarState);
+  const [sidebar, setSidebar] = useRecoilState(sidebarState);
+  const coloredBeanList = useRecoilValue(beanListSelector);
+  const coloredFocusedList = useRecoilValue(focusedListSelector);
   const navigate = useNavigate();
 
   useEffect(() => {
     document.documentElement.style.setProperty("--inner-height", "300px");
-    document.documentElement.style.setProperty(
-      "--scroll-width-default",
-      "100%"
-    );
-    setisFirst(false);
+
     setIsFull(false);
 
     return () => {
@@ -38,33 +38,42 @@ export default function Sidebar() {
     };
   }, []);
 
-  function switchChat(target: number) {
-    if (target === 1) {
-      setisFirst(true);
+  useEffect(() => {
+    if (sidebar === 0) {
       document.documentElement.style.setProperty(
         "--scroll-width-default",
         "0px"
       );
     } else {
-      setisFirst(false);
       document.documentElement.style.setProperty(
         "--scroll-width-default",
         "100%"
       );
     }
-  }
-
+  }, [sidebar]);
   const upHandlers = useSwipeable({
     onSwiping: (eventData) => {
       document.documentElement.style.setProperty("--inner-transition", "");
-      if (
-        eventData.deltaY < 270 &&
-        eventData.deltaY > 300 - window.innerHeight
-      ) {
-        document.documentElement.style.setProperty(
-          "--inner-height",
-          `${300 - eventData.deltaY}px`
-        );
+      if (isFull) {
+        if (
+          eventData.deltaY > -50 &&
+          eventData.deltaY < -50 + window.innerHeight
+        ) {
+          document.documentElement.style.setProperty(
+            "--inner-height",
+            `calc(var(--vh, 1vh) * 100 - ${eventData.deltaY + 50}px)`
+          );
+        }
+      } else {
+        if (
+          eventData.deltaY < 270 &&
+          eventData.deltaY > 300 - window.innerHeight
+        ) {
+          document.documentElement.style.setProperty(
+            "--inner-height",
+            `${300 - eventData.deltaY}px`
+          );
+        }
       }
     },
     onSwiped: (eventData) => {
@@ -72,25 +81,38 @@ export default function Sidebar() {
         "--inner-transition",
         "all ease 300ms"
       );
-      document.documentElement.style.setProperty("--inner-height", "300px");
+      if (isFull) {
+        document.documentElement.style.setProperty(
+          "--inner-height",
+          "calc(var(--vh, 1vh) * 100 - 50px)"
+        );
+      } else {
+        document.documentElement.style.setProperty("--inner-height", "300px");
+      }
       if (
         eventData.dir === "Up" &&
         eventData.deltaY < (-1 / 8) * window.innerHeight
       ) {
         setIsFull(true);
-        document.documentElement.style.setProperty("--mobile-border", "0");
         document.documentElement.style.setProperty(
           "--inner-height",
-          "calc(var(--vh, 1vh) * 100)"
+          "calc(var(--vh, 1vh) * 100 - 50px)"
         );
       } else if (
         eventData.dir === "Down" &&
         eventData.deltaY > (1 / 8) * window.innerHeight
       ) {
-        document.documentElement.style.setProperty(
-          "--inner-height",
-          `${300 - eventData.deltaY}px`
-        );
+        if (isFull) {
+          document.documentElement.style.setProperty(
+            "--inner-height",
+            `calc(var(--vh, 1vh) * 100 - ${eventData.deltaY + 50}px)`
+          );
+        } else {
+          document.documentElement.style.setProperty(
+            "--inner-height",
+            `${300 - eventData.deltaY}px`
+          );
+        }
         navigate("/");
       }
     },
@@ -137,20 +159,12 @@ export default function Sidebar() {
         eventData.dir === "Left" &&
         eventData.deltaX < (-1 / 4) * window.innerWidth
       ) {
-        setisFirst(false);
-        document.documentElement.style.setProperty(
-          "--scroll-width-default",
-          "100%"
-        );
+        setSidebar(1);
       } else if (
         eventData.dir === "Right" &&
         eventData.deltaX > (1 / 4) * window.innerWidth
       ) {
-        setisFirst(true);
-        document.documentElement.style.setProperty(
-          "--scroll-width-default",
-          "0px"
-        );
+        setSidebar(0);
       }
     },
   });
@@ -161,20 +175,7 @@ export default function Sidebar() {
       </div>
       <div className="inner">
         <div className="header">
-          <img src={logo} className="side-logo" alt="logo" />
-          <div
-            className={
-              isFirst ? "switch-container first" : "switch-container second"
-            }
-          >
-            <div className="switch all" onClick={() => switchChat(1)}>
-              <img src={bigChat} alt="전체보기" />
-            </div>
-            <div className="switch focus" onClick={() => switchChat(2)}>
-              <img src={chat} alt="상세보기" />
-            </div>
-          </div>
-          {!isFull && <div className="swipe-handle" {...upHandlers}></div>}
+          <div className="swipe-handle" {...upHandlers} />
           <img
             className="close"
             src={x}
@@ -184,10 +185,46 @@ export default function Sidebar() {
         </div>
         <div className="scroll-container" {...sideHandlers}>
           <div className="scroll first">
-            <ChatList chatList={beanList} />
+            <div className="scroll-description">
+              <div className="description-header">
+                <div style={{ marginRight: "5px" }}>전국</div>
+                모든 콩들의 대화 내용입니다.
+              </div>
+            </div>
+            <ChatList chatList={coloredBeanList} />
+            {coloredBeanList.length > 0 ? (
+              <div></div>
+            ) : (
+              <div className="empty-list">
+                <img src={sadBean} alt="" />
+                "Beanzido에 콩이 하나도 없어요..."
+              </div>
+            )}
           </div>
           <div className="scroll second">
-            <ChatList chatList={focused} />
+            <div className="scroll-description">
+              {coloredFocusedList.length > 0 && (
+                <div>
+                  <div className="description-header">
+                    <Lottie
+                      animationData={locationAni}
+                      className="location-img"
+                    />
+                    <div>{coloredFocusedList[0].location}</div>에 있는
+                  </div>
+                  콩들의 대화 내용입니다.
+                </div>
+              )}
+            </div>
+            <ChatList chatList={coloredFocusedList} />
+            {coloredFocusedList.length > 0 ? (
+              <div></div>
+            ) : (
+              <div className="empty-list">
+                <img src={sadBean} alt="" />
+                "Beanzido에 심어진 콩을 클릭해봐"
+              </div>
+            )}
           </div>
         </div>
       </div>

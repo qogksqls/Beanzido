@@ -1,17 +1,10 @@
-import React, {
-  useState,
-  Dispatch,
-  SetStateAction,
-  useRef,
-  useCallback,
-} from "react";
-import { useRecoilState } from "recoil";
-import { beanColorState } from "store/atom";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useRecoilValue } from "recoil";
+import { colorSelector } from "store/selector";
 import Webcam from "react-webcam";
 import useRandomName from "components/hooks/useRandomName";
 import BeanStyle from "components/BeanStyle/BeanStyle";
 import imageCompression from "browser-image-compression";
-
 import "./CreateBean.scss";
 import x from "../../assets/img/x.svg";
 import Camera from "../../assets/img/Camera.svg";
@@ -35,9 +28,16 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
     setContentValue(e.currentTarget.value);
   }
   const { coordinates } = useGeolocation();
-  const [beanColor] = useRecoilState(beanColorState);
+  const { color, backgroundColor, beanColor } = useRecoilValue(colorSelector);
   const [camera, setCamera] = useState(false);
   const navigate = useNavigate();
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--create-bean-color",
+      backgroundColor
+    );
+    document.documentElement.style.setProperty("--create-text-color", color);
+  }, [beanColor, color, backgroundColor]);
   function OnCamera() {
     setCamera(true);
   }
@@ -103,7 +103,9 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
   function SaveBean() {
     const beanInfo = {
       nickname: name,
-      content: contentValue ? contentValue : "내용이 없습니다.",
+      content: contentValue
+        ? contentValue.replace(/(?:\r\n|\r|\n)/g, "<br/>")
+        : "",
       color: beanColor,
       img: imgSrc,
       latitude: coordinates.lat,

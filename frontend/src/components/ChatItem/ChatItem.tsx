@@ -1,31 +1,26 @@
 import { useEffect, useRef, memo } from "react";
-import useColor from "components/hooks/useColor";
 import "./ChatItem.scss";
 import useTime from "components/hooks/useTime";
+import Lottie from "lottie-react";
+import locationAni from "assets/img/location.json";
+import locationImg from "assets/img/location.svg";
+import filtered from "assets/img/filtered.png";
+import { ColoredBean } from "store/types";
 
 type ChatProps = {
-  Chatinfo: {
-    nickname: string;
-    content: string;
-    color: number;
-    img?: string;
-    createdAt: string;
-  };
+  Chatinfo: ColoredBean;
 };
 
 function ChatItem({ Chatinfo }: ChatProps) {
   const colorRef = useRef<HTMLDivElement>(null);
   const [elapsedText] = useTime(Chatinfo.createdAt);
-  const [indexToColor] = useColor();
   useEffect(() => {
     const { current } = colorRef;
     if (current !== null) {
-      current.style.color = indexToColor(Chatinfo.color).color;
-      current.style.backgroundColor = indexToColor(
-        Chatinfo.color
-      ).backgroundColor;
+      current.style.color = Chatinfo.color.color;
+      current.style.backgroundColor = Chatinfo.color.backgroundColor;
     }
-  }, []);
+  });
 
   return (
     <div className="chat-item">
@@ -37,13 +32,24 @@ function ChatItem({ Chatinfo }: ChatProps) {
           <div>{Chatinfo.nickname}</div>
           <div className="time">{elapsedText}</div>
         </div>
-        {Chatinfo.content == "내용이 없습니다." ? (
+        <div className="location">
+          {/* <Lottie animationData={locationAni} className="location-img" /> */}
+          <img src={locationImg} className="location-img" alt="" />
+          {Chatinfo.location}
+        </div>
+        {Chatinfo.content === "" ? (
           <div></div>
         ) : (
-          <div className="down">{Chatinfo.content}</div>
+          <div className="down">
+            <div style={{ whiteSpace: "pre-line" }}>
+              {Chatinfo.contentFilter
+                ? "부적절한 단어가 포함되어 있습니다."
+                : Chatinfo.content.replaceAll("<br/>", "\r\n")}
+            </div>
+          </div>
         )}
         <div className="chat-item-img">
-          <img src={Chatinfo.img} alt="" />
+          <img src={Chatinfo.imgFilter ? filtered : Chatinfo.img} alt="" />
         </div>
       </div>
     </div>

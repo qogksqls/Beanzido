@@ -1,38 +1,25 @@
 import { useRecoilState } from "recoil";
-import {
-  Map,
-  MapMarker,
-  MapTypeControl,
-  ZoomControl,
-} from "react-kakao-maps-sdk";
+import { Map, MapMarker, MapTypeControl } from "react-kakao-maps-sdk";
 import Clusterer from "./Clusterer/Clusterer";
-import Bean from "components/Bean/Bean";
 import { beanListState } from "store/atom";
-import { useEffect, useState, memo, useRef, useMemo, useCallback } from "react";
+import { useEffect, useState, memo } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import useGeolocation from "./hooks/useGeolocation";
 import "./KakaoMap.scss";
-
 import gps from "../assets/img/Gps.svg";
 import plus from "../assets/img/plus.svg";
 import minus from "../assets/img/minus.svg";
 import my_location from "../assets/img/my_location.svg";
+import { Bean } from "store/types";
 
 function KakaoMap() {
-  const [beanList, setBeanList] = useRecoilState(beanListState);
+  const [beanList] = useRecoilState(beanListState);
   const [level, setLevel] = useState(3);
   const [map, setMap] = useState<kakao.maps.Map>();
   const location = useGeolocation();
-  const [clusterList, setClusterList] = useState(
-    [] as {
-      nickname: string;
-      content: string;
-      color: number;
-      img: string;
-      createdAt: string;
-      latitude: number;
-      longitude: number;
-    }[][]
-  );
+  const [searchParams] = useSearchParams();
+  // console.log(searchParams.get("keyword"));
+  const [clusterList, setClusterList] = useState([] as Bean[][]);
   const [initialPosition, SetinitialPosition] = useState({
     lat: 0,
     lng: 0,
@@ -186,20 +173,9 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   return dist;
 }
 
-function getCluster(
-  level: number,
-  beanList: {
-    nickname: string;
-    content: string;
-    color: number;
-    img: string;
-    createdAt: string;
-    latitude: number;
-    longitude: number;
-  }[]
-) {
+function getCluster(level: number, beanList: Bean[]) {
   var clustered = new Set();
-  var newClusterList = new Array();
+  var newClusterList: Bean[][] = [];
   beanList.forEach((bean1, idx1) => {
     var tmp = new Array(bean1);
     beanList.forEach((bean2, idx2) => {

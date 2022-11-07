@@ -1,16 +1,9 @@
 import "./ChatList.scss";
 import ChatItem from "components/ChatItem/ChatItem";
+import { ColoredBean } from "store/types";
 
 type ChatProps = {
-  chatList: {
-    nickname: string;
-    content: string;
-    color: number;
-    img: string;
-    createdAt: string;
-    latitude: number;
-    longitude: number;
-  }[];
+  chatList: ColoredBean[];
 };
 
 function ChatList({ chatList }: ChatProps) {
