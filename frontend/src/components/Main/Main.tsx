@@ -8,19 +8,6 @@ import Sidebar from "components/Sidebar/Sidebar";
 import CreateBean from "components/CreateBean/CreateBean";
 import FeedbackButton from "components/FeedbackButton/FeedbackButton";
 import "./Main.scss";
-import openIcon from "assets/img/Expand_right_light.svg";
-import x from "assets/img/x.svg";
-
-import Lottie from "lottie-react";
-import aroundTheWorld from "assets/img/around-the-world.json";
-import bubbleChat from "assets/img/bubble-chat.json";
-import likeAni from "assets/img/like.json";
-import locationAni from "assets/img/location.json";
-import searchAni from "assets/img/search.json";
-
-import createButton from "assets/img/chat-button.svg";
-import logo from "assets/img/Logo.svg";
-import chat from "assets/img/Chat.svg";
 
 function Main() {
   const navigate = useNavigate();
