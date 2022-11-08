@@ -1,6 +1,7 @@
-import { useEffect, useRef, memo } from "react";
+import { useEffect, useRef, memo, useState, useCallback } from "react";
 import "./ChatItem.scss";
 import useTime from "components/hooks/useTime";
+import ExpandImg from "components/ExpandImg/ExpandImg";
 import Lottie from "lottie-react";
 import locationAni from "assets/img/location.json";
 import locationImg from "assets/img/location.svg";
@@ -14,6 +15,8 @@ type ChatProps = {
 function ChatItem({ Chatinfo }: ChatProps) {
   const colorRef = useRef<HTMLDivElement>(null);
   const [elapsedText] = useTime(Chatinfo.createdAt);
+  const [expandImg, setExpandImg] = useState(false);
+
   useEffect(() => {
     const { current } = colorRef;
     if (current !== null) {
@@ -49,7 +52,15 @@ function ChatItem({ Chatinfo }: ChatProps) {
           </div>
         )}
         <div className="chat-item-img">
-          <img src={Chatinfo.imgFilter ? filtered : Chatinfo.img} alt="" />
+          <img
+            src={Chatinfo.imgFilter ? filtered : Chatinfo.img}
+            className="chat-item-img-off"
+            onClick={() => setExpandImg(!expandImg)}
+            alt=""
+          />
+          {expandImg && (
+            <ExpandImg photo={Chatinfo.img} setExpandImg={setExpandImg} />
+          )}
         </div>
       </div>
     </div>
