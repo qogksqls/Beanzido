@@ -17,6 +17,7 @@ public class MessageReq {
 	private int color;
 	private String nickname;
 	private String location;
+	private int code;
 	
 	public MessageLog createMessageLog(String ip) {
 		Timestamp timestamp = new Timestamp(new Date().getTime());
