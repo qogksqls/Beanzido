@@ -111,6 +111,7 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
       latitude: coordinates.lat,
       longitude: coordinates.lng,
       location: "",
+      code: 0,
     };
 
     if (contentValue || imgSrc) {
@@ -120,9 +121,9 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
         coordinates.lat,
         (result, status) => {
           for (var i = 0; i < result.length; i++) {
-            if (result[i].region_type === "H") {
-              // console.log(result[i].address_name);
+            if (result[i].region_type === "B") {
               beanInfo.location = result[i].address_name;
+              beanInfo.code = +result[i].code.slice(0, 8);
               sendMessage(JSON.stringify(beanInfo));
               navigate("/");
             }
