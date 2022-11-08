@@ -25,7 +25,7 @@
 }
 
 html {
-	--min-width: min(100%, 600px);
+	--max-width: min(600px, 100%)
 }
 
 @include desktop {
@@ -47,7 +47,8 @@ html {
 			justify-content: center;
 			text-align: center;
 			.photo {
-				border-radius: 15px;
+				object-fit: contain;
+				width: var(--max-width);
 			}
 		}
 	}
