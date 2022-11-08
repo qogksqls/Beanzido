@@ -12,9 +12,14 @@
 		height: 100%;
 		z-index: 111;
 		background-color: rgba(0, 0, 0, 0.2);
-		.photo {
-			border-radius: 15px;
-			width: 90%;
+		.photo-box{
+			display: flex;
+			justify-content: center;
+			text-align: center;
+			.photo {
+				border-radius: 15px;
+				width: 90%;
+			}
 		}
 	}
 }
@@ -29,14 +34,21 @@ html {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		top: 0%;
+		top: 0;
 		left: 80px;
 		width: calc(100% - 80px);
 		height: 100%;
 		z-index: 111;
 		background-color: rgba(0, 0, 0, 0.2);
-		.photo {
-			border-radius: 15px;
+		.photo-box{
+			width: 600px;
+			height: 600px;
+			display: flex;
+			justify-content: center;
+			text-align: center;
+			.photo {
+				border-radius: 15px;
+			}
 		}
 	}
 }
