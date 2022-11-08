@@ -77,7 +77,7 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
 
     const options = {
       maxSizeMB: 1,
-      maxWidthOrHeight: 480,
+      maxWidthOrHeight: 1080,
       useWebWorker: true,
     };
     try {
