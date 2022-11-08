@@ -1,13 +1,20 @@
 import json
+import os
+from dotenv import load_dotenv
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR,".env"))
+server_path = os.environ["JSON_PATH"]
 
 
 class Polygon:
     def __init__(self):
-        with open('C:\workspace\project3\BackEnd\Python\keyword\level1.json', 'r', encoding='UTF-8') as f:
+        with open(server_path+'level1.json', 'r', encoding='UTF-8') as f:
             json_do = json.load(f)
-        with open('C:\workspace\project3\BackEnd\Python\keyword\level2.json', 'r', encoding='UTF-8') as f:
+        with open(server_path+'level2.json', 'r', encoding='UTF-8') as f:
             json_si = json.load(f)
-        with open('C:\workspace\project3\BackEnd\Python\keyword\level3.json', 'r', encoding='UTF-8') as f:
+        with open(server_path+'level3.json', 'r', encoding='UTF-8') as f:
             json_dong = json.load(f)
 
         self.do = {'082': {}}
