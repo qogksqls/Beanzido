@@ -117,7 +117,6 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
       code: 0,
     };
 
-
     if (contentValue || imgSrc) {
       const geocoder = new kakao.maps.services.Geocoder();
       geocoder.coord2RegionCode(
@@ -199,9 +198,12 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
               {camera ? (
                 <WebcamCapture />
               ) : (
-                <div className="camera-btn" onClick={() => {
-                  OnCamera();
-                }}>
+                <div
+                  className="camera-btn"
+                  onClick={() => {
+                    OnCamera();
+                  }}
+                >
                   {[1, 5, 7, 8, 9].includes(beanColor) ? (
                     <img className="camera-img" src={Camera_white} alt="" />
                   ) : (
@@ -240,16 +242,19 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
               )}
             </div>
           )}
-          <div className="finish-button" onClick={() => {
-            SaveBean();
-            console.log(coordinates);
-            setMapCenter({
-              lat: coordinates.lat,
-              lng: coordinates.lng,
-              loaded: true,
-              isPanto: true,
-            });
-          }}>
+          <div
+            className="finish-button"
+            onClick={() => {
+              SaveBean();
+              // console.log(coordinates);
+              setMapCenter({
+                lat: coordinates.lat,
+                lng: coordinates.lng,
+                loaded: true,
+                isPanto: true,
+              });
+            }}
+          >
             <h3>글 작성 완료</h3>
           </div>
         </div>

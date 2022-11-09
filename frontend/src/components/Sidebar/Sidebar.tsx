@@ -210,7 +210,13 @@ export default function Sidebar() {
                       animationData={locationAni}
                       className="location-img"
                     />
-                    <div>{coloredFocusedList[0].location}</div>에 있는
+                    <div>
+                      {
+                        coloredFocusedList[coloredFocusedList.length - 1]
+                          .location
+                      }
+                    </div>
+                    에 있는
                   </div>
                   콩들의 대화 내용입니다.
                 </div>
