@@ -33,7 +33,7 @@ function ChatItem({ Chatinfo }: ChatProps) {
     <div
       className="chat-item"
       onClick={() => {
-        console.log("위치로 이동");
+        // console.log("위치로 이동");
         setMapCenter({
           lat: Chatinfo.latitude,
           lng: Chatinfo.longitude,
