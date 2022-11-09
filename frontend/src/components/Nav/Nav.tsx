@@ -66,7 +66,7 @@ export default function Nav() {
             src={logo}
             alt="logo"
             onClick={() => {
-              alert("일해라 황태희희흐히ㅡ히ㅡ히ㅡ흐히");
+              alert("Beanzido is World Best Social Map Community.");
             }}
           />
         </div>
