@@ -16,6 +16,7 @@ $breakpoint: 500px;
 :root {
 	--create-bean-color: #c7f2a4;
   --create-text-color: #000000;
+  --create-bean-light: #f5f5f5
 }
 
 .create-bean-back {
@@ -35,8 +36,14 @@ $breakpoint: 500px;
   left: calc(50% - var(--create-width) / 2);
   z-index: 111;
   width: var(--create-width);
-  background-color: white;
+  background-color: #f5f5f5;
   border-radius: 10px;
+  box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.1), inset 4px 4px 8px (rgba(255, 255, 255, 1));
+
+  .finish-button {
+    box-shadow: inset -4px -4px 4px rgba(0, 0, 0, 0.1), inset 4px 4px 4px (rgba(255, 255, 255, 0.1));
+  }
+
   .header {
     background-color: var(--create-bean-color);
     color: var(--create-text-color);
@@ -84,7 +91,7 @@ $breakpoint: 500px;
         }
         .refresh {
           margin-left: 5px;
-          background-color: #f5f5f5;
+          filter: brightness(0.95);
           border: solid 1px var(--create-bean-color);
           border-radius: 5px;
           cursor: pointer;
@@ -121,6 +128,7 @@ $breakpoint: 500px;
     .message {
       margin-bottom: 10px;
       textarea {
+        background-color: transparent;
         border-color: var(--create-bean-color);
         border-radius: 5px;
         width: calc(100% - 20px);
@@ -277,6 +285,9 @@ $breakpoint: 500px;
       &:active {
         filter: brightness(0.9);
       }
+    }
+    .finish-button {
+      box-shadow: inset -4px -4px 4px rgba(0, 0, 0, 0.1), inset 4px 4px 4px (rgba(255, 255, 255, 0.1));
     }
   }
 }
