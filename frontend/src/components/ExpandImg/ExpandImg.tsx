@@ -9,7 +9,9 @@ type ImgProps = {
 const ExpandImg = ({ photo, setExpandImg }: ImgProps) => {
   return (
     <div className="expand-photo" onClick={() => setExpandImg(false)}>
-      <img src={photo} className="photo" alt="" />
+      <div className="photo-box">
+        <img src={photo} className="photo" alt="" />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useRecoilState } from "recoil";
+import { mapCenterState } from "store/atom";
 import { useRecoilValue } from "recoil";
 import { colorSelector } from "store/selector";
 import Webcam from "react-webcam";
@@ -21,6 +23,7 @@ type createBeanProps = {
 };
 
 export default function CreateBean({ sendMessage }: createBeanProps) {
+  const [, setMapCenter] = useRecoilState(mapCenterState);
   const [isBeanStyle, setIsBeanStyle] = useState(false);
   const { name, setRandomName } = useRandomName(); // nickname
   const [contentValue, setContentValue] = useState(""); // content
@@ -77,7 +80,7 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
 
     const options = {
       maxSizeMB: 1,
-      maxWidthOrHeight: 480,
+      maxWidthOrHeight: 1080,
       useWebWorker: true,
     };
     try {
@@ -113,25 +116,30 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
       location: "",
       code: 0,
     };
+    console.log(beanInfo);
 
-    if (contentValue || imgSrc) {
-      const geocoder = new kakao.maps.services.Geocoder();
-      geocoder.coord2RegionCode(
-        coordinates.lng,
-        coordinates.lat,
-        (result, status) => {
-          for (var i = 0; i < result.length; i++) {
-            if (result[i].region_type === "B") {
-              beanInfo.location = result[i].address_name;
-              beanInfo.code = +result[i].code.slice(0, 8);
-              sendMessage(JSON.stringify(beanInfo));
-              navigate("/");
+    if (beanInfo.latitude === 0 || beanInfo.longitude === 0) {
+      alert("위치 정보 제공에 동의해 주세요. 새로고침 ㄱㄱ");
+    } else {
+      if (contentValue || imgSrc) {
+        const geocoder = new kakao.maps.services.Geocoder();
+        geocoder.coord2RegionCode(
+          coordinates.lng,
+          coordinates.lat,
+          (result, status) => {
+            for (var i = 0; i < result.length; i++) {
+              if (result[i].region_type === "B") {
+                beanInfo.location = result[i].address_name;
+                beanInfo.code = +result[i].code.slice(0, 8);
+                sendMessage(JSON.stringify(beanInfo));
+                navigate("/");
+              }
             }
           }
-        }
-      );
-    } else {
-      alert("전할 메시지를 적어주세요.");
+        );
+      } else {
+        alert("전할 메시지를 적어주세요.");
+      }
     }
   }
 
@@ -189,7 +197,12 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
               {camera ? (
                 <WebcamCapture />
               ) : (
-                <div className="camera-btn" onClick={OnCamera}>
+                <div
+                  className="camera-btn"
+                  onClick={() => {
+                    OnCamera();
+                  }}
+                >
                   {[1, 5, 7, 8, 9].includes(beanColor) ? (
                     <img className="camera-img" src={Camera_white} alt="" />
                   ) : (
@@ -228,7 +241,19 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
               )}
             </div>
           )}
-          <div className="finish-button" onClick={SaveBean}>
+          <div
+            className="finish-button"
+            onClick={() => {
+              SaveBean();
+              // console.log(coordinates);
+              setMapCenter({
+                lat: coordinates.lat,
+                lng: coordinates.lng,
+                loaded: true,
+                isPanto: true,
+              });
+            }}
+          >
             <h3>글 작성 완료</h3>
           </div>
         </div>

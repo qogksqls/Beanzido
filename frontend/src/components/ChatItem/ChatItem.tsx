@@ -1,18 +1,22 @@
-import { useEffect, useRef, memo, useState, useCallback } from "react";
-import "./ChatItem.scss";
+import React, { useEffect, useRef, useState, memo } from "react";
+import { useRecoilState } from "recoil";
+import ReactTooltip from "react-tooltip";
+import { mapCenterState } from "store/atom";
+import { ColoredBean } from "store/types";
 import useTime from "components/hooks/useTime";
+import "./ChatItem.scss";
+
 import ExpandImg from "components/ExpandImg/ExpandImg";
-import Lottie from "lottie-react";
-import locationAni from "assets/img/location.json";
 import locationImg from "assets/img/location.svg";
 import filtered from "assets/img/filtered.png";
-import { ColoredBean } from "store/types";
 
 type ChatProps = {
   Chatinfo: ColoredBean;
 };
 
 function ChatItem({ Chatinfo }: ChatProps) {
+  // const [targetPosition, SetTargetPosition] = useTargetLocation();
+  const [, setMapCenter] = useRecoilState(mapCenterState);
   const colorRef = useRef<HTMLDivElement>(null);
   const [elapsedText] = useTime(Chatinfo.createdAt);
   const [expandImg, setExpandImg] = useState(false);
@@ -23,10 +27,30 @@ function ChatItem({ Chatinfo }: ChatProps) {
       current.style.color = Chatinfo.color.color;
       current.style.backgroundColor = Chatinfo.color.backgroundColor;
     }
-  });
+  }, []);
 
   return (
-    <div className="chat-item">
+    <div
+      className="chat-item"
+      onClick={() => {
+        setMapCenter({
+          lat: Chatinfo.latitude,
+          lng: Chatinfo.longitude,
+          loaded: true,
+          isPanto: true,
+        });
+      }}
+      data-for="chat-item"
+      data-tip
+    >
+      <ReactTooltip
+        id="chat-item"
+        getContent={(dataTip) => "위치로 이동"}
+        type="success"
+        place="right"
+        // effect="solid"
+        delayShow={500}
+      />
       <div className="nickname-container" ref={colorRef}>
         {Chatinfo.nickname[0]}
       </div>
@@ -36,7 +60,6 @@ function ChatItem({ Chatinfo }: ChatProps) {
           <div className="time">{elapsedText}</div>
         </div>
         <div className="location">
-          {/* <Lottie animationData={locationAni} className="location-img" /> */}
           <img src={locationImg} className="location-img" alt="" />
           {Chatinfo.location}
         </div>

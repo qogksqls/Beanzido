@@ -2,13 +2,9 @@ import { useRecoilState } from "recoil";
 import { Map, MapMarker, MapTypeControl } from "react-kakao-maps-sdk";
 import { Routes, Route } from "react-router-dom";
 import Clusterer from "./Clusterer/Clusterer";
-import { beanListState } from "store/atom";
-import { useEffect, useState, memo, useCallback } from "react";
-import {
-  useLocation,
-  useSearchParams,
-  useRouteLoaderData,
-} from "react-router-dom";
+import { beanListState, mapCenterState } from "store/atom";
+import { useEffect, useState, memo } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import useGeolocation from "./hooks/useGeolocation";
 import "./KakaoMap.scss";
 import gps from "../assets/img/Gps.svg";
@@ -23,22 +19,22 @@ import KeywordDong from "./KeywordMap/KeywordDong";
 
 function KakaoMap() {
   const [beanList] = useRecoilState(beanListState);
+  const [mapCenter, setMapCenter] = useRecoilState(mapCenterState);
   const [level, setLevel] = useState(3);
   const [map, setMap] = useState<kakao.maps.Map>();
   const location = useGeolocation();
   const routerLocation = useLocation();
   const [clusterList, setClusterList] = useState([] as Bean[][]);
-  const [initialPosition, setInitialPosition] = useState({
-    lat: 0,
-    lng: 0,
-    loaded: false,
-    isPanto: false,
-  });
+  // const [initialPosition, SetinitialPosition] = useState({
+  //   lat: 0,
+  //   lng: 0,
+  //   loaded: false,
+  //   isPanto: false,
+  // });
 
   useEffect(() => {
-    if (location.loaded === true && initialPosition.loaded === false) {
-      console.log(level);
-      setInitialPosition({
+    if (location.loaded === true && mapCenter.loaded === false) {
+      setMapCenter({
         lat: location.coordinates.lat,
         lng: location.coordinates.lng,
         loaded: true,
@@ -61,15 +57,15 @@ function KakaoMap() {
 
   return (
     <>
-      {initialPosition.loaded && (
+      {mapCenter.loaded && (
         <Map
           id="map"
-          center={{ lat: initialPosition.lat, lng: initialPosition.lng }}
-          isPanto={initialPosition.isPanto}
+          center={{ lat: mapCenter.lat, lng: mapCenter.lng }}
+          isPanto={mapCenter.isPanto}
           className="map"
           onIdle={(map) => {
             setLevel(map.getLevel());
-            setInitialPosition({
+            setMapCenter({
               lat: map.getCenter().getLat(),
               lng: map.getCenter().getLng(),
               loaded: true,
@@ -131,7 +127,7 @@ function KakaoMap() {
               src={gps}
               alt=""
               onClick={() => {
-                setInitialPosition({
+                setMapCenter({
                   lat: location.coordinates.lat,
                   lng: location.coordinates.lng,
                   loaded: true,
