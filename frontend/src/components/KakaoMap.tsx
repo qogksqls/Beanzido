@@ -1,5 +1,6 @@
 import { useRecoilState } from "recoil";
 import { Map, MapMarker, MapTypeControl } from "react-kakao-maps-sdk";
+import { Routes, Route } from "react-router-dom";
 import Clusterer from "./Clusterer/Clusterer";
 import { beanListState, mapCenterState } from "store/atom";
 import { useEffect, useState, memo } from "react";
@@ -11,6 +12,10 @@ import plus from "../assets/img/plus.svg";
 import minus from "../assets/img/minus.svg";
 import my_location from "../assets/img/my_location.svg";
 import { Bean } from "store/types";
+import KeywordMap from "./KeywordMap/KeywordMap";
+import KeywordDo from "./KeywordMap/KeywordDo";
+import KeywordSi from "./KeywordMap/KeywordSi";
+import KeywordDong from "./KeywordMap/KeywordDong";
 
 function KakaoMap() {
   const [beanList] = useRecoilState(beanListState);
@@ -18,8 +23,7 @@ function KakaoMap() {
   const [level, setLevel] = useState(3);
   const [map, setMap] = useState<kakao.maps.Map>();
   const location = useGeolocation();
-  const [searchParams] = useSearchParams();
-  // console.log(searchParams.get("keyword"));
+  const routerLocation = useLocation();
   const [clusterList, setClusterList] = useState([] as Bean[][]);
   // const [initialPosition, SetinitialPosition] = useState({
   //   lat: 0,
@@ -45,7 +49,7 @@ function KakaoMap() {
   }
   useEffect(() => {
     setScreenSize();
-  }, []);
+  }, [routerLocation.pathname, map]);
 
   useEffect(() => {
     setClusterList(getCluster(level, beanList));
@@ -72,9 +76,8 @@ function KakaoMap() {
             setMap(map);
           }}
         >
-          <MapMarker // 마커를 생성합니다
+          <MapMarker
             position={{
-              // 마커가 표시될 위치입니다
               lat: location.coordinates.lat,
               lng: location.coordinates.lng,
             }}
@@ -83,20 +86,41 @@ function KakaoMap() {
               size: {
                 width: 20,
                 height: 20,
-              }, // 마커이미지의 크기입니다
+              },
               options: {
                 offset: {
                   x: 10,
                   y: 10,
-                }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                },
               },
             }}
           />
-          {/* <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} /> */}
           <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
-          {clusterList.map((clusteredBeanList, idx) => (
-            <Clusterer beanList={clusteredBeanList} key={idx} />
-          ))}
+          {map && (
+            <Routes>
+              <Route path="keyword/*" element={<KeywordMap map={map} />}>
+                <Route path="" element={<KeywordDo map={map} />} />
+                <Route path="si/:siCode" element={<KeywordSi map={map} />} />
+                <Route
+                  path="dong/:dongCode"
+                  element={<KeywordDong map={map} />}
+                />
+              </Route>
+              <Route
+                path="*"
+                element={clusterList.map((clusteredBeanList, idx) => (
+                  <Clusterer beanList={clusteredBeanList} key={idx} />
+                ))}
+              />
+            </Routes>
+          )}
+          {/* {routerLocation.pathname.slice(0, 8) !== "/keyword"
+            ? clusterList.map((clusteredBeanList, idx) => (
+                <Clusterer beanList={clusteredBeanList} key={idx} />
+              ))
+            : map && (
+                <KeywordMap map={map} setInitialPosition={setInitialPosition} />
+              )} */}
           <div className="gps">
             <img
               className="gps-img"
