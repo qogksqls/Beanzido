@@ -45,11 +45,12 @@ function ChatItem({ Chatinfo }: ChatProps) {
     >
       <ReactTooltip
         id="chat-item"
+        className="chat-item-tooltip"
         getContent={(dataTip) => "위치로 이동"}
         type="success"
         place="right"
         // effect="solid"
-        delayShow={500}
+        delayShow={200}
       />
       <div className="nickname-container" ref={colorRef}>
         {Chatinfo.nickname[0]}
