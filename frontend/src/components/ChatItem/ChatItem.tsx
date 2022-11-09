@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState, memo, Component, useCallback  } from "react";
+import { useEffect, useRef, useState, memo } from "react";
+import { useRecoilState } from "recoil";
+import { mapCenterState } from "store/atom";
 import "./ChatItem.scss";
 import useTime from "components/hooks/useTime";
 import ExpandImg from "components/ExpandImg/ExpandImg";
@@ -7,18 +9,14 @@ import locationAni from "assets/img/location.json";
 import locationImg from "assets/img/location.svg";
 import filtered from "assets/img/filtered.png";
 import { ColoredBean } from "store/types";
-import useTargetLocation from "components/hooks/useTargetLocation"
+
 type ChatProps = {
   Chatinfo: ColoredBean;
 };
 
 function ChatItem({ Chatinfo }: ChatProps) {
-  const [initialPosition, SetinitialPosition] = useState({
-    lat: Chatinfo.latitude,
-    lng: Chatinfo.longitude,
-    loaded: true,
-    isPanto: true,
-  });
+  // const [targetPosition, SetTargetPosition] = useTargetLocation();
+  const [, setMapCenter] = useRecoilState(mapCenterState);
   const colorRef = useRef<HTMLDivElement>(null);
   const [elapsedText] = useTime(Chatinfo.createdAt);
   const [expandImg, setExpandImg] = useState(false);
@@ -32,16 +30,18 @@ function ChatItem({ Chatinfo }: ChatProps) {
   });
 
   return (
-    <div className="chat-item" onClick={() => {
-      console.log('위치로 이동')
-      SetinitialPosition({
-        lat: Chatinfo.latitude,
-        lng: Chatinfo.longitude,
-        loaded: true,
-        isPanto: true,
-      });
-      console.log(initialPosition)
-    }}>
+    <div
+      className="chat-item"
+      onClick={() => {
+        console.log("위치로 이동");
+        setMapCenter({
+          lat: Chatinfo.latitude,
+          lng: Chatinfo.longitude,
+          loaded: true,
+          isPanto: true,
+        });
+      }}
+    >
       <div className="nickname-container" ref={colorRef}>
         {Chatinfo.nickname[0]}
       </div>
