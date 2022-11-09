@@ -1,3 +1,4 @@
+import useGeolocation from "components/hooks/useGeolocation";
 import { atom } from "recoil";
 import { Bean } from "./types";
 
@@ -26,14 +27,16 @@ export const sidebarState = atom({
   default: 0,
 });
 
-// export const locationState = atom({
-//   key: "locationState",
-//   default: {
-//     loaded: false,
-//     coordinates: { lat: 0, lng: 0 },
-//     error: { code: 0, message: "not loaded" },
-//   },
-// });
+export const mapCenterState = atom({
+  key: "mapCenterState",
+  default: {
+    lat: 0,
+    lng: 0,
+    loaded: false,
+    isPanto: false,
+  }
+});
+
 
 function getRandomInt(min: number, max: number) {
   min = Math.ceil(min);

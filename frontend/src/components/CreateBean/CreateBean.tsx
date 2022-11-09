@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useRecoilState } from "recoil";
+import { mapCenterState } from "store/atom";
 import { useRecoilValue } from "recoil";
 import { colorSelector } from "store/selector";
 import Webcam from "react-webcam";
@@ -21,6 +23,7 @@ type createBeanProps = {
 };
 
 export default function CreateBean({ sendMessage }: createBeanProps) {
+  const [, setMapCenter] = useRecoilState(mapCenterState);
   const [isBeanStyle, setIsBeanStyle] = useState(false);
   const { name, setRandomName } = useRandomName(); // nickname
   const [contentValue, setContentValue] = useState(""); // content
@@ -114,6 +117,7 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
       code: 0,
     };
 
+
     if (contentValue || imgSrc) {
       const geocoder = new kakao.maps.services.Geocoder();
       geocoder.coord2RegionCode(
@@ -130,6 +134,12 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
           }
         }
       );
+      // setMapCenter({
+      //   lat: coordinates.lat,
+      //   lng: coordinates.lng,
+      //   loaded: true,
+      //   isPanto: true,
+      // });
     } else {
       alert("전할 메시지를 적어주세요.");
     }
@@ -189,7 +199,9 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
               {camera ? (
                 <WebcamCapture />
               ) : (
-                <div className="camera-btn" onClick={OnCamera}>
+                <div className="camera-btn" onClick={() => {
+                  OnCamera();
+                }}>
                   {[1, 5, 7, 8, 9].includes(beanColor) ? (
                     <img className="camera-img" src={Camera_white} alt="" />
                   ) : (
@@ -228,7 +240,16 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
               )}
             </div>
           )}
-          <div className="finish-button" onClick={SaveBean}>
+          <div className="finish-button" onClick={() => {
+            SaveBean();
+            console.log(coordinates);
+            setMapCenter({
+              lat: coordinates.lat,
+              lng: coordinates.lng,
+              loaded: true,
+              isPanto: true,
+            });
+          }}>
             <h3>글 작성 완료</h3>
           </div>
         </div>
