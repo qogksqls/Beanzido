@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { sidebarState } from "store/atom";
+import ReactTooltip from "react-tooltip";
 import "./Nav.scss";
 import createButton from "assets/img/chat-button.svg";
 import openIcon from "assets/img/Expand_right_light.svg";
@@ -80,7 +81,11 @@ export default function Nav() {
               : "switch-container"
           }
         >
-          <div className="switch">
+          <div
+            className="switch"
+            data-for={isKeyword ? "community" : "keyword"}
+            data-tip
+          >
             <Lottie
               animationData={isKeyword ? aroundTheWorld : searchAni}
               className={
@@ -91,6 +96,21 @@ export default function Nav() {
                 setIsKeyword(!isKeyword);
               }}
             />
+            {isKeyword ? (
+              <ReactTooltip
+                id="community"
+                getContent={(dataTip) => "커뮤니티 보기"}
+                place="top"
+                effect="solid"
+              />
+            ) : (
+              <ReactTooltip
+                id="keyword"
+                getContent={(dataTip) => "지역별 키워드 보기"}
+                place="right"
+                effect="solid"
+              />
+            )}
           </div>
           <div
             className="switch all"
@@ -100,8 +120,16 @@ export default function Nav() {
               }
               setSidebar(0);
             }}
+            data-for="all-bean"
+            data-tip
           >
             <Lottie animationData={bubbleChat} className="ani-img bubbleChat" />
+            <ReactTooltip
+              id="all-bean"
+              getContent={(dataTip) => "전체 콩"}
+              place="right"
+              effect="solid"
+            />
           </div>
           <div
             className="switch focus"
@@ -111,18 +139,34 @@ export default function Nav() {
               }
               setSidebar(1);
             }}
+            data-for="one-bean"
+            data-tip
           >
             <Lottie animationData={pinAni} className="ani-img pin" />
+            <ReactTooltip
+              id="one-bean"
+              getContent={(dataTip) => "개별 콩"}
+              place="right"
+              effect="solid"
+            />
           </div>
         </div>
         {location.pathname !== "/feedback" && (
           <div
             className="feedback-button"
             onClick={() => navigate("/feedback")}
+            data-for="feedback-btn"
+            data-tip
           >
             <Lottie className="feedback-button-img" animationData={likeAni} />
           </div>
         )}
+        <ReactTooltip
+          id="feedback-btn"
+          getContent={(dataTip) => "피드백"}
+          place="right"
+          effect="solid"
+        />
       </div>
     </nav>
   );
