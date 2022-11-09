@@ -21,3 +21,5 @@ export type ColoredBean = BeanBase & {
     color: string;
   };
 };
+
+export type LngLat = { lng: number; lat: number };

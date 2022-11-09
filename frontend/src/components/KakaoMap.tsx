@@ -1,9 +1,14 @@
 import { useRecoilState } from "recoil";
 import { Map, MapMarker, MapTypeControl } from "react-kakao-maps-sdk";
+import { Routes, Route } from "react-router-dom";
 import Clusterer from "./Clusterer/Clusterer";
 import { beanListState } from "store/atom";
-import { useEffect, useState, memo } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useEffect, useState, memo, useCallback } from "react";
+import {
+  useLocation,
+  useSearchParams,
+  useRouteLoaderData,
+} from "react-router-dom";
 import useGeolocation from "./hooks/useGeolocation";
 import "./KakaoMap.scss";
 import gps from "../assets/img/Gps.svg";
@@ -11,16 +16,19 @@ import plus from "../assets/img/plus.svg";
 import minus from "../assets/img/minus.svg";
 import my_location from "../assets/img/my_location.svg";
 import { Bean } from "store/types";
+import KeywordMap from "./KeywordMap/KeywordMap";
+import KeywordDo from "./KeywordMap/KeywordDo";
+import KeywordSi from "./KeywordMap/KeywordSi";
+import KeywordDong from "./KeywordMap/KeywordDong";
 
 function KakaoMap() {
   const [beanList] = useRecoilState(beanListState);
   const [level, setLevel] = useState(3);
   const [map, setMap] = useState<kakao.maps.Map>();
   const location = useGeolocation();
-  const [searchParams] = useSearchParams();
-  // console.log(searchParams.get("keyword"));
+  const routerLocation = useLocation();
   const [clusterList, setClusterList] = useState([] as Bean[][]);
-  const [initialPosition, SetinitialPosition] = useState({
+  const [initialPosition, setInitialPosition] = useState({
     lat: 0,
     lng: 0,
     loaded: false,
@@ -29,7 +37,8 @@ function KakaoMap() {
 
   useEffect(() => {
     if (location.loaded === true && initialPosition.loaded === false) {
-      SetinitialPosition({
+      console.log(level);
+      setInitialPosition({
         lat: location.coordinates.lat,
         lng: location.coordinates.lng,
         loaded: true,
@@ -44,7 +53,7 @@ function KakaoMap() {
   }
   useEffect(() => {
     setScreenSize();
-  }, []);
+  }, [routerLocation.pathname, map]);
 
   useEffect(() => {
     setClusterList(getCluster(level, beanList));
@@ -60,7 +69,7 @@ function KakaoMap() {
           className="map"
           onIdle={(map) => {
             setLevel(map.getLevel());
-            SetinitialPosition({
+            setInitialPosition({
               lat: map.getCenter().getLat(),
               lng: map.getCenter().getLng(),
               loaded: true,
@@ -71,9 +80,8 @@ function KakaoMap() {
             setMap(map);
           }}
         >
-          <MapMarker // 마커를 생성합니다
+          <MapMarker
             position={{
-              // 마커가 표시될 위치입니다
               lat: location.coordinates.lat,
               lng: location.coordinates.lng,
             }}
@@ -82,27 +90,48 @@ function KakaoMap() {
               size: {
                 width: 20,
                 height: 20,
-              }, // 마커이미지의 크기입니다
+              },
               options: {
                 offset: {
                   x: 10,
                   y: 10,
-                }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                },
               },
             }}
           />
-          {/* <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} /> */}
           <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
-          {clusterList.map((clusteredBeanList, idx) => (
-            <Clusterer beanList={clusteredBeanList} key={idx} />
-          ))}
+          {map && (
+            <Routes>
+              <Route path="keyword/*" element={<KeywordMap map={map} />}>
+                <Route path="" element={<KeywordDo map={map} />} />
+                <Route path="si/:siCode" element={<KeywordSi map={map} />} />
+                <Route
+                  path="dong/:dongCode"
+                  element={<KeywordDong map={map} />}
+                />
+              </Route>
+              <Route
+                path="*"
+                element={clusterList.map((clusteredBeanList, idx) => (
+                  <Clusterer beanList={clusteredBeanList} key={idx} />
+                ))}
+              />
+            </Routes>
+          )}
+          {/* {routerLocation.pathname.slice(0, 8) !== "/keyword"
+            ? clusterList.map((clusteredBeanList, idx) => (
+                <Clusterer beanList={clusteredBeanList} key={idx} />
+              ))
+            : map && (
+                <KeywordMap map={map} setInitialPosition={setInitialPosition} />
+              )} */}
           <div className="gps">
             <img
               className="gps-img"
               src={gps}
               alt=""
               onClick={() => {
-                SetinitialPosition({
+                setInitialPosition({
                   lat: location.coordinates.lat,
                   lng: location.coordinates.lng,
                   loaded: true,

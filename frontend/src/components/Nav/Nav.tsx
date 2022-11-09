@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { sidebarState } from "store/atom";
 import "./Nav.scss";
@@ -19,6 +19,7 @@ import bottomBar from "assets/img/bottom-bar.svg";
 export default function Nav() {
   const [sidebar, setSidebar] = useRecoilState(sidebarState);
   const [isKeyword, setIsKeyword] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -32,14 +33,14 @@ export default function Nav() {
         <div
           className="button-container"
           onClick={() => {
-            alert("추가 예정인 기능입니다. 기대해주세요.");
+            navigate(isKeyword ? "/" : "/keyword");
             setIsKeyword(!isKeyword);
           }}
         >
           <Lottie
-            animationData={isKeyword ? searchAni : aroundTheWorld}
+            animationData={isKeyword ? aroundTheWorld : searchAni}
             className={
-              isKeyword ? "ani-img searchAni" : "ani-img aroundTheWorld"
+              isKeyword ? "ani-img aroundTheWorld" : "ani-img searchAni"
             }
           />
         </div>
@@ -81,12 +82,12 @@ export default function Nav() {
         >
           <div className="switch">
             <Lottie
-              animationData={isKeyword ? searchAni : aroundTheWorld}
+              animationData={isKeyword ? aroundTheWorld : searchAni}
               className={
-                isKeyword ? "ani-img searchAni" : "ani-img aroundTheWorld"
+                isKeyword ? "ani-img aroundTheWorld" : "ani-img searchAni"
               }
               onClick={() => {
-                alert("추가 예정인 기능입니다. 기대해주세요.");
+                navigate(isKeyword ? "/" : "/keyword");
                 setIsKeyword(!isKeyword);
               }}
             />
