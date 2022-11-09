@@ -116,31 +116,30 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
       location: "",
       code: 0,
     };
+    console.log(beanInfo);
 
-    if (contentValue || imgSrc) {
-      const geocoder = new kakao.maps.services.Geocoder();
-      geocoder.coord2RegionCode(
-        coordinates.lng,
-        coordinates.lat,
-        (result, status) => {
-          for (var i = 0; i < result.length; i++) {
-            if (result[i].region_type === "B") {
-              beanInfo.location = result[i].address_name;
-              beanInfo.code = +result[i].code.slice(0, 8);
-              sendMessage(JSON.stringify(beanInfo));
-              navigate("/");
+    if (beanInfo.latitude === 0 || beanInfo.longitude === 0) {
+      alert("위치 정보 제공에 동의해 주세요. 새로고침 ㄱㄱ");
+    } else {
+      if (contentValue || imgSrc) {
+        const geocoder = new kakao.maps.services.Geocoder();
+        geocoder.coord2RegionCode(
+          coordinates.lng,
+          coordinates.lat,
+          (result, status) => {
+            for (var i = 0; i < result.length; i++) {
+              if (result[i].region_type === "B") {
+                beanInfo.location = result[i].address_name;
+                beanInfo.code = +result[i].code.slice(0, 8);
+                sendMessage(JSON.stringify(beanInfo));
+                navigate("/");
+              }
             }
           }
-        }
-      );
-      // setMapCenter({
-      //   lat: coordinates.lat,
-      //   lng: coordinates.lng,
-      //   loaded: true,
-      //   isPanto: true,
-      // });
-    } else {
-      alert("전할 메시지를 적어주세요.");
+        );
+      } else {
+        alert("전할 메시지를 적어주세요.");
+      }
     }
   }
 
