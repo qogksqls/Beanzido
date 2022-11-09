@@ -10,6 +10,7 @@ import com.ssafy.a206.request.MessageReq;
 import com.ssafy.a206.service.MessageLogService;
 import com.ssafy.a206.serviceImpl.RedisService;
 
+import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.services.rekognition.RekognitionClient;
 import software.amazon.awssdk.services.rekognition.model.DetectModerationLabelsRequest;
@@ -19,6 +20,9 @@ import software.amazon.awssdk.services.rekognition.model.ModerationLabel;
 import software.amazon.awssdk.services.rekognition.model.RekognitionException;
 import software.amazon.awssdk.utils.BinaryUtils;
 
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
@@ -26,6 +30,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.websocket.OnOpen;
 
+@Slf4j
 public class WebSocketHandler extends TextWebSocketHandler {
 	private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
 
@@ -47,6 +53,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	private RedisService redisService;
+	
+	@Autowired
+    RabbitTemplate rabbitTemplate;
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -105,6 +114,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		redisService.setChatValues(dto, session.getId());
 
 		String d = mapper.writeValueAsString(dto);
+		rabbitTemplate.convertAndSend(d);
 		TextMessage newMessage = new TextMessage(d);
 		sessions.values().forEach(s -> {
 			try {
@@ -115,6 +125,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		});
 	}
 
+	@RabbitListener(queues = "dev-beanzido.queue")
+    public void receiveMessage(final Message message) {
+        log.info(message.toString());
+        log.info(new String(message.getBody(),StandardCharsets.UTF_8));
+    }
+	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessions.remove(session.getId());
