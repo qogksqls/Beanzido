@@ -10,6 +10,7 @@ import aroundTheWorld from "assets/img/around-the-world.json";
 import bubbleChat from "assets/img/bubble-chat.json";
 import likeAni from "assets/img/like.json";
 import locationAni from "assets/img/location.json";
+import pinAni from "assets/img/pin.json";
 import searchAni from "assets/img/search.json";
 import chat from "assets/img/Chat.svg";
 import logo from "assets/img/Logo.svg";
@@ -30,7 +31,10 @@ export default function Nav() {
         <img className="barImage" src={bottomBar} alt="navImage" />
         <div
           className="button-container"
-          onClick={() => setIsKeyword(!isKeyword)}
+          onClick={() => {
+            alert("추가 예정인 기능입니다. 기대해주세요.");
+            setIsKeyword(!isKeyword);
+          }}
         >
           <Lottie
             animationData={isKeyword ? searchAni : aroundTheWorld}
@@ -62,7 +66,7 @@ export default function Nav() {
             src={logo}
             alt="logo"
             onClick={() => {
-              alert("일해라 황태희");
+              alert("일해라 황태희희흐히ㅡ히ㅡ히ㅡ흐히");
             }}
           />
         </div>
@@ -81,7 +85,10 @@ export default function Nav() {
               className={
                 isKeyword ? "ani-img searchAni" : "ani-img aroundTheWorld"
               }
-              onClick={() => setIsKeyword(!isKeyword)}
+              onClick={() => {
+                alert("추가 예정인 기능입니다. 기대해주세요.");
+                setIsKeyword(!isKeyword);
+              }}
             />
           </div>
           <div
@@ -104,7 +111,7 @@ export default function Nav() {
               setSidebar(1);
             }}
           >
-            <img src={chat} alt="상세보기" />
+            <Lottie animationData={pinAni} className="ani-img pin" />
           </div>
         </div>
         {location.pathname !== "/feedback" && (

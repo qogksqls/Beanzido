@@ -3,6 +3,7 @@ import { Map, MapMarker, MapTypeControl } from "react-kakao-maps-sdk";
 import Clusterer from "./Clusterer/Clusterer";
 import { beanListState } from "store/atom";
 import { useEffect, useState, memo } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import useGeolocation from "./hooks/useGeolocation";
 import "./KakaoMap.scss";
 import gps from "../assets/img/Gps.svg";
@@ -16,18 +17,9 @@ function KakaoMap() {
   const [level, setLevel] = useState(3);
   const [map, setMap] = useState<kakao.maps.Map>();
   const location = useGeolocation();
-  const [clusterList, setClusterList] = useState(
-    [] as {
-      nickname: string;
-      content: string;
-      color: number;
-      img: string;
-      createdAt: string;
-      latitude: number;
-      longitude: number;
-      location: string;
-    }[][]
-  );
+  const [searchParams] = useSearchParams();
+  // console.log(searchParams.get("keyword"));
+  const [clusterList, setClusterList] = useState([] as Bean[][]);
   const [initialPosition, SetinitialPosition] = useState({
     lat: 0,
     lng: 0,
@@ -181,19 +173,7 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   return dist;
 }
 
-function getCluster(
-  level: number,
-  beanList: {
-    nickname: string;
-    content: string;
-    color: number;
-    img: string;
-    createdAt: string;
-    latitude: number;
-    longitude: number;
-    location: string;
-  }[]
-) {
+function getCluster(level: number, beanList: Bean[]) {
   var clustered = new Set();
   var newClusterList: Bean[][] = [];
   beanList.forEach((bean1, idx1) => {

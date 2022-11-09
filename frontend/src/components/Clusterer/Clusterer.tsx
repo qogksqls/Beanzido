@@ -26,8 +26,8 @@ function Clusterer({ beanList }: ClusterProps) {
           nickname={beanList.map((bean) => bean.nickname).slice(-3)}
           content={beanList[beanList.length - 1].content}
           color={beanList.map((bean) => bean.color).slice(-3)}
-          img={beanList[beanList.length - 1].img}
           createdAt={beanList[beanList.length - 1].createdAt}
+          contentFilter={beanList[beanList.length - 1].contentFilter}
         ></ClusterBean>
       </div>
     </CustomOverlayMap>

@@ -26,8 +26,18 @@ html {
       .scroll-description {
         padding: 0px 20px 20px 30px;
         text-align: start;
-        font-size: 1.3rem;
         font-weight: bold;
+        font-size: 16px;
+        .description-header {
+          display: flex;
+          div {
+            color: rgb(27, 110, 110);
+          }
+          .location-img {
+            width: 18px;
+            margin-right: 4px;
+          }
+        }
       }
       .empty-list {
         padding: 30px 10px;
@@ -181,7 +191,7 @@ html {
       height: 50px;
 
       top: calc(50% - 50px);
-      right: -25px;
+      right: -26px;
   
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
