@@ -8,7 +8,7 @@ import useRandomName from "components/hooks/useRandomName";
 import BeanStyle from "components/BeanStyle/BeanStyle";
 import imageCompression from "browser-image-compression";
 import "./CreateBean.scss";
-import x from "../../assets/img/x.svg";
+import { ReactComponent as XButton } from "../../assets/img/x.svg";
 import Camera from "../../assets/img/Camera.svg";
 import Camera_white from "../../assets/img/Camera_white.svg";
 import Img_box from "../../assets/img/Img_box.svg";
@@ -34,13 +34,34 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
   const { color, backgroundColor, beanColor } = useRecoilValue(colorSelector);
   const [camera, setCamera] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     document.documentElement.style.setProperty(
       "--create-bean-color",
       backgroundColor
     );
     document.documentElement.style.setProperty("--create-text-color", color);
+    if (color === "black") {
+      document.documentElement.style.setProperty(
+        "--create-bean-light",
+        "rgba(255, 255, 255, 0.4)"
+      );
+      document.documentElement.style.setProperty(
+        "--create-bean-dark",
+        "rgba(0, 0, 0, 0.05)"
+      );
+    } else {
+      document.documentElement.style.setProperty(
+        "--create-bean-light",
+        "rgba(255, 255, 255, 0.15)"
+      );
+      document.documentElement.style.setProperty(
+        "--create-bean-dark",
+        "rgba(0, 0, 0, 0.2)"
+      );
+    }
   }, [beanColor, color, backgroundColor]);
+
   function OnCamera() {
     setCamera(true);
   }
@@ -149,7 +170,7 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
         <div className="header">
           <h2>글 작성</h2>
         </div>
-        <img className="x" src={x} alt="" onClick={() => navigate("/")} />
+        <XButton className="x" stroke={color} onClick={() => navigate("/")} />
         <div className="content">
           <div className="name-style">
             <div className="name-refresh">
