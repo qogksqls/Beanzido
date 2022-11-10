@@ -3,6 +3,9 @@ import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { sidebarState } from "store/atom";
 import ReactTooltip from "react-tooltip";
+import CommunityIcons from "./CommunityIcons";
+import KeywordIcons from "./KeywordIcons";
+
 import "./Nav.scss";
 import createButton from "assets/img/chat-button.svg";
 import openIcon from "assets/img/Expand_right_light.svg";
@@ -10,10 +13,7 @@ import Lottie from "lottie-react";
 import aroundTheWorld from "assets/img/around-the-world.json";
 import bubbleChat from "assets/img/bubble-chat.json";
 import likeAni from "assets/img/like.json";
-import locationAni from "assets/img/location.json";
-import pinAni from "assets/img/pin.json";
 import searchAni from "assets/img/search.json";
-import chat from "assets/img/Chat.svg";
 import logo from "assets/img/Logo.svg";
 import bottomBar from "assets/img/bottom-bar.svg";
 
@@ -83,73 +83,38 @@ export default function Nav() {
         >
           <div
             className="switch"
-            data-for={isKeyword ? "community" : "keyword"}
+            data-for={
+              location.pathname.slice(0, 8) !== "/keyword"
+                ? "community"
+                : "keyword"
+            }
             data-tip
           >
             <Lottie
-              animationData={isKeyword ? aroundTheWorld : searchAni}
+              animationData={
+                location.pathname.slice(0, 8) !== "/keyword"
+                  ? searchAni
+                  : aroundTheWorld
+              }
               className={
-                isKeyword ? "ani-img aroundTheWorld" : "ani-img searchAni"
+                location.pathname.slice(0, 8) !== "/keyword"
+                  ? "ani-img searchAni"
+                  : "ani-img aroundTheWorld"
               }
               onClick={() => {
-                navigate(isKeyword ? "/" : "/keyword");
-                setIsKeyword(!isKeyword);
+                navigate(
+                  location.pathname.slice(0, 8) !== "/keyword"
+                    ? "/keyword"
+                    : "/"
+                );
               }}
             />
-            {isKeyword ? (
-              <ReactTooltip
-                id="community"
-                getContent={(dataTip) => "커뮤니티 보기"}
-                place="top"
-                effect="solid"
-              />
-            ) : (
-              <ReactTooltip
-                id="keyword"
-                getContent={(dataTip) => "지역별 키워드 보기"}
-                place="right"
-                effect="solid"
-              />
-            )}
           </div>
-          <div
-            className="switch all"
-            onClick={() => {
-              if (location.pathname !== "/sidebar") {
-                navigate("/sidebar");
-              }
-              setSidebar(0);
-            }}
-            data-for="all-bean"
-            data-tip
-          >
-            <Lottie animationData={bubbleChat} className="ani-img bubbleChat" />
-            <ReactTooltip
-              id="all-bean"
-              getContent={(dataTip) => "전체 콩"}
-              place="right"
-              effect="solid"
-            />
-          </div>
-          <div
-            className="switch focus"
-            onClick={() => {
-              if (location.pathname !== "/sidebar") {
-                navigate("/sidebar");
-              }
-              setSidebar(1);
-            }}
-            data-for="one-bean"
-            data-tip
-          >
-            <Lottie animationData={pinAni} className="ani-img pin" />
-            <ReactTooltip
-              id="one-bean"
-              getContent={(dataTip) => "개별 콩"}
-              place="right"
-              effect="solid"
-            />
-          </div>
+          {location.pathname.slice(0, 8) === "/keyword" ? (
+            <KeywordIcons />
+          ) : (
+            <CommunityIcons />
+          )}
         </div>
         {location.pathname !== "/feedback" && (
           <div
@@ -168,6 +133,21 @@ export default function Nav() {
           effect="solid"
         />
       </div>
+      {location.pathname.slice(0, 8) === "/keyword" ? (
+        <ReactTooltip
+          id="community"
+          getContent={(dataTip) => "커뮤니티 보기"}
+          place="right"
+          effect="solid"
+        />
+      ) : (
+        <ReactTooltip
+          id="keyword"
+          getContent={(dataTip) => "지역별 키워드 보기"}
+          place="right"
+          effect="solid"
+        />
+      )}
     </nav>
   );
 }
