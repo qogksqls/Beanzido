@@ -4,7 +4,8 @@ import { useRecoilState } from "recoil";
 import { sidebarState } from "store/atom";
 import ReactTooltip from "react-tooltip";
 import "./Nav.scss";
-import createButton from "assets/img/chat-button.svg";
+// import createButton from "assets/img/chat-button.svg";
+import { ReactComponent as CreateButton } from "assets/img/chat-button.svg";
 import openIcon from "assets/img/Expand_right_light.svg";
 import Lottie from "lottie-react";
 import aroundTheWorld from "assets/img/around-the-world.json";
@@ -15,7 +16,7 @@ import pinAni from "assets/img/pin.json";
 import searchAni from "assets/img/search.json";
 import chat from "assets/img/Chat.svg";
 import logo from "assets/img/Logo.svg";
-import bottomBar from "assets/img/bottom-bar.svg";
+import { ReactComponent as BottomBridge } from "assets/img/bottom-bar.svg";
 
 export default function Nav() {
   const [sidebar, setSidebar] = useRecoilState(sidebarState);
@@ -30,7 +31,8 @@ export default function Nav() {
         <div className="button-container" onClick={() => navigate("/sidebar")}>
           <Lottie animationData={bubbleChat} className="ani-img bubleChat" />
         </div>
-        <img className="barImage" src={bottomBar} alt="navImage" />
+        <BottomBridge className="barImage" />
+        {/* <img className="barImage" src={bottomBar} alt="navImage" /> */}
         <div
           className="button-container"
           onClick={() => {
@@ -55,12 +57,19 @@ export default function Nav() {
         <img src={openIcon} alt="open" />
       </div>
       <div className="create-button">
-        <img
+        <CreateButton
+          className="create-button-img"
+          onClick={() => navigate("/create")}
+          width="34"
+          height="34"
+          viewBox="3 3 18 18"
+        />
+        {/* <img
           className="create-button-img"
           onClick={() => navigate("/create")}
           src={createButton}
           alt="chat-button"
-        />
+        /> */}
       </div>
       <div className="sidebar-fix">
         <div className="side-logo">
