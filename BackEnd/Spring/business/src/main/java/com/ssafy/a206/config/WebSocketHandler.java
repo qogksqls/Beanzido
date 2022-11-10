@@ -54,7 +54,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		String sessionId = session.getId();
 		sessions.put(sessionId, session);
-		log.info("seesion_count : {}",sessions.size());
+		log.info("[open]seesion_count : {} session_id : {}",sessions.size(),session.getId());
 		sessions.values().forEach(s -> {
 
 			try {
@@ -125,6 +125,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessions.remove(session.getId());
+		log.info("[closed]session_count : {} session_id : {}",sessions.size(),session.getId());
 		super.afterConnectionClosed(session, status);
 	}
 
