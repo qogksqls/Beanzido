@@ -43,8 +43,41 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 70px;
+  width: 60px;
   height: 50px;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+  
+  &::after {
+    content:'';
+    top: 5px;
+    left: 0;
+    border-bottom-right-radius: 20px;
+    transform:translateX(100%) rotate(45deg);
+    width:60px;
+    height:27px;
+    position: absolute;
+    z-index:1;
+    animation: slide 8s infinite 5s;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 50%,rgba(32, 34, 36, 0) 99%,rgba(125,185,232,0) 100%);
+  }
+  
+  /* animation */
+  
+  @keyframes slide {
+    0% {
+      transform:translateX(-100%);
+      display: block;
+    }
+    15% {
+      transform:translateX(100%);
+      display: none;
+    }
+    100% {
+      transform:translateX(100%);
+    }
+  }
+
   img {
     width: 60px;
     min-width: 60px;

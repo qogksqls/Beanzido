@@ -52,7 +52,7 @@ function KakaoMap() {
   }, [routerLocation.pathname, map]);
 
   useEffect(() => {
-    setClusterList(getCluster(level, beanList));
+    setClusterList(getCluster(level, beanList.slice(-100)));
   }, [level, beanList]);
 
   return (

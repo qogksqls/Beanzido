@@ -6,7 +6,7 @@ export const beanListSelector = selector({
   key: "beanListSelector",
   get: ({ get }) => {
     const beanList = get(beanListState);
-    const coloredBeanList = beanList.map((element) => {
+    const coloredBeanList = beanList.slice(-100).map((element) => {
       return getColoredBean(element);
     });
     return coloredBeanList;
@@ -17,7 +17,7 @@ export const focusedListSelector = selector({
   key: "focusedListSelector",
   get: ({ get }) => {
     const beanList = get(focusedState);
-    const coloredBeanList = beanList.map((element) => {
+    const coloredBeanList = beanList.slice(-100).map((element) => {
       return getColoredBean(element);
     });
     return coloredBeanList;
