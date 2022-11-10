@@ -31,9 +31,10 @@ import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 public class WebSocketHandler extends TextWebSocketHandler {
 	private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
-	
+
 	@Autowired
 	private ImageFilter imageFilter;
 	
@@ -53,6 +54,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		String sessionId = session.getId();
 		sessions.put(sessionId, session);
+		log.info("seesion_count : {}",sessions.size());
 		sessions.values().forEach(s -> {
 
 			try {
