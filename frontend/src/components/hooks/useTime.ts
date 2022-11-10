@@ -15,10 +15,12 @@ function getElapsedText(createdAt: string) {
   const hour = minute * 60;
   const day = hour * 24;
 
-  if (elapsedTime < seconds * 10) {
+  // if (elapsedTime < seconds * 10) {
+  //   return "방금 전";
+  // } else
+  if (elapsedTime < minute) {
     return "방금 전";
-  } else if (elapsedTime < minute) {
-    return elapsedTime + "초 전";
+    // return elapsedTime + "초 전";
   } else if (elapsedTime < hour) {
     return Math.trunc(elapsedTime / minute) + "분 전";
   } else if (elapsedTime < day) {

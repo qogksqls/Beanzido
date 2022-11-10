@@ -17,17 +17,8 @@ type ChatProps = {
 function ChatItem({ Chatinfo }: ChatProps) {
   // const [targetPosition, SetTargetPosition] = useTargetLocation();
   const [, setMapCenter] = useRecoilState(mapCenterState);
-  const colorRef = useRef<HTMLDivElement>(null);
   const [elapsedText] = useTime(Chatinfo.createdAt);
   const [expandImg, setExpandImg] = useState(false);
-
-  useEffect(() => {
-    const { current } = colorRef;
-    if (current !== null) {
-      current.style.color = Chatinfo.color.color;
-      current.style.backgroundColor = Chatinfo.color.backgroundColor;
-    }
-  }, []);
 
   return (
     <div
@@ -52,7 +43,13 @@ function ChatItem({ Chatinfo }: ChatProps) {
         // effect="solid"
         delayShow={200}
       />
-      <div className="nickname-container" ref={colorRef}>
+      <div
+        className="nickname-container"
+        style={{
+          color: Chatinfo.color.color,
+          backgroundColor: Chatinfo.color.backgroundColor,
+        }}
+      >
         {Chatinfo.nickname[0]}
       </div>
       <div className="contents-container">
