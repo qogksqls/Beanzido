@@ -97,7 +97,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		messageLogService.messageAdd(messageReq, ip);
 		MessageDTO dto = new MessageDTO(messageReq, ip);
 		dto.setContentFilter(badWordFilter.search(dto.getContent()));
-		if (messageReq.getImg() != null) {
+		if (messageReq.getImg() != null||"".equals(messageReq.getImg())) {
 			String imgFilter = imageFilter.detectModLabels(messageReq.getImg());
 			dto.setImgFilter(imgFilter);
 			dto.setCreatedAt(new Date());

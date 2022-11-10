@@ -35,7 +35,7 @@ public class RedisService {
 			e.printStackTrace();
 		}
 		
-		values.set(nano, data, 12, TimeUnit.HOURS);
+		values.set(nano, data, 1, TimeUnit.DAYS);
 	}
 
 	public void setChatValues(String key, String data, Duration duration) {
