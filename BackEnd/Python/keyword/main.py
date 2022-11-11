@@ -27,11 +27,9 @@ async def dong():
 
     for key in poly.do['082']:
         if rd.get(key):
-            for keyword in rd.get(key):
-                poly.do['082'][key]['keyword'] = keyword
-                break
+            poly.do['082'][key]['keywords'] = rd.get(key)
         else:
-            poly.do['082'][key]['keyword'] = ''
+            poly.do['082'][key]['keywords'] = ''
 
     return poly.do['082']
 
@@ -42,11 +40,9 @@ async def do(item_id):
 
     for key in poly.si[item_id]:
         if rd.get(key):
-            for keyword in rd.get(key):
-                poly.si[item_id][key]['keyword'] = keyword
-                break
+            poly.si[item_id][key]['keywords'] = rd.get(key)
         else:
-            poly.si[item_id][key]['keyword'] = ''
+            poly.si[item_id][key]['keywords'] = ''
 
     return poly.si[item_id]
 
@@ -57,11 +53,9 @@ async def si(item_id):
 
     for key in poly.dong[item_id]:
         if rd.get(key):
-            for keyword in rd.get(key):
-                poly.dong[item_id][key]['keyword'] = keyword
-                break
+            poly.dong[item_id][key]['keywords'] = rd.get(key)
         else:
-            poly.dong[item_id][key]['keyword'] = ''
+            poly.dong[item_id][key]['keywords'] = ''
 
     return poly.dong[item_id]
 
