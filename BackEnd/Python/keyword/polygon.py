@@ -23,20 +23,25 @@ class Polygon:
 
         for item in json_do:
             self.do['082'][item["properties"]["CTPRVN_CD"]] = {
-                "polygon" : item["geometry"]["coordinates"]
+                "polygon" : item["geometry"]["coordinates"],
+                "name": item["properties"]["CTP_KOR_NM"]
             }
             self.si[item["properties"]["CTPRVN_CD"]] = {}
 
         for item in json_si:
             sno = str(item["properties"]["SIG_CD"])
             self.si[sno[0:2]][sno] = {
-                "polygon" : item["geometry"]["coordinates"]
+                "polygon" : item["geometry"]["coordinates"],
+                "name": item["properties"]["SIG_KOR_NM"]
             }
             self.dong[sno] = {}
 
         for item in json_dong:
             sno = str(item["properties"]["EMD_CD"])
             self.dong[sno[0:5]][sno] = {
-                "polygon" : item["geometry"]["coordinates"]
+                "polygon" : item["geometry"]["coordinates"],
+                "name": item["properties"]["EMD_KOR_NM"]
             }
-ms = Polygon()
+
+
+poly = Polygon()

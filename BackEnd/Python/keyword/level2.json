@@ -39075,7 +39075,7 @@
       },
       "properties": {
         "SIG_CD": "26200",
-        "SGG_NM": "영도구",
+        "SIG_KOR_NM": "영도구",
         "SGG_OID": "",
         "COL_ADM_SE": "26200",
         "GID": "113"

@@ -80,11 +80,11 @@ def analyze():
             tf_words3[region][noun] += 1
         tf_words3[region] = dict(sorted(tf_words3[region].items(), key=operator.itemgetter(1), reverse=True))
 
-    print(4)
+    # print(4)
     for region, tf in tf_words3.items():
         try:
             t1 = str(region)[:2]
-            t2 = str(region)[2:6]
+            t2 = str(region)[:6]
             tf_words2.setdefault(t2, Counter({}))
             tf_words1.setdefault(t1, Counter({}))
             tf_words1[t1] += Counter(tf)
@@ -93,7 +93,7 @@ def analyze():
             continue
     # print(json.dumps(tf_words2,ensure_ascii=False))
     # print(json.dumps(tf_words1,ensure_ascii=False))
-    print(5)
+    # print(5)
     rd_keyword.set('do', json.dumps(tf_words1, ensure_ascii=False))
     rd_keyword.set('si', json.dumps(tf_words2, ensure_ascii=False))
     rd_keyword.set('dong', json.dumps(tf_words3, ensure_ascii=False))
