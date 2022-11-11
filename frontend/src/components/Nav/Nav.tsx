@@ -120,6 +120,21 @@ export default function Nav() {
             />
           </div>
           {location.pathname.slice(0, 8) === "/keyword" ? (
+            <ReactTooltip
+              id="keyword"
+              getContent={(dataTip) => "커뮤니티 보기"}
+              place="right"
+              effect="solid"
+            />
+          ) : (
+            <ReactTooltip
+              id="keyword"
+              getContent={(dataTip) => "지역별 키워드 보기"}
+              place="right"
+              effect="solid"
+            />
+          )}
+          {location.pathname.slice(0, 8) === "/keyword" ? (
             <KeywordIcons />
           ) : (
             <CommunityIcons />
@@ -142,21 +157,6 @@ export default function Nav() {
           effect="solid"
         />
       </div>
-      {location.pathname.slice(0, 8) === "/keyword" ? (
-        <ReactTooltip
-          id="community"
-          getContent={(dataTip) => "커뮤니티 보기"}
-          place="right"
-          effect="solid"
-        />
-      ) : (
-        <ReactTooltip
-          id="keyword"
-          getContent={(dataTip) => "지역별 키워드 보기"}
-          place="right"
-          effect="solid"
-        />
-      )}
     </nav>
   );
 }
