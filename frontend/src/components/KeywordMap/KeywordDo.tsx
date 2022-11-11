@@ -9,11 +9,11 @@ type KeywordProps = {
 function KeywordDo({ map }: KeywordProps) {
   const { keyRes, isKeyLoad } = useKeyword("/do");
   useEffect(() => {
-    const sw = new kakao.maps.LatLng(33.17261058239259, 124.7893154389517);
-    const ne = new kakao.maps.LatLng(38.54261253850525, 130.96325546758288);
+    const sw = new kakao.maps.LatLng(33.4, 126);
+    const ne = new kakao.maps.LatLng(37.9, 129.5);
 
     const bounds = new kakao.maps.LatLngBounds(sw, ne);
-    map.panTo(bounds);
+    map.panTo(bounds, 0);
   }, []);
 
   return (
