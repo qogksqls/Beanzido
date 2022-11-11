@@ -30,10 +30,11 @@ function KeywordSi({ map }: KeywordProps) {
     <div>
       {isKeyLoad && (
         <>
-          {keyRes.map(([code, { polygon, keyword }]) => (
+          {keyRes.map(([code, { polygon, keyword, name }]) => (
             <KeywordPoly
               polygon={polygon}
               keyword={keyword}
+              name={name}
               code={code}
               map={map}
               key={code}
