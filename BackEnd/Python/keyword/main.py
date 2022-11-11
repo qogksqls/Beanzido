@@ -24,14 +24,16 @@ async def root():
 @app.get("/keyword-server/do")
 async def do():
     rd = json.loads(rd_keyword.get('do').decode())
-
+    rs = {}
     for key in poly.do['082']:
         if rd.get(key):
             poly.do['082'][key]['keywords'] = rd.get(key)
         else:
-            poly.do['082'][key]['keywords'] = ''
-    poly.do['082']['rank'] = json.loads(rd_keyword.get('total').decode())
-    return poly.do['082']
+            poly.do['082'][key]['keywords'] = {}
+
+    rs['property'] = poly.do['082']
+    rs['rank'] = json.loads(rd_keyword.get('total').decode())
+    return rs
 
 
 @app.get("/keyword-server/si/{item_id}")
@@ -42,7 +44,7 @@ async def si(item_id):
         if rd.get(key):
             poly.si[item_id][key]['keywords'] = rd.get(key)
         else:
-            poly.si[item_id][key]['keywords'] = ''
+            poly.si[item_id][key]['keywords'] = {}
 
     poly.si[item_id]['rank'] = json.loads(rd_keyword.get('do').decode()).get(item_id, {})
     return poly.si[item_id]
@@ -56,7 +58,7 @@ async def dong(item_id):
         if rd.get(key):
             poly.dong[item_id][key]['keywords'] = rd.get(key)
         else:
-            poly.dong[item_id][key]['keywords'] = ''
+            poly.dong[item_id][key]['keywords'] = {}
 
     poly.dong[item_id]['rank'] = json.loads(rd_keyword.get('si').decode()).get(item_id, {})
     return poly.dong[item_id]
