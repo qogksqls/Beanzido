@@ -24,8 +24,8 @@ tf_keyword_rank = {}
 # print(hannanum.pos('아 배고파 점심메뉴 추천좀요'))
 
 # get redis connection
-rd_keyword = redis.StrictRedis(host="13.125.39.100", port=8071, db=0)
-rd_message = redis.StrictRedis(host="13.125.39.100", port=8070, db=0)
+rd_keyword = redis.StrictRedis(host=os.environ["SERVER_IP"], port=os.environ["REDIS_PORT_KEYWORD"], db=0)
+rd_message = redis.StrictRedis(host=os.environ["SERVER_IP"], port=os.environ["REDIS_PORT_MESSAGE"], db=0)
 
 
 # rd_keyword.set('노원구',json.dumps(nowon, ensure_ascii=False).encode('utf-8')
@@ -48,6 +48,7 @@ def analyze():
     tf_words1 = {}
     tf_words2 = {}
     tf_words3 = {}
+    tf_total ={}
 
     # print(1)
     for key in keys:
@@ -76,8 +77,12 @@ def analyze():
 
         # tf_words3 = Counter(nouns)
         for noun in nouns:
+            # todo: badword filter
+
             tf_words3[region].setdefault(noun, 0)
+            tf_total.setdefault(noun, 0)
             tf_words3[region][noun] += 1
+            tf_total[noun] += 1
         tf_words3[region] = dict(sorted(tf_words3[region].items(), key=operator.itemgetter(1), reverse=True))
 
     # print(4)
@@ -105,10 +110,12 @@ def analyze():
     rd_keyword.set('do', json.dumps(tf_words1, ensure_ascii=False))
     rd_keyword.set('si', json.dumps(tf_words2, ensure_ascii=False))
     rd_keyword.set('dong', json.dumps(tf_words3, ensure_ascii=False))
+    rd_keyword.set('total', json.dumps(dict(sorted(tf_total.items(), key=operator.itemgetter(1), reverse=True)), ensure_ascii=False))
     print("분석끝")
-
 # 시.도별 / 구별/ 동별 or  한번에
 sched.start()
+# analyze()
+
 # 'keyword' [1티어{'서울시':{}}
 # 2티어{'노원구':{},}
 # 3티어
