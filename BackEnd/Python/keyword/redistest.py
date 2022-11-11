@@ -89,7 +89,7 @@ def analyze():
     for region, tf in tf_words3.items():
         try:
             t1 = str(region)[:2]
-            t2 = str(region)[:6]
+            t2 = str(region)[:5]
             tf_words2.setdefault(t2, Counter({}))
             tf_words1.setdefault(t1, Counter({}))
             tf_words1[t1] += Counter(tf)
