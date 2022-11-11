@@ -7,6 +7,7 @@ type Polygon = LngLat[][];
 type ResData = { string: { polygon: PolyRes; keyword: string } };
 
 export default function useKeyword(target: string) {
+  const Url = process.env.REACT_APP_SEND_URL;
   const [isKeyLoad, setIsKeyLoad] = useState(false);
   const [keyRes, setKeyRes] = useState(
     <[string, { polygon: Polygon; keyword: string }][]>[]
@@ -15,7 +16,7 @@ export default function useKeyword(target: string) {
     if (target) {
       setIsKeyLoad(false);
       setKeyRes([]);
-      const baseUrl = "https://k7a206.p.ssafy.io/keyword-server";
+      const baseUrl = `https://${Url}/keyword-server`;
       const keywordUrl = baseUrl + target;
       axios.get<ResData>(keywordUrl).then(({ data }) => {
         setKeyRes(
