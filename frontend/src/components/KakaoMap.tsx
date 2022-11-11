@@ -7,9 +7,7 @@ import { useEffect, useState, memo } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import useGeolocation from "./hooks/useGeolocation";
 import "./KakaoMap.scss";
-import gps from "../assets/img/Gps.svg";
-import plus from "../assets/img/plus.svg";
-import minus from "../assets/img/minus.svg";
+import MapController from "./MapControl/MapController";
 import my_location from "../assets/img/my_location.svg";
 import { Bean } from "store/types";
 import KeywordMap from "./KeywordMap/KeywordMap";
@@ -95,7 +93,6 @@ function KakaoMap() {
               },
             }}
           />
-          <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
           {map && (
             <Routes>
               <Route path="keyword/*" element={<KeywordMap map={map} />}>
@@ -114,50 +111,13 @@ function KakaoMap() {
               />
             </Routes>
           )}
-          {/* {routerLocation.pathname.slice(0, 8) !== "/keyword"
-            ? clusterList.map((clusteredBeanList, idx) => (
-                <Clusterer beanList={clusteredBeanList} key={idx} />
-              ))
-            : map && (
-                <KeywordMap map={map} setInitialPosition={setInitialPosition} />
-              )} */}
-          <div className="gps">
-            <img
-              className="gps-img"
-              src={gps}
-              alt=""
-              onClick={() => {
-                setMapCenter({
-                  lat: location.coordinates.lat,
-                  lng: location.coordinates.lng,
-                  loaded: true,
-                  isPanto: true,
-                });
-              }}
+          {map && (
+            <MapController
+              map={map}
+              level={level}
+              coordinates={location.coordinates}
             />
-          </div>
-          <div className="zoom-control">
-            <img
-              className="plus-button"
-              onClick={() => {
-                if (map) {
-                  map.setLevel(level - 1, { animate: true });
-                }
-              }}
-              src={plus}
-              alt=""
-            />
-            <img
-              className="minus-button"
-              onClick={() => {
-                if (map) {
-                  map.setLevel(level + 1, { animate: true });
-                }
-              }}
-              src={minus}
-              alt=""
-            />
-          </div>
+          )}
         </Map>
       )}
     </>
