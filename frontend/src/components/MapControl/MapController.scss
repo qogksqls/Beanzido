@@ -71,12 +71,15 @@
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
   .selected-btn,
   .btn {
-    height: calc(var(--control-button-size) - 4px);
-    min-width: calc(var(--control-button-size) - 4px);
+    height: 36px;
+    min-width: 36px;
     padding: 0 5px;
-    line-height: calc(var(--control-button-size) - 4px);
+    line-height: 36px;
     font-size: 14px;
     border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: bold;
     &:hover {
       filter: brightness(1.05);
     }

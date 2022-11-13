@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useColor from "components/hooks/useColor";
 
 type MapTypeControlProps = {
   controlType: (maptype: string) => void;
@@ -6,6 +7,7 @@ type MapTypeControlProps = {
 
 function MapTypeControl({ controlType }: MapTypeControlProps) {
   const [mapType, setMapType] = useState("roadmap");
+  const {} = useColor();
 
   return (
     <div className="type-control">

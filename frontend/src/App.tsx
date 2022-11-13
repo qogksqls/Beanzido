@@ -7,7 +7,6 @@ import "./App.scss";
 import useBeanAPI from "components/hooks/useBeanAPI";
 import Main from "components/Main/Main";
 import Nav from "components/Nav/Nav";
-import KakaoMap from "components/KakaoMap";
 import Logo from "assets/img/Logo.svg";
 import useGeolocation from "components/hooks/useGeolocation";
 
@@ -24,15 +23,7 @@ function App() {
       </div>
       <Nav />
       <Routes location={location}>
-        <Route
-          path="/*"
-          element={
-            <>
-              {loaded && <KakaoMap />}
-              <Main />
-            </>
-          }
-        />
+        <Route path="/*" element={<>{loaded && <Main />}</>} />
       </Routes>
     </div>
   );
