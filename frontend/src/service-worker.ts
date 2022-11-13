@@ -11,7 +11,7 @@
 import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
-import { registerRoute } from "workbox-routing";
+import { NavigationRoute, registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 
@@ -97,3 +97,10 @@ self.addEventListener("message", (event) => {
 });
 
 // Any other custom service worker logic can go here.
+const navigationRoute = new NavigationRoute(
+  createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html"),
+  {
+    denylist: [new RegExp("/*")],
+  }
+);
+registerRoute(navigationRoute);
