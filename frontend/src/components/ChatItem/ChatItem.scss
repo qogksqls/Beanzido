@@ -40,6 +40,7 @@
       font-weight: bold;
       display: flex;
       width: 100%;
+      min-height: 16px;
       
       div {
         overflow: hidden;
@@ -47,8 +48,14 @@
         text-overflow: ellipsis;
       }
 
+      .nickname {
+        text-align: left;
+        width: 32%;
+        min-width: 77px;
+      }
       .time {
         margin-left: 10px;
+        min-width: 55px;
         color: rgba(0, 0, 0, 0.4);
       }
     }
@@ -60,9 +67,11 @@
       align-items: center;
       padding-bottom: 4px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      // width: 100px;
+      min-width: 150px;
+      min-height: 14px;
       .location-img {
         width: 14px;
+        height: 14px;
         margin-right: 0px;
         animation-duration: 5s;
       }
@@ -76,6 +85,41 @@
       text-align: start;
       .chat-item-img-off {
         width: 80%;
+      }
+    }
+  }
+
+  &.skeleton {
+    .gray {
+      background-color: #f0f0f0;
+    }
+    .text {
+      border-radius: 3px;
+    }
+    .nickname-container {
+      box-shadow: none;
+    }
+    .up {
+      .text {
+        width: 160px;
+      }
+    }
+    .location {
+      padding-right: 5px;
+      .text {
+        width: 120px;
+        height: 13px;
+      }
+    }
+    .down {
+      .text {
+        width: 90%;
+        height: 18px;
+        &+.text {
+          margin-top: 3px;
+          margin-bottom: 21px;
+          width: 60%;
+        }
       }
     }
   }

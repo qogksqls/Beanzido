@@ -54,7 +54,7 @@ function ChatItem({ Chatinfo }: ChatProps) {
       </div>
       <div className="contents-container">
         <div className="up">
-          <div>{Chatinfo.nickname}</div>
+          <div className="nickname">{Chatinfo.nickname}</div>
           <div className="time">{elapsedText}</div>
         </div>
         <div className="location">
