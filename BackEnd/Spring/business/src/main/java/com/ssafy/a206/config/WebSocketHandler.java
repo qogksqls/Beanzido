@@ -102,7 +102,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			dto.setImgFilter(imgFilter);
 			dto.setCreatedAt(new Date());
 		}
-		redisService.setChatValues(dto, session.getId());
+		
+		if(!dto.isContentFilter()) {
+			redisService.setChatValues(dto, session.getId());
+		}
 
 		String d = mapper.writeValueAsString(dto);
 		
