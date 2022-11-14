@@ -10,13 +10,13 @@ import KeywordTooltip from "./KeywordTooltip";
 
 type PolyProps = {
   polygon: LngLat[][];
-  keyword: string;
+  keywords: { [keyword: string]: number };
   name: string;
   map: kakao.maps.Map;
   code: string;
 };
 
-function KeywordPoly({ polygon, keyword, name, code, map }: PolyProps) {
+function KeywordPoly({ polygon, keywords, name, code, map }: PolyProps) {
   const navigate = useNavigate();
   const { backgroundColor } = useRecoilValue(colorSelector);
   const [mousePosition, setMousePosition] = useState({
@@ -44,7 +44,7 @@ function KeywordPoly({ polygon, keyword, name, code, map }: PolyProps) {
         }}
         onMouseover={(target, mouseEvent) => {
           target.setOptions({ fillColor: backgroundColor });
-          console.log(name);
+          // console.log(name);
         }}
         onMouseout={(target) => {
           target.setOptions({ fillColor: "#f5f5f5" });
@@ -63,7 +63,7 @@ function KeywordPoly({ polygon, keyword, name, code, map }: PolyProps) {
       <KeywordTooltip
         mousePosition={mousePosition}
         name={name}
-        keyword={keyword}
+        keywords={keywords}
       />
     </div>
   );

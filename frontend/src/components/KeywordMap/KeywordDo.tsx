@@ -20,10 +20,10 @@ function KeywordDo({ map }: KeywordProps) {
     <div>
       {isKeyLoad && (
         <>
-          {keyRes.map(([code, { polygon, keyword, name }]) => (
+          {keyRes.map(([code, { polygon, keywords, name }]) => (
             <KeywordPoly
               polygon={polygon}
-              keyword={keyword}
+              keywords={keywords}
               name={name}
               code={code}
               map={map}
