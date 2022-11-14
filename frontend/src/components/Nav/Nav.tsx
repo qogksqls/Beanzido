@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { sidebarState } from "store/atom";
+import { sidebarState, mapCenterState } from "store/atom";
 import ReactTooltip from "react-tooltip";
 import CommunityIcons from "./CommunityIcons";
 import KeywordIcons from "./KeywordIcons";
@@ -17,6 +17,7 @@ import likeAni from "assets/img/like.json";
 import searchAni from "assets/img/search.json";
 import logo from "assets/img/Logo.svg";
 import { ReactComponent as BottomBridge } from "assets/img/bottom-bar.svg";
+import useGeolocation from "components/hooks/useGeolocation";
 
 export default function Nav() {
   const [sidebar, setSidebar] = useRecoilState(sidebarState);
@@ -24,6 +25,8 @@ export default function Nav() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const [, setMapCenter] = useRecoilState(mapCenterState);
+  const { coordinates } = useGeolocation();
 
   return (
     <nav>
@@ -32,7 +35,6 @@ export default function Nav() {
           <Lottie animationData={bubbleChat} className="ani-img bubleChat" />
         </div>
         <BottomBridge className="barImage" />
-        {/* <img className="barImage" src={bottomBar} alt="navImage" /> */}
         <div
           className="button-container"
           onClick={() => {
@@ -49,7 +51,11 @@ export default function Nav() {
         </div>
       </div>
       <div
-        className="handle"
+        className={
+          location.pathname.slice(0, 8) !== "/keyword"
+            ? "handle"
+            : "display: none"
+        }
         onClick={() => {
           navigate("/sidebar");
         }}
@@ -64,12 +70,6 @@ export default function Nav() {
           height="34"
           viewBox="3 3 18 18"
         />
-        {/* <img
-          className="create-button-img"
-          onClick={() => navigate("/create")}
-          src={createButton}
-          alt="chat-button"
-        /> */}
       </div>
       <div className="sidebar-fix">
         <div className="side-logo">
@@ -116,6 +116,12 @@ export default function Nav() {
                     ? "/keyword"
                     : "/"
                 );
+                setMapCenter({
+                  lat: coordinates.lat,
+                  lng: coordinates.lng,
+                  loaded: true,
+                  isPanto: true,
+                });
               }}
             />
           </div>

@@ -75,7 +75,7 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
       location: "",
       code: 0,
     };
-    console.log(beanInfo);
+    // console.log(beanInfo);
 
     if (beanInfo.latitude === 0 || beanInfo.longitude === 0) {
       alert("위치 정보 제공에 동의해 주세요. 새로고침 ㄱㄱ");
