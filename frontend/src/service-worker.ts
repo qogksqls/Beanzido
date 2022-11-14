@@ -24,6 +24,8 @@ clientsClaim();
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching. See https://cra.link/PWA
 
+precacheAndRoute([{ url: "/assets/img/", revision: null }]);
+
 const ignored = self.__WB_MANIFEST;
 
 // Set up App Shell-style routing, so that all navigation requests
@@ -52,7 +54,7 @@ registerRoute(
     // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html")
+  createHandlerBoundToURL(process.env.PUBLIC_URL + "/handler.html")
 );
 
 // This allows the web app to trigger skipWaiting via
