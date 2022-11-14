@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
-import "./KeywordPoly.scss";
+import "./KeywordTooltip.scss";
 import locationImg from "assets/img/location.svg";
 
 type PositionProps = {
@@ -10,7 +10,7 @@ type PositionProps = {
 };
 
 const KeywordTooltip = ({ mousePosition, name, keyword }: PositionProps) => {
-  console.log(keyword);
+  console.log(name);
 
   return (
     <div>
@@ -24,7 +24,7 @@ const KeywordTooltip = ({ mousePosition, name, keyword }: PositionProps) => {
           {keyword ? (
             <div className="keyword">{keyword}</div>
           ) : (
-            <div className="keyword">점심메뉴 짜장 카레 점심메뉴점심메뉴</div>
+            <div className="keyword">이 지역은 콩이 하나도 없습니다.ㅠ^ㅠ</div>
           )}
         </div>
       </CustomOverlayMap>
