@@ -23,7 +23,8 @@ clientsClaim();
 // Their URLs are injected into the manifest variable below.
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching. See https://cra.link/PWA
-precacheAndRoute(self.__WB_MANIFEST);
+
+precacheAndRoute([{ url: "/assets/img/", revision: null }]);
 
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
@@ -54,40 +55,6 @@ registerRoute(
   createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html")
 );
 
-// 폰트 캐싱
-registerRoute(
-  // Add in any other file extensions or routing criteria as needed.
-  ({ url }) =>
-    url.origin === self.location.origin && url.pathname.endsWith(".png"),
-  // Customize this strategy as needed, e.g., by changing to CacheFirst.
-  new StaleWhileRevalidate({
-    cacheName: "images",
-    plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50 }),
-    ],
-  })
-);
-
-// 이미지 캐싱
-registerRoute(
-  // Add in any other file extensions or routing criteria as needed.
-  ({ request }) => request.destination === "image",
-  // Customize this strategy as needed, e.g., by changing to CacheFirst.
-  new StaleWhileRevalidate({
-    cacheName: "image-cache",
-    plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
-      new CacheableResponsePlugin({
-        statuses: [200],
-      }),
-      new ExpirationPlugin({ maxEntries: 50 }),
-    ],
-  })
-);
-
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener("message", (event) => {
@@ -97,10 +64,3 @@ self.addEventListener("message", (event) => {
 });
 
 // Any other custom service worker logic can go here.
-const navigationRoute = new NavigationRoute(
-  createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html"),
-  {
-    denylist: [new RegExp("/*")],
-  }
-);
-registerRoute(navigationRoute);
