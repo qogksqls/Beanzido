@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { Map, MapMarker, MapTypeControl } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Clusterer from "./Clusterer/Clusterer";
 import { beanListState, mapCenterState, mapLevelState } from "store/atom";
@@ -19,20 +19,20 @@ function KakaoMap() {
   const [mapCenter, setMapCenter] = useRecoilState(mapCenterState);
   const [level, setLevel] = useRecoilState(mapLevelState);
   const [map, setMap] = useState<kakao.maps.Map>();
-  const location = useGeolocation();
+  const { loaded, coordinates } = useGeolocation();
   const routerLocation = useLocation();
   const [clusterList, setClusterList] = useState([] as Bean[][]);
 
   useEffect(() => {
-    if (location.loaded === true && mapCenter.loaded === false) {
+    if (loaded === true && mapCenter.loaded === false) {
       setMapCenter({
-        lat: location.coordinates.lat,
-        lng: location.coordinates.lng,
+        lat: coordinates.lat,
+        lng: coordinates.lng,
         loaded: true,
         isPanto: false,
       });
     }
-  }, [location.loaded]);
+  }, [loaded]);
 
   function setScreenSize() {
     let vh = window.innerHeight * 0.01;
@@ -72,8 +72,8 @@ function KakaoMap() {
         >
           <MapMarker
             position={{
-              lat: location.coordinates.lat,
-              lng: location.coordinates.lng,
+              lat: coordinates.lat,
+              lng: coordinates.lng,
             }}
             image={{
               src: my_location,
@@ -108,11 +108,7 @@ function KakaoMap() {
             </Routes>
           )}
           {map && (
-            <MapController
-              map={map}
-              level={level}
-              coordinates={location.coordinates}
-            />
+            <MapController map={map} level={level} coordinates={coordinates} />
           )}
         </Map>
       )}
