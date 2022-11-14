@@ -64,8 +64,8 @@ async def dong(item_id):
         else:
             poly.dong[item_id][key]['keywords'] = {}
 
-    rs['property'] = poly.si[item_id]
-    rs['rank'] = json.loads(rd_keyword.get('do').decode()).get(item_id, {})
+    rs['property'] = poly.dong[item_id]
+    rs['rank'] = json.loads(rd_keyword.get('si').decode()).get(item_id, {})
     return rs
 
 
