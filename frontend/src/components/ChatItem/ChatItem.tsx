@@ -21,69 +21,71 @@ function ChatItem({ Chatinfo }: ChatProps) {
   const [expandImg, setExpandImg] = useState(false);
 
   return (
-    <div
-      className="chat-item"
-      onClick={() => {
-        setMapCenter({
-          lat: Chatinfo.latitude,
-          lng: Chatinfo.longitude,
-          loaded: true,
-          isPanto: true,
-        });
-      }}
-      data-for="chat-item"
-      data-tip
-    >
-      <ReactTooltip
-        id="chat-item"
-        className="chat-item-tooltip"
-        getContent={(dataTip) => "위치로 이동"}
-        type="success"
-        place="right"
-        // effect="solid"
-        delayShow={200}
-      />
+    <div>
       <div
-        className="nickname-container"
-        style={{
-          color: Chatinfo.color.color,
-          backgroundColor: Chatinfo.color.backgroundColor,
+        className="chat-item"
+        onClick={() => {
+          setMapCenter({
+            lat: Chatinfo.latitude,
+            lng: Chatinfo.longitude,
+            loaded: true,
+            isPanto: true,
+          });
         }}
+        data-for="chat-item"
+        data-tip
       >
-        {Chatinfo.nickname[0]}
-      </div>
-      <div className="contents-container">
-        <div className="up">
-          <div>{Chatinfo.nickname}</div>
-          <div className="time">{elapsedText}</div>
+        <ReactTooltip
+          id="chat-item"
+          className="chat-item-tooltip"
+          getContent={(dataTip) => "위치로 이동"}
+          type="success"
+          place="top"
+          // effect="solid"
+          delayShow={200}
+        />
+        <div
+          className="nickname-container"
+          style={{
+            color: Chatinfo.color.color,
+            backgroundColor: Chatinfo.color.backgroundColor,
+          }}
+        >
+          {Chatinfo.nickname[0]}
         </div>
-        <div className="location">
-          <img src={locationImg} className="location-img" alt="" />
-          {Chatinfo.location}
-        </div>
-        {Chatinfo.content === "" ? (
-          <div></div>
-        ) : (
-          <div className="down">
-            <div style={{ whiteSpace: "pre-line" }}>
-              {Chatinfo.contentFilter
-                ? "부적절한 단어가 포함되어 있습니다."
-                : Chatinfo.content.replaceAll("<br/>", "\r\n")}
-            </div>
+        <div className="contents-container">
+          <div className="up">
+            <div>{Chatinfo.nickname}</div>
+            <div className="time">{elapsedText}</div>
           </div>
-        )}
-        <div className="chat-item-img">
-          <img
-            src={Chatinfo.imgFilter ? filtered : Chatinfo.img}
-            className="chat-item-img-off"
-            onClick={() => setExpandImg(!expandImg)}
-            alt=""
-          />
-          {expandImg && (
-            <ExpandImg photo={Chatinfo.img} setExpandImg={setExpandImg} />
+          <div className="location">
+            <img src={locationImg} className="location-img" alt="" />
+            {Chatinfo.location}
+          </div>
+          {Chatinfo.content === "" ? (
+            <div></div>
+          ) : (
+            <div className="down">
+              <div style={{ whiteSpace: "pre-line" }}>
+                {Chatinfo.contentFilter
+                  ? "부적절한 단어가 포함되어 있습니다."
+                  : Chatinfo.content.replaceAll("<br/>", "\r\n")}
+              </div>
+            </div>
           )}
+          <div className="chat-item-img">
+            <img
+              src={Chatinfo.imgFilter ? filtered : Chatinfo.img}
+              className="chat-item-img-off"
+              onClick={() => setExpandImg(!expandImg)}
+              alt=""
+            />
+          </div>
         </div>
       </div>
+      {expandImg && (
+        <ExpandImg photo={Chatinfo.img} setExpandImg={setExpandImg} />
+      )}
     </div>
   );
 }
