@@ -56,7 +56,9 @@
     filter: brightness(0.9);
   }
 }
-
+.handle-off {
+  display: none;
+}
 
 
 @keyframes feedbackIn {
@@ -165,9 +167,6 @@
     }
   }
   .bottom-bar {
-    display: none;
-  }
-  .handle-off {
     display: none;
   }
 }
