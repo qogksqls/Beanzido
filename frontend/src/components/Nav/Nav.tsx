@@ -84,9 +84,7 @@ export default function Nav() {
       </div>
       <div
         className={
-          location.pathname.slice(0, 8) !== "/keyword"
-            ? "handle"
-            : "display: none"
+          location.pathname.slice(0, 8) !== "/keyword" ? "handle" : "handle-off"
         }
         onClick={() => {
           navigate("/sidebar");

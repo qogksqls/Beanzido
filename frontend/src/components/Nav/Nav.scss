@@ -167,6 +167,9 @@
   .bottom-bar {
     display: none;
   }
+  .handle-off {
+    display: none;
+  }
 }
 
 @include mobile {
