@@ -28,7 +28,13 @@ const KeywordIcons = () => {
       </div>
       <div
         className="switch goon-goo"
-        onClick={() => navigate("/keyword")}
+        onClick={() => {
+          if (location.pathname.split("/").length === 4) {
+            navigate(
+              `/keyword/si/${location.pathname.split("/")[3].slice(0, 2)}`
+            );
+          }
+        }}
         data-for="goon-goo"
         data-tip
       >
@@ -42,7 +48,13 @@ const KeywordIcons = () => {
       </div>
       <div
         className="switch dong"
-        onClick={() => navigate("/keyword")}
+        onClick={() => {
+          if (location.pathname.split("/").length === 4) {
+            navigate(
+              `/keyword/si/${location.pathname.split("/")[3].slice(0, 2)}`
+            );
+          }
+        }}
         data-for="dong"
         data-tip
       >

@@ -20,7 +20,7 @@ const KeywordTooltip = ({ mousePosition, name, keywords }: PositionProps) => {
           <div className="keyword-header">
             <img src={locationImg} className="location-img" alt="" />
             <div className="keyword-location">{name}</div>
-            <div style={{ fontSize: "6px" }}>의 실시간 키워드입니다.</div>
+            <div style={{ fontSize: "10px" }}>의 실시간 키워드입니다.</div>
           </div>
           {_.isEmpty(keywords) ? (
             <div className="keyword">이 지역은 콩이 하나도 없습니다.ㅠ^ㅠ</div>
