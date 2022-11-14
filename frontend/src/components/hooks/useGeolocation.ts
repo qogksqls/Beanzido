@@ -1,20 +1,13 @@
 import { useState, useEffect } from "react";
-
-interface locationType {
-  loaded: boolean;
-  coordinates: { lat: number; lng: number };
-  error?: { code: number; message: string };
-}
+import { useRecoilState } from "recoil";
+import { locationState } from "store/atom";
 
 const useGeolocation = () => {
-  const [location, setLocation] = useState<locationType>({
-    loaded: false,
-    coordinates: { lat: 0, lng: 0 },
-  });
+  const [location, setLocation] = useRecoilState(locationState);
+
   const onSuccess = (location: {
     coords: { latitude: number; longitude: number };
   }) => {
-    console.log(location);
     setLocation({
       loaded: true,
       coordinates: {
@@ -25,13 +18,9 @@ const useGeolocation = () => {
   };
 
   const onError = (error: { code: number; message: string }) => {
-    console.log("position error");
     setLocation({
+      ...location,
       loaded: true,
-      coordinates: {
-        lat: 37.5009614732362,
-        lng: 127.03972084911923,
-      },
       error,
     });
   };
@@ -46,6 +35,7 @@ const useGeolocation = () => {
     navigator.geolocation.getCurrentPosition(onSuccess, onError, {
       enableHighAccuracy: true,
     });
+    location.error && alert(location.error.message);
   }, []);
 
   return location;

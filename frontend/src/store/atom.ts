@@ -1,14 +1,14 @@
 import { atom } from "recoil";
-import { Bean } from "./types";
+import { Bean, Location } from "./types";
 
-export const beanListState = atom({
+export const beanListState = atom<Bean[]>({
   key: "beanListState",
-  default: [] as Bean[],
+  default: [],
 });
 
-export const focusedState = atom({
+export const focusedState = atom<Bean[]>({
   key: "focusedState",
-  default: [] as Bean[],
+  default: [],
 });
 
 export const nameState = atom({
@@ -39,6 +39,14 @@ export const mapCenterState = atom({
 export const mapLevelState = atom({
   key: "mapLevelState",
   default: 3,
+});
+
+export const locationState = atom<Location>({
+  key: "locationState",
+  default: {
+    loaded: false,
+    coordinates: { lat: 37.5009614732362, lng: 127.03972084911923 },
+  },
 });
 
 function getRandomInt(min: number, max: number) {

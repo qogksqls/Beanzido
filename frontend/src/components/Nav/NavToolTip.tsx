@@ -1,5 +1,4 @@
 import ReactTooltip from "react-tooltip";
-import { Routes, Route } from "react-router";
 
 function NavToolTip() {
   return (
