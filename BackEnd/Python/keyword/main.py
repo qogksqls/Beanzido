@@ -39,6 +39,7 @@ async def do():
 @app.get("/keyword-server/si/{item_id}")
 async def si(item_id):
     rd = json.loads(rd_keyword.get('si').decode())
+    rs = {}
 
     for key in poly.si[item_id]:
         if rd.get(key):
@@ -46,13 +47,16 @@ async def si(item_id):
         else:
             poly.si[item_id][key]['keywords'] = {}
 
-    poly.si[item_id]['rank'] = json.loads(rd_keyword.get('do').decode()).get(item_id, {})
-    return poly.si[item_id]
+    rs['property'] = poly.si[item_id]
+    rs['rank'] = json.loads(rd_keyword.get('do').decode()).get(item_id, {})
+
+    return rs
 
 
 @app.get("/keyword-server/dong/{item_id}")
 async def dong(item_id):
     rd = json.loads(rd_keyword.get('dong').decode())
+    rs = {}
 
     for key in poly.dong[item_id]:
         if rd.get(key):
@@ -60,8 +64,9 @@ async def dong(item_id):
         else:
             poly.dong[item_id][key]['keywords'] = {}
 
-    poly.dong[item_id]['rank'] = json.loads(rd_keyword.get('si').decode()).get(item_id, {})
-    return poly.dong[item_id]
+    rs['property'] = poly.si[item_id]
+    rs['rank'] = json.loads(rd_keyword.get('do').decode()).get(item_id, {})
+    return rs
 
 
 
