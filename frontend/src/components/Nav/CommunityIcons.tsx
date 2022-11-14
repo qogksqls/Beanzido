@@ -1,11 +1,10 @@
-import React from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { sidebarState } from "store/atom";
 import Lottie from "lottie-react";
+import searchAni from "assets/img/search.json";
 import pinAni from "assets/img/pin.json";
 import bubbleChat from "assets/img/bubble-chat.json";
-import ReactTooltip from "react-tooltip";
 import "./Nav.scss";
 
 const CommunityIcons = () => {
@@ -13,46 +12,45 @@ const CommunityIcons = () => {
   const location = useLocation();
   const navigate = useNavigate();
   return (
-    <div>
+    <>
       <div
-        className="switch all"
+        className="switch"
         onClick={() => {
-          if (location.pathname !== "/sidebar") {
-            navigate("/sidebar");
-          }
+          navigate("/keyword");
           setSidebar(0);
         }}
-        data-for="all-bean"
+        data-for={"keyword"}
         data-tip
       >
-        <Lottie animationData={bubbleChat} className="ani-img bubbleChat" />
-        <ReactTooltip
-          id="all-bean"
-          getContent={(dataTip) => "전체 콩"}
-          place="right"
-          effect="solid"
-        />
+        <Lottie animationData={searchAni} className={"ani-img searchAni"} />
       </div>
       <div
-        className="switch focus"
+        className={"switch " + (sidebar === 1 ? "active" : "")}
         onClick={() => {
           if (location.pathname !== "/sidebar") {
             navigate("/sidebar");
           }
           setSidebar(1);
         }}
+        data-for="all-bean"
+        data-tip
+      >
+        <Lottie animationData={bubbleChat} className="ani-img bubbleChat" />
+      </div>
+      <div
+        className={"switch " + (sidebar === 2 ? "active" : "")}
+        onClick={() => {
+          if (location.pathname !== "/sidebar") {
+            navigate("/sidebar");
+          }
+          setSidebar(2);
+        }}
         data-for="one-bean"
         data-tip
       >
         <Lottie animationData={pinAni} className="ani-img pin" />
-        <ReactTooltip
-          id="one-bean"
-          getContent={(dataTip) => "개별 콩"}
-          place="right"
-          effect="solid"
-        />
       </div>
-    </div>
+    </>
   );
 };
 

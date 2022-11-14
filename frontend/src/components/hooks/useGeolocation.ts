@@ -14,6 +14,7 @@ const useGeolocation = () => {
   const onSuccess = (location: {
     coords: { latitude: number; longitude: number };
   }) => {
+    console.log(location);
     setLocation({
       loaded: true,
       coordinates: {

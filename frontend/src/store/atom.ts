@@ -1,4 +1,3 @@
-import useGeolocation from "components/hooks/useGeolocation";
 import { atom } from "recoil";
 import { Bean } from "./types";
 
@@ -34,9 +33,13 @@ export const mapCenterState = atom({
     lng: 0,
     loaded: false,
     isPanto: false,
-  }
+  },
 });
 
+export const mapLevelState = atom({
+  key: "mapLevelState",
+  default: 3,
+});
 
 function getRandomInt(min: number, max: number) {
   min = Math.ceil(min);
