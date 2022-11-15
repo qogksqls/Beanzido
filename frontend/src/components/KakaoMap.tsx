@@ -34,14 +34,6 @@ function KakaoMap() {
     }
   }, [loaded]);
 
-  function setScreenSize() {
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  }
-  useEffect(() => {
-    setScreenSize();
-  }, [routerLocation.pathname, map]);
-
   useEffect(() => {
     setClusterList(getCluster(level, beanList.slice(-100)));
     if (map && level !== map.getLevel()) {

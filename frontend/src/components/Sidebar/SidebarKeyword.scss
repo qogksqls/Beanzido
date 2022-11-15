@@ -48,12 +48,33 @@ html {
           display: flex;
           justify-content: space-between;
           align-items: center;
+          .perspective-container {
+            perspective: 100px;
+            position: relative;
+          }
           .medal {
             position: relative;
             overflow: hidden;
             box-sizing: border-box;
-            box-shadow: inset -1px -1px 2px rgba(255, 255, 255, 0.35), inset 1px 1px 2px rgba(0, 0, 0, 0.35),
-            -1px -1px 2px rgba(255, 255, 255, 0.35), 1px 1px 2px rgba(0, 0, 0, 0.35);
+            box-shadow: -1px -1px 2px rgba(255, 255, 255, 0.35), 1px 1px 2px rgba(0, 0, 0, 0.35);
+            transform-style: preserve-3d;
+            transition: all ease 1s;
+            &:hover {
+              transform: translate3d(5px, 0px, 20px);
+              box-shadow: 8px 8px 3px -4px rgba(0, 0, 0, 0.35);
+            }
+            &:hover::after {
+              animation: none;
+            }
+            &::before {
+              content: "";
+              position: absolute;
+              width: 40px;
+              height: 40px;
+              box-sizing: border-box;
+              border-radius: 20px;
+              box-shadow: inset -1px -1px 2px rgba(255, 255, 255, 0.35), inset 1px 1px 2px rgba(0, 0, 0, 0.35);
+            }
             &::after {
               content: "";
               top: 0;
@@ -74,10 +95,12 @@ html {
             justify-content: center;
             align-items: center;
             border-radius: 100px;
-            border: 3.5px solid rgb(255, 217, 0);
             font-weight: bold;
+            &::before {
+              border: 3.5px solid rgb(255, 217, 0);
+            }
             &::after {
-              animation: slide 4s infinite;
+              animation: slide 4s infinite 1s;
             }
           }
           .item-rank2 {
@@ -88,10 +111,12 @@ html {
             justify-content: center;
             align-items: center;
             border-radius: 100px;
-            border: 3.5px solid rgb(174, 174, 174);
             font-weight: bold;
+            &::before {
+              border: 3.5px solid rgb(174, 174, 174);
+            }
             &::after {
-              animation: slide 4s infinite 1s;
+              animation: slide 4s infinite 2s;
             }          
           }
           .item-rank3 {
@@ -102,10 +127,12 @@ html {
             justify-content: center;
             align-items: center;
             border-radius: 100px;
-            border: 3.5px solid #dda165;
             font-weight: bold;
+            &::before {
+              border: 3.5px solid #dda165;
+            }
             &::after {
-              animation: slide 4s infinite 2s;
+              animation: slide 4s infinite 3s;
             }          
           }
           .item-rank-loser {

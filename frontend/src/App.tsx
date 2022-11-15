@@ -16,6 +16,17 @@ function App() {
 
   useEffect(() => fetchBean(), []);
 
+  useEffect(() => {
+    function setScreenSize() {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    }
+
+    window.addEventListener("resize", setScreenSize);
+
+    return () => window.removeEventListener("resize", setScreenSize);
+  }, []);
+
   return (
     <div className="App">
       <div className="logo">
