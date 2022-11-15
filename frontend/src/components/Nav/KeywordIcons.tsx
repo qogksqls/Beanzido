@@ -52,8 +52,12 @@ const KeywordIcons = () => {
       <div
         className={"switch " + (sidebar === 2 ? "active" : "")}
         onClick={() => {
-          navigate("/keyword");
-          setSidebar(2);
+          if (location.pathname.split("/").length === 4) {
+            navigate(
+              `/keyword/si/${location.pathname.split("/")[3].slice(0, 2)}`
+            );
+            setSidebar(2);
+          }
         }}
         data-for="goon-goo"
         data-tip
@@ -63,8 +67,12 @@ const KeywordIcons = () => {
       <div
         className={"switch " + (sidebar === 3 ? "active" : "")}
         onClick={() => {
-          navigate("/keyword");
-          setSidebar(3);
+          if (location.pathname.split("/").length === 4) {
+            navigate(
+              `/keyword/si/${location.pathname.split("/")[3].slice(0, 2)}`
+            );
+            setSidebar(3);
+          }
         }}
         data-for="dong"
         data-tip
