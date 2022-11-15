@@ -1,36 +1,33 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { sidebarState } from "store/atom";
 import { beanListSelector, focusedListSelector } from "store/selector";
 import { useSwipeable } from "react-swipeable";
-import ChatList from "components/ChatList/ChatList";
 import "./Sidebar.scss";
 import closeIcon from "assets/img/Expand_left_light.svg";
 import x from "assets/img/x.svg";
-import logo from "assets/img/Logo.svg";
-import chat from "assets/img/Chat.svg";
-import bigChat from "assets/img/Chat_alt.svg";
 import { useNavigate } from "react-router-dom";
-import bean from "../../assets/img/logo192.png";
 import sadBean from "assets/img/bean-sad.svg";
 import Lottie from "lottie-react";
 import locationAni from "assets/img/location.json";
+import _ from "lodash";
+import useBeanAPI from "components/hooks/useBeanAPI";
+import ChatList from "components/ChatList/ChatList";
 
 export default function Sidebar() {
-  const nodeRef = useRef(null);
   const [isFull, setIsFull] = useState(false);
-  const [isFirst, setisFirst] = useState(true);
   const [isScroll, setIsScroll] = useState(false);
   const [sidebar, setSidebar] = useRecoilState(sidebarState);
   const coloredBeanList = useRecoilValue(beanListSelector);
   const coloredFocusedList = useRecoilValue(focusedListSelector);
   const navigate = useNavigate();
+  const { isBeanLoad } = useBeanAPI();
 
   useEffect(() => {
     document.documentElement.style.setProperty("--inner-height", "300px");
 
     setIsFull(false);
-
+    console.log(sidebar);
     return () => {
       document.documentElement.style.setProperty("--mobile-border", "15px");
       document.documentElement.style.setProperty("--inner-height", "300px");
@@ -39,7 +36,7 @@ export default function Sidebar() {
   }, []);
 
   useEffect(() => {
-    if (sidebar === 0) {
+    if (sidebar === 1) {
       document.documentElement.style.setProperty(
         "--scroll-width-default",
         "0px"
@@ -128,7 +125,7 @@ export default function Sidebar() {
       if (!isScroll) {
         document.documentElement.style.setProperty("--scroll-transition", "");
         if (
-          isFirst &&
+          sidebar === 1 &&
           eventData.deltaX > -1 * window.innerWidth &&
           eventData.deltaX <= 30
         ) {
@@ -137,7 +134,7 @@ export default function Sidebar() {
             `${eventData.deltaX}px`
           );
         } else if (
-          !isFirst &&
+          sidebar === 2 &&
           eventData.deltaX < window.innerWidth &&
           eventData.deltaX >= -30
         ) {
@@ -159,17 +156,17 @@ export default function Sidebar() {
         eventData.dir === "Left" &&
         eventData.deltaX < (-1 / 4) * window.innerWidth
       ) {
-        setSidebar(1);
+        setSidebar(2);
       } else if (
         eventData.dir === "Right" &&
         eventData.deltaX > (1 / 4) * window.innerWidth
       ) {
-        setSidebar(0);
+        setSidebar(1);
       }
     },
   });
   return (
-    <div className="sidebar" ref={nodeRef}>
+    <div className="sidebar">
       <div className="slide-handle" onClick={() => navigate("/")}>
         <img src={closeIcon} alt="open" />
       </div>
@@ -191,14 +188,13 @@ export default function Sidebar() {
                 모든 콩들의 대화 내용입니다.
               </div>
             </div>
-            <ChatList chatList={coloredBeanList} />
-            {coloredBeanList.length > 0 ? (
-              <div></div>
-            ) : (
+            {isBeanLoad && _.isEmpty(coloredBeanList) ? (
               <div className="empty-list">
                 <img src={sadBean} alt="" />
                 "Beanzido에 콩이 하나도 없어요..."
               </div>
+            ) : (
+              <ChatList chatList={coloredBeanList} />
             )}
           </div>
           <div className="scroll second">
@@ -222,14 +218,13 @@ export default function Sidebar() {
                 </div>
               )}
             </div>
-            <ChatList chatList={coloredFocusedList} />
-            {coloredFocusedList.length > 0 ? (
-              <div></div>
-            ) : (
+            {isBeanLoad && _.isEmpty(coloredBeanList) ? (
               <div className="empty-list">
                 <img src={sadBean} alt="" />
                 "Beanzido에 심어진 콩을 클릭해봐"
               </div>
+            ) : (
+              <ChatList chatList={coloredFocusedList} />
             )}
           </div>
         </div>

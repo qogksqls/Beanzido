@@ -23,7 +23,7 @@ export const beanColorState = atom({
 
 export const sidebarState = atom({
   key: "sidebarState",
-  default: 0,
+  default: 1,
 });
 
 export const mapCenterState = atom({

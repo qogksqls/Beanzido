@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { beanListState } from "store/atom";
 import "./App.scss";
 
 import useBeanAPI from "components/hooks/useBeanAPI";
@@ -11,10 +9,12 @@ import Logo from "assets/img/Logo.svg";
 import useGeolocation from "components/hooks/useGeolocation";
 
 function App() {
-  useBeanAPI();
+  const { fetchBean } = useBeanAPI();
   const { loaded } = useGeolocation();
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => fetchBean(), []);
 
   return (
     <div className="App">

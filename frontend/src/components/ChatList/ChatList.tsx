@@ -1,7 +1,9 @@
-import { lazy, Suspense } from "react";
+import { Suspense, lazy } from "react";
 import "./ChatList.scss";
 import { ColoredBean } from "store/types";
-import ChatitemSkeleton from "components/ChatItem/ChatitemSkeleton";
+import ChatItemSkeleton from "components/ChatItem/ChatItemSkeleton";
+import _ from "lodash";
+
 const ChatItem = lazy(() => import("components/ChatItem/ChatItem"));
 
 type ChatProps = {
@@ -11,11 +13,15 @@ type ChatProps = {
 function ChatList({ chatList }: ChatProps) {
   return (
     <div className="chat-list">
-      {chatList.map((Chatinfo, index) => (
-        <Suspense fallback={<ChatitemSkeleton />}>
+      <Suspense
+        fallback={new Array(5).fill("").map((_, index) => (
+          <ChatItemSkeleton key={index} />
+        ))}
+      >
+        {chatList.map((Chatinfo, index) => (
           <ChatItem Chatinfo={Chatinfo} key={index} />
-        </Suspense>
-      ))}
+        ))}
+      </Suspense>
     </div>
   );
 }

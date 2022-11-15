@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
 import { beanListState } from "store/atom";
