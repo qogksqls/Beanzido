@@ -11,6 +11,8 @@ import time
 from apscheduler.schedulers.background import BackgroundScheduler
 import pickle
 
+from numpy import mean
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(BASE_DIR,".env"))
 
@@ -55,14 +57,43 @@ def analyze():
         messages.append(json.loads(rd_message.get(key).decode()))
 
     # print(2)
-    for message in messages:
-        region3 = message['code']
-        if words3.setdefault(region3, ' '):
-            words3[region3] += " " + message['content']
+    # for message in messages:
+    #     region3 = message['code']
+    #     if words3.setdefault(region3, ' '):
+    #         words3[region3] += " " + message['content']
 
     # print(words3)
-    for region, words in words3.items():
-        tf_words3[region] = {}
+    # for region, words in words3.items():
+    #     tf_words3[region] = {}
+    #     words = re.sub('<.+?>', ' ', words)
+    #     if words.strip()=='':
+    #         continue
+    #     nouns = hannanum.nouns(words)
+    #     # print(nouns)
+    #     # 영어
+    #     compiler = re.compile('[^a-z | \\s]+')
+    #     words = compiler.sub("", words.lower())
+    #     for word, pos in nltk.pos_tag(nltk.word_tokenize(words)):
+    #         # print(word)
+    #         if pos == 'NN' or pos == 'NNP' or pos == 'NNS' or pos == 'NNPS':
+    #             nouns.append(word)
+    #
+    #     # tf_words3 = Counter(nouns)
+    #     for noun in nouns:
+    #         # todo: badword filter
+    #
+    #         tf_words3[region].setdefault(noun, 0)
+    #         tf_total.setdefault(noun, 0)
+    #         tf_words3[region][noun] += 1
+    #         tf_total[noun] += 1
+    #     tf_words3[region] = dict(sorted(tf_words3[region].items(), key=operator.itemgetter(1), reverse=True))
+
+    for message in messages:
+        region = message['code']
+        words = message['content']
+        tf_words3.setdefault(region, {})
+
+        words = re.sub('<.+?>', ' ', words)
         if words.strip()=='':
             continue
         nouns = hannanum.nouns(words)
@@ -75,6 +106,7 @@ def analyze():
             if pos == 'NN' or pos == 'NNP' or pos == 'NNS' or pos == 'NNPS':
                 nouns.append(word)
 
+        nouns =set(nouns)
         # tf_words3 = Counter(nouns)
         for noun in nouns:
             # todo: badword filter
@@ -96,14 +128,11 @@ def analyze():
             tf_words2[t2] += Counter(tf)
         except:
             continue
-
     #do,si 정렬
     for region, tf in tf_words1.items():
         tf_words1[region] = dict(sorted(tf_words1[region].items(), key=operator.itemgetter(1), reverse=True))
     for region, tf in tf_words2.items():
         tf_words2[region] = dict(sorted(tf_words2[region].items(), key=operator.itemgetter(1), reverse=True))
-
-
     # print(json.dumps(tf_words2,ensure_ascii=False))
     # print(json.dumps(tf_words1,ensure_ascii=False))
     # print(5)
@@ -112,9 +141,11 @@ def analyze():
     rd_keyword.set('dong', json.dumps(tf_words3, ensure_ascii=False))
     rd_keyword.set('total', json.dumps(dict(sorted(tf_total.items(), key=operator.itemgetter(1), reverse=True)), ensure_ascii=False))
     print("분석끝")
+
+
 # 시.도별 / 구별/ 동별 or  한번에
 sched.start()
-# analyze()
+analyze()
 
 # 'keyword' [1티어{'서울시':{}}
 # 2티어{'노원구':{},}

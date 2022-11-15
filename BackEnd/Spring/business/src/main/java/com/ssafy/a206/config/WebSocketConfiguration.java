@@ -16,14 +16,13 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
 		registry.addHandler(signalingSocketHandler(), "/map").setAllowedOrigins("*");
 	}
 
-		@Bean
-		public ServletServerContainerFactoryBean createWebSocketContainer() {
-			ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
-			container.setMaxTextMessageBufferSize(1024*1000*5);
-			container.setMaxBinaryMessageBufferSize(1024*1000*5);
-        return container;
-    }
-
+	@Bean
+	public ServletServerContainerFactoryBean createWebSocketContainer() {
+		ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
+		container.setMaxTextMessageBufferSize(1024 * 1000 * 5);
+		container.setMaxBinaryMessageBufferSize(1024 * 1000 * 5);
+		return container;
+	}
 
 	@Bean
 	public WebSocketHandler signalingSocketHandler() {

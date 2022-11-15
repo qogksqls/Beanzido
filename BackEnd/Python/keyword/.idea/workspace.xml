@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7d15ec59-001f-4bc8-9b5a-97c93225dcfd" name="Changes" comment="" />
+    <list default="true" id="7d15ec59-001f-4bc8-9b5a-97c93225dcfd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Spring/business/src/main/java/com/ssafy/a206/config/WebSocketConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring/business/src/main/java/com/ssafy/a206/config/WebSocketConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/business/src/main/java/com/ssafy/a206/config/WebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring/business/src/main/java/com/ssafy/a206/config/WebSocketHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Spring/business/src/main/java/com/ssafy/a206/filter/BadWordFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring/business/src/main/java/com/ssafy/a206/filter/BadWordFilter.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -155,5 +159,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/redistest.py</url>
+          <line>50</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
