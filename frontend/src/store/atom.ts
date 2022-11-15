@@ -23,7 +23,7 @@ export const beanColorState = atom({
 
 export const sidebarState = atom({
   key: "sidebarState",
-  default: 1,
+  default: 0,
 });
 
 export const mapCenterState = atom({
@@ -47,6 +47,11 @@ export const locationState = atom<Location>({
     loaded: false,
     coordinates: { lat: 37.5009614732362, lng: 127.03972084911923 },
   },
+});
+
+export const beanLoadState = atom({
+  key: "beanLoadState",
+  default: false,
 });
 
 function getRandomInt(min: number, max: number) {

@@ -1,12 +1,12 @@
 import { useCallback, useState } from "react";
 import { useRecoilState } from "recoil";
-import { beanListState } from "store/atom";
+import { beanListState, beanLoadState } from "store/atom";
 import axios from "axios";
 import { Bean } from "store/types";
 
 export default function useBeanAPI() {
   const [, setBeanList] = useRecoilState(beanListState);
-  const [isBeanLoad, setIsBeanLoad] = useState(false);
+  const [isBeanLoad, setIsBeanLoad] = useRecoilState(beanLoadState);
 
   const Url = process.env.REACT_APP_SEND_URL;
 

@@ -25,9 +25,11 @@ export default function Sidebar() {
 
   useEffect(() => {
     document.documentElement.style.setProperty("--inner-height", "300px");
-
     setIsFull(false);
-    console.log(sidebar);
+    if (sidebar === 0) {
+      setSidebar(1);
+    }
+
     return () => {
       document.documentElement.style.setProperty("--mobile-border", "15px");
       document.documentElement.style.setProperty("--inner-height", "300px");
@@ -218,7 +220,7 @@ export default function Sidebar() {
                 </div>
               )}
             </div>
-            {isBeanLoad && _.isEmpty(coloredBeanList) ? (
+            {isBeanLoad && _.isEmpty(coloredFocusedList) ? (
               <div className="empty-list">
                 <img src={sadBean} alt="" />
                 "Beanzido에 심어진 콩을 클릭해봐"
