@@ -28,15 +28,15 @@ const SidebarKeyword = ({ setIsKeywordRank }: keywordRankProps) => {
               return (
                 <div key={idx} className="item">
                   {idx === 0 ? (
-                    <div className="item-rank1">{idx + 1}</div>
+                    <div className="medal item-rank1">{idx + 1}</div>
                   ) : (
                     <div>
                       {idx === 1 ? (
-                        <div className="item-rank2">{idx + 1}</div>
+                        <div className="medal item-rank2">{idx + 1}</div>
                       ) : (
                         <div>
                           {idx === 2 ? (
-                            <div className="item-rank3">{idx + 1}</div>
+                            <div className="medal item-rank3">{idx + 1}</div>
                           ) : (
                             <div className="item-rank-loser">{idx + 1}</div>
                           )}
