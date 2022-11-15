@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import "./ChatList.scss";
 import { ColoredBean } from "store/types";
-import ChatItemSkeleton from "components/ChatItem/ChatItemSkeleton";
+import { ChatItemSkeleton } from "components/Skeleton/Skeleton";
 import _ from "lodash";
 
 const ChatItem = lazy(() => import("components/ChatItem/ChatItem"));

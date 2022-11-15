@@ -13,6 +13,7 @@ const KeywordIcons = () => {
   const [sidebar, setSidebar] = useRecoilState(sidebarState);
   const [, setLevel] = useRecoilState(mapLevelState);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [, setMapCenter] = useRecoilState(mapCenterState);
   const { coordinates } = useGeolocation();
