@@ -33,8 +33,10 @@ export default function Nav() {
   useEffect(() => {
     if (location.pathname.slice(0, 8) === "/keyword") {
       setIsKeyword(true);
+      setIsKeywordRank(true);
     } else {
       setIsKeyword(false);
+      setIsKeywordRank(false);
     }
   }, [location.pathname]);
 
