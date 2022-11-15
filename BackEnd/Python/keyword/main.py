@@ -33,6 +33,7 @@ async def do():
 
     rs['property'] = poly.do['082']
     rs['rank'] = json.loads(rd_keyword.get('total').decode())
+    rs['name'] = '대한민국'
     return rs
 
 
