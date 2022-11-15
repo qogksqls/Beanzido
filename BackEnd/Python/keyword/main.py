@@ -33,6 +33,7 @@ async def do():
 
     rs['property'] = poly.do['082']
     rs['rank'] = json.loads(rd_keyword.get('total').decode())
+    rs['name'] = '대한민국'
     return rs
 
 
@@ -49,7 +50,7 @@ async def si(item_id):
 
     rs['property'] = poly.si[item_id]
     rs['rank'] = json.loads(rd_keyword.get('do').decode()).get(item_id, {})
-
+    rs['name'] = poly.do['082'][item_id]['name']
     return rs
 
 
@@ -66,6 +67,7 @@ async def dong(item_id):
 
     rs['property'] = poly.dong[item_id]
     rs['rank'] = json.loads(rd_keyword.get('si').decode()).get(item_id, {})
+    rs['name'] = poly.si[item_id[:2]][item_id]['name']
     return rs
 
 

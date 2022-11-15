@@ -37,33 +37,24 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	private ImageFilter imageFilter;
-	
+
 	@Autowired
 	private BadWordFilter badWordFilter;
-	
+
 	@Autowired
 	private MessageLogService messageLogService;
 
 	@Autowired
 	private RedisService redisService;
-	
+
 	@Autowired
-    RabbitTemplate rabbitTemplate;
+	RabbitTemplate rabbitTemplate;
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		String sessionId = session.getId();
 		sessions.put(sessionId, session);
-		log.info("[open]seesion_count : {} session_id : {}",sessions.size(),session.getId());
-		sessions.values().forEach(s -> {
-
-			try {
-				String cnt = String.valueOf(sessions.size());
-				s.sendMessage(new TextMessage(cnt.getBytes()));
-			} catch (Exception e) {
-			}
-		});
-
+		log.info("[open]seesion_count : {} session_id : {}", sessions.size(), session.getId());
 		super.afterConnectionEstablished(session);
 	}
 
@@ -91,44 +82,42 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			e1.printStackTrace();
 		}
 
-
 		String ip = session.getHandshakeHeaders().get("x-forwarded-for").get(0);
 
 		messageLogService.messageAdd(messageReq, ip);
 		MessageDTO dto = new MessageDTO(messageReq, ip);
 		dto.setContentFilter(badWordFilter.search(dto.getContent()));
-		if (messageReq.getImg() != null||"".equals(messageReq.getImg())) {
+		if (messageReq.getImg() != null || "".equals(messageReq.getImg())) {
 			String imgFilter = imageFilter.detectModLabels(messageReq.getImg());
 			dto.setImgFilter(imgFilter);
 			dto.setCreatedAt(new Date());
 		}
-		
-		if(!dto.isContentFilter()) {
+
+		if (!dto.isContentFilter()) {
 			redisService.setChatValues(dto, session.getId());
 		}
 
 		String d = mapper.writeValueAsString(dto);
-		
-		rabbitTemplate.convertAndSend("dev-beanzido.exchange","dev-beanzido.oing.#",d);
-		
+
+		rabbitTemplate.convertAndSend("dev-beanzido.exchange", "dev-beanzido.oing.#", d);
+
 	}
 
-	@RabbitListener(bindings = @QueueBinding(value=@Queue, 
-			exchange = @Exchange(name = "${EXHANGE_NAME}", type = ExchangeTypes.FANOUT)))
-    public void receiveMessage(final Message message) {
-		TextMessage newMessage = new TextMessage(new String(message.getBody(),StandardCharsets.UTF_8));
+	@RabbitListener(bindings = @QueueBinding(value = @Queue, exchange = @Exchange(name = "${EXHANGE_NAME}", type = ExchangeTypes.FANOUT)))
+	public void receiveMessage(final Message message) {
+		TextMessage newMessage = new TextMessage(new String(message.getBody(), StandardCharsets.UTF_8));
 		sessions.values().forEach(s -> {
 			try {
 				s.sendMessage(newMessage);
 			} catch (Exception e) {
 			}
 		});
-    }
-	
+	}
+
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessions.remove(session.getId());
-		log.info("[closed]session_count : {} session_id : {}",sessions.size(),session.getId());
+		log.info("[closed]session_count : {} session_id : {}", sessions.size(), session.getId());
 		super.afterConnectionClosed(session, status);
 	}
 
@@ -137,5 +126,4 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		super.handleTransportError(session, exception);
 	}
 
-	
 }
