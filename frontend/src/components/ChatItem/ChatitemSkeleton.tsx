@@ -1,4 +1,4 @@
-function ChatitemSkeleton() {
+function ChatItemSkeleton() {
   return (
     <div className="chat-item skeleton">
       <div className="nickname-container gray"></div>
@@ -18,4 +18,4 @@ function ChatitemSkeleton() {
   );
 }
 
-export default ChatitemSkeleton;
+export default ChatItemSkeleton;
