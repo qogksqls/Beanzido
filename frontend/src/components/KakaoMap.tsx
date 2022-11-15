@@ -1,10 +1,9 @@
 import { useRecoilState } from "recoil";
-import { Map, MapMarker, MapTypeControl } from "react-kakao-maps-sdk";
-import { Routes, Route } from "react-router-dom";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Clusterer from "./Clusterer/Clusterer";
-import { beanListState, mapCenterState } from "store/atom";
+import { beanListState, mapCenterState, mapLevelState } from "store/atom";
 import { useEffect, useState, memo } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
 import useGeolocation from "./hooks/useGeolocation";
 import "./KakaoMap.scss";
 import MapController from "./MapControl/MapController";
@@ -18,28 +17,22 @@ import KeywordDong from "./KeywordMap/KeywordDong";
 function KakaoMap() {
   const [beanList] = useRecoilState(beanListState);
   const [mapCenter, setMapCenter] = useRecoilState(mapCenterState);
-  const [level, setLevel] = useState(3);
+  const [level, setLevel] = useRecoilState(mapLevelState);
   const [map, setMap] = useState<kakao.maps.Map>();
-  const location = useGeolocation();
+  const { loaded, coordinates } = useGeolocation();
   const routerLocation = useLocation();
   const [clusterList, setClusterList] = useState([] as Bean[][]);
-  // const [initialPosition, SetinitialPosition] = useState({
-  //   lat: 0,
-  //   lng: 0,
-  //   loaded: false,
-  //   isPanto: false,
-  // });
 
   useEffect(() => {
-    if (location.loaded === true && mapCenter.loaded === false) {
+    if (loaded === true && mapCenter.loaded === false) {
       setMapCenter({
-        lat: location.coordinates.lat,
-        lng: location.coordinates.lng,
+        lat: coordinates.lat,
+        lng: coordinates.lng,
         loaded: true,
         isPanto: false,
       });
     }
-  }, [location.loaded]);
+  }, [loaded]);
 
   function setScreenSize() {
     let vh = window.innerHeight * 0.01;
@@ -51,6 +44,9 @@ function KakaoMap() {
 
   useEffect(() => {
     setClusterList(getCluster(level, beanList.slice(-100)));
+    if (map && level !== map.getLevel()) {
+      map.setLevel(level, { animate: true });
+    }
   }, [level, beanList]);
 
   return (
@@ -76,8 +72,8 @@ function KakaoMap() {
         >
           <MapMarker
             position={{
-              lat: location.coordinates.lat,
-              lng: location.coordinates.lng,
+              lat: coordinates.lat,
+              lng: coordinates.lng,
             }}
             image={{
               src: my_location,
@@ -112,11 +108,7 @@ function KakaoMap() {
             </Routes>
           )}
           {map && (
-            <MapController
-              map={map}
-              level={level}
-              coordinates={location.coordinates}
-            />
+            <MapController map={map} level={level} coordinates={coordinates} />
           )}
         </Map>
       )}
