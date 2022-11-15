@@ -6,6 +6,7 @@ import { mapLevelState, mapCenterState } from "store/atom";
 import NavToolTip from "./NavToolTip";
 import CommunityIcons from "./CommunityIcons";
 import KeywordIcons from "./KeywordIcons";
+import SidebarKeyword from "components/Sidebar/SidebarKeyword";
 import "./Nav.scss";
 import { ReactComponent as CreateButton } from "assets/img/chat-button.svg";
 import openIcon from "assets/img/Expand_right_light.svg";
@@ -27,12 +28,15 @@ export default function Nav() {
   const communityRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isKeywordRank, setIsKeywordRank] = useState(true);
 
   useEffect(() => {
     if (location.pathname.slice(0, 8) === "/keyword") {
       setIsKeyword(true);
+      setIsKeywordRank(true);
     } else {
       setIsKeyword(false);
+      setIsKeywordRank(false);
     }
   }, [location.pathname]);
 
@@ -89,14 +93,22 @@ export default function Nav() {
       </div>
       <div
         className={
-          location.pathname.slice(0, 8) !== "/keyword" ? "handle" : "handle-off"
+          location.pathname.slice(0, 8) !== "/keyword"
+            ? "handle"
+            : "handle-keyword"
         }
         onClick={() => {
-          navigate("/sidebar");
+          // eslint-disable-next-line no-lone-blocks
+          {
+            location.pathname.slice(0, 8) !== "/keyword"
+              ? navigate("/sidebar")
+              : setIsKeywordRank(true);
+          }
         }}
       >
         <img src={openIcon} alt="open" />
       </div>
+      {isKeywordRank && <SidebarKeyword setIsKeywordRank={setIsKeywordRank} />}
       <div className="create-button">
         <CreateButton
           className="create-button-img"
@@ -124,7 +136,7 @@ export default function Nav() {
             timeout={500}
           >
             <div className={"switch-container"} ref={keywordRef}>
-              <KeywordIcons />
+              <KeywordIcons setIsKeywordRank={setIsKeywordRank} />
             </div>
           </CSSTransition>
           <CSSTransition

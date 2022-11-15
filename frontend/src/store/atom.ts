@@ -26,6 +26,11 @@ export const sidebarState = atom({
   default: 0,
 });
 
+export const sidebarKeywordRankState = atom({
+  key: "sidebarKeywordRankState",
+  default: 0,
+});
+
 export const mapCenterState = atom({
   key: "mapCenterState",
   default: {
@@ -52,6 +57,16 @@ export const locationState = atom<Location>({
 export const beanLoadState = atom({
   key: "beanLoadState",
   default: false,
+});
+
+export const rankState = atom<{ [keyword: string]: number }>({
+  key: "rankState",
+  default: {},
+});
+
+export const regionNameState = atom({
+  key: "RegionNameState",
+  default: "",
 });
 
 function getRandomInt(min: number, max: number) {

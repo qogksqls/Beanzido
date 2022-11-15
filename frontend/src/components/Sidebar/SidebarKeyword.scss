@@ -1,0 +1,135 @@
+@import "assets/css/variables.scss";
+
+html {
+  --inner-height: 300px;
+  --mobile-border: 10px;
+  --scroll-width: 0px;
+  --scroll-width-default: 0px;
+  --scroll-transition: all ease 300ms;
+}
+
+@include mobile {
+  .sidebar-keyword {
+    display: none;
+  }
+}
+
+@include desktop {
+  .sidebar-keyword {
+    position: fixed;
+    top: 0;
+    left: 80px;
+    z-index: 109;
+    width: 350px;
+    height: 100%;
+    background-color: #f5f5f5;
+    text-align: start;
+    .handle {
+      position: fixed;
+      left: 430px;
+    }
+    .inner {
+      margin: 30px;
+      .header {
+        margin-bottom: 30px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        .location-img {
+          width: 20px;
+        }
+      }
+      .rank {
+        .item {
+          background-color: white;
+          margin-bottom: 10px;
+          padding: 10px;
+          border-radius: 10px 10px 10px 0px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .medal {
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+            box-shadow: inset -1px -1px 2px rgba(255, 255, 255, 0.35), inset 1px 1px 2px rgba(0, 0, 0, 0.35),
+            -1px -1px 2px rgba(255, 255, 255, 0.35), 1px 1px 2px rgba(0, 0, 0, 0.35);
+            &::after {
+              content: "";
+              top: 0;
+              left: 0;
+              transform: translateX(100%);
+              width: 100px;
+              height: 60px;
+              position: absolute;
+              z-index: 1;
+              background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 0%, rgba(239, 239, 239, 0.8) 50%, rgba(32, 34, 36, 0) 99%, rgba(125, 185, 232, 0) 100%);
+            }
+          }
+          .item-rank1 {
+            background-color: rgb(255, 217, 0);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 100px;
+            border: 3.5px solid rgb(255, 217, 0);
+            font-weight: bold;
+            &::after {
+              animation: slide 4s infinite;
+            }
+          }
+          .item-rank2 {
+            background-color: rgb(174, 174, 174);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 100px;
+            border: 3.5px solid rgb(174, 174, 174);
+            font-weight: bold;
+            &::after {
+              animation: slide 4s infinite 1s;
+            }          
+          }
+          .item-rank3 {
+            background-color: #dda165;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 100px;
+            border: 3.5px solid #dda165;
+            font-weight: bold;
+            &::after {
+              animation: slide 4s infinite 2s;
+            }          
+          }
+          .item-rank-loser {
+            background-color: #f5f5f5;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 100px;
+            font-weight: bold;
+          }
+          .item-keyword {
+            font-weight: bold;
+            text-align: start;
+            width: 160px;
+          }
+          .item-count {
+            width: 30px;
+            font-size: 12px;
+            color: #979797;
+          }
+        }
+      }
+    }
+  }
+}
