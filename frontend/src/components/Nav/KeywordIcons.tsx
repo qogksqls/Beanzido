@@ -1,16 +1,29 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import Lottie from "lottie-react";
 import { useRecoilState } from "recoil";
-import { mapCenterState, sidebarState, mapLevelState } from "store/atom";
+import {
+  mapCenterState,
+  sidebarState,
+  mapLevelState,
+  sidebarKeywordRankState,
+} from "store/atom";
 import useGeolocation from "components/hooks/useGeolocation";
 import aroundTheWorld from "assets/img/around-the-world.json";
 import cycle from "assets/img/cycling.json";
 import bus from "assets/img/bus.json";
 import train from "assets/img/train.json";
 import "./Nav.scss";
+import { SetStateAction } from "react";
 
-const KeywordIcons = () => {
+type keywordRankProps = {
+  setIsKeywordRank: React.Dispatch<SetStateAction<boolean>>;
+};
+
+const KeywordIcons = ({ setIsKeywordRank }: keywordRankProps) => {
   const [sidebar, setSidebar] = useRecoilState(sidebarState);
+  const [sidebarKeywordRank, setSidebarKeywordRank] = useRecoilState(
+    sidebarKeywordRankState
+  );
   const [, setLevel] = useRecoilState(mapLevelState);
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,6 +36,7 @@ const KeywordIcons = () => {
         className="switch"
         onClick={() => {
           navigate("/");
+          setIsKeywordRank(false);
           setMapCenter({
             lat: coordinates.lat,
             lng: coordinates.lng,
@@ -42,8 +56,9 @@ const KeywordIcons = () => {
       <div
         className={"switch " + (sidebar === 1 ? "active" : "")}
         onClick={() => {
+          setIsKeywordRank(true);
           navigate("/keyword");
-          setSidebar(1);
+          setSidebarKeywordRank(1);
         }}
         data-for="si-do"
         data-tip
@@ -53,11 +68,12 @@ const KeywordIcons = () => {
       <div
         className={"switch " + (sidebar === 2 ? "active" : "")}
         onClick={() => {
+          setIsKeywordRank(true);
           if (location.pathname.split("/").length === 4) {
             navigate(
               `/keyword/si/${location.pathname.split("/")[3].slice(0, 2)}`
             );
-            setSidebar(2);
+            setSidebarKeywordRank(2);
           }
         }}
         data-for="goon-goo"
@@ -68,12 +84,13 @@ const KeywordIcons = () => {
       <div
         className={"switch " + (sidebar === 3 ? "active" : "")}
         onClick={() => {
-          if (location.pathname.split("/").length === 4) {
-            navigate(
-              `/keyword/si/${location.pathname.split("/")[3].slice(0, 2)}`
-            );
-            setSidebar(3);
-          }
+          setIsKeywordRank(true);
+          // if (location.pathname.split("/").length === 4) {
+          //   navigate(
+          //     `/keyword/si/${location.pathname.split("/")[3].slice(0, 2)}`
+          //   );
+          //   setSidebarKeywordRank(3);
+          // }
         }}
         data-for="dong"
         data-tip

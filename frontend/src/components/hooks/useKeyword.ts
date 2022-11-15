@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { LngLat } from "store/types";
+import { useRecoilState } from "recoil";
+import { rankState, regionNameState } from "store/atom";
 
 type PolyRes = number[][][];
 type Polygon = LngLat[][];
@@ -13,6 +15,7 @@ type ResData = {
     };
   };
   rank: { [keyword: string]: number };
+  name: string;
 };
 
 export default function useKeyword(target: string) {
@@ -28,6 +31,9 @@ export default function useKeyword(target: string) {
       }
     ][]
   );
+  const [rank, setRank] = useRecoilState(rankState);
+  const [, setRegionName] = useRecoilState(regionNameState);
+
   useEffect(() => {
     if (target) {
       setIsKeyLoad(false);
@@ -47,6 +53,8 @@ export default function useKeyword(target: string) {
             }
           )
         );
+        setRank(data.rank);
+        setRegionName(data.name);
         setIsKeyLoad(true);
       });
     }
