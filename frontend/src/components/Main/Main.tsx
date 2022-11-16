@@ -36,6 +36,13 @@ function Main() {
     <>
       <KakaoMap />
       <TransitionGroup component={null}>
+        {location.pathname === "/keyword" ? (
+          <div className="keyword-info">
+            ※ 키워드는 5분 단위로 업데이트 됩니다.
+          </div>
+        ) : (
+          <div></div>
+        )}
         <CSSTransition classNames="transition" timeout={500} key={location.key}>
           <Routes location={location}>
             <Route path="sidebar" element={<Sidebar />} />

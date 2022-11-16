@@ -91,3 +91,58 @@
   width: 100%;
   height: 100%;
 }
+
+@keyframes keyword-info-ani {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes keyword-info-ani2 {
+  0% {
+    opacity: 0.9;
+    visibility: visible;
+  }
+  80% {
+    opacity: 0.9;
+    transform: rotate(3600deg);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(3600deg);
+  }
+}
+
+@include mobile {
+  .keyword-info {
+    background-color: white;
+    position: fixed;
+    top: 60px;
+    right: 10px;
+    z-index: 88;
+    padding: 5px;
+    border-radius: 8px;
+    font-size: 10px;
+    opacity: 0.7;
+    visibility: hidden;
+    animation: keyword-info-ani2 5000ms ease-out;
+  }
+}
+
+@include desktop {
+  .keyword-info {
+    background-color: white;
+    position: fixed;
+    top: 10px;
+    right: 150px;
+    z-index: 88;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    opacity: 0.7;
+    animation: keyword-info-ani 2000ms ease-in-out;
+  }
+}

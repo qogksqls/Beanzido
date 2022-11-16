@@ -1,6 +1,8 @@
 import ReactTooltip from "react-tooltip";
+import { useLocation } from "react-router-dom";
 
 function NavToolTip() {
+  const location = useLocation();
   return (
     <>
       <ReactTooltip
@@ -11,19 +13,28 @@ function NavToolTip() {
       />
       <ReactTooltip
         id="goon-goo"
-        getContent={(dataTip) => "시/군/구"}
+        getContent={(dataTip) =>
+          location.pathname.split("/").length === 4
+            ? "시/군/구"
+            : "지도에서 보고 싶은 <시/군/구>를 선택해주세요."
+        }
         place="right"
         effect="solid"
       />
       <ReactTooltip
         id="dong"
-        getContent={(dataTip) => "읍/면/동"}
+        getContent={(dataTip) =>
+          location.pathname.split("/").length === 4 &&
+          location.pathname.split("/")[2] === "dong"
+            ? "읍/면/동"
+            : "지도에서 보고 싶은 <읍/면/동>를 선택해주세요."
+        }
         place="right"
         effect="solid"
       />
       <ReactTooltip
         id="si-do"
-        getContent={(dataTip) => "시/도"}
+        getContent={(dataTip) => "대한민국 전체 보기"}
         place="right"
         effect="solid"
       />
