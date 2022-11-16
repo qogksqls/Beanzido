@@ -149,6 +149,18 @@
           // border-right: 1px solid rgba(0, 0, 0, 0.15);
         }
       }
+      .static {
+        width: 100%;
+        opacity: 0.3;
+        .bus-icon {
+          width: 32px;
+          height: 66px;
+        }
+        .cycle-icon {
+          width: 32px;
+          height: 70px;
+        }
+      }
     }
   }
   .handle {
