@@ -50,6 +50,7 @@ export default function Sidebar() {
       );
     }
   }, [sidebar]);
+
   const upHandlers = useSwipeable({
     onSwiping: (eventData) => {
       document.documentElement.style.setProperty("--inner-transition", "");
