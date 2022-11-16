@@ -7,8 +7,10 @@ import NavToolTip from "./NavToolTip";
 import CommunityIcons from "./CommunityIcons";
 import KeywordIcons from "./KeywordIcons";
 import SidebarKeyword from "components/Sidebar/SidebarKeyword";
+import KeywordButton from "./KeywordButton";
 import "./Nav.scss";
-import { ReactComponent as CreateButton } from "assets/img/chat-button.svg";
+import { ReactComponent as CreateSVG } from "assets/img/chat-button.svg";
+import { ReactComponent as BottomBridge } from "assets/img/bottom-bar.svg";
 import openIcon from "assets/img/Expand_right_light.svg";
 import Lottie from "lottie-react";
 import aroundTheWorld from "assets/img/around-the-world.json";
@@ -19,7 +21,6 @@ import cycle from "assets/img/cycling.json";
 import bus from "assets/img/bus.json";
 import train from "assets/img/train.json";
 import logo from "assets/img/Logo.svg";
-import { ReactComponent as BottomBridge } from "assets/img/bottom-bar.svg";
 
 export default function Nav() {
   const [, setLevel] = useRecoilState(mapLevelState);
@@ -109,15 +110,13 @@ export default function Nav() {
         <img src={openIcon} alt="open" />
       </div>
       {isKeywordRank && <SidebarKeyword setIsKeywordRank={setIsKeywordRank} />}
-      <div className="create-button">
-        <CreateButton
-          className="create-button-img"
-          onClick={() => navigate("/create")}
-          width="34"
-          height="34"
-          viewBox="3 3 18 18"
-        />
-      </div>
+      {isKeyword ? (
+        <KeywordButton />
+      ) : (
+        <div className="create-button" onClick={() => navigate("/create")}>
+          <CreateSVG width="34" height="34" viewBox="3 3 18 18" />
+        </div>
+      )}
       <div className="sidebar-fix">
         <div className="side-logo">
           <img
