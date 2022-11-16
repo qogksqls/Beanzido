@@ -1,7 +1,6 @@
 @import "assets/css/variables.scss";
 
 .create-button {
-  // background-color: #f5f5f5;
   border-radius: 30px;
   position: absolute;
   z-index: 88;
@@ -15,7 +14,6 @@
   background: linear-gradient(145deg, #ffffff, #e6e6e6);
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  // transition: all ease 0.2s 0s;
   &:hover {
     filter: brightness(1.05);
   }
@@ -55,6 +53,64 @@
     filter: brightness(0.9);
   }
 }
+
+.keyword-button-container {
+  position: absolute;
+  z-index: 88;
+  bottom: calc(4% + 50px);
+  left: calc(50%);
+  .keyword-button {
+    position: absolute;
+    left: -30px;
+    bottom: -30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  
+    .bean {
+      transition: transform ease 500ms;
+    }
+  
+    &.active {
+      .bean {
+        transform: rotate(45deg);
+      }
+    }
+    &:active {
+      filter: brightness(0.9);
+      background: #f5f5f5;
+      box-shadow: inset 6px 6px 12px #b8b8b8, inset -6px -6px 12px #ffffff;
+    }
+  }
+  .pop-container {
+    .pop {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      background: linear-gradient(145deg, #ffffff, #e6e6e6);
+      .ani-img {
+        width: 40px;
+        height: 40px;
+      }
+      &:active {
+        filter: brightness(0.9);
+        background: #f5f5f5;
+        box-shadow: inset 5px 5px 10px #b8b8b8, inset -5px -5px 10px #ffffff;
+      }
+    }
+  }
+}
+
 .handle-keyword {
   display: none;
 }
@@ -162,6 +218,9 @@
         }
       }
     }
+    .keyword-button {
+      display: none;
+    }
   }
   .handle {
     position: absolute;
@@ -226,10 +285,6 @@
     bottom: 4%;
     left: 12vw;
     z-index: 87;
-    // background-color: #f5f5f5;
-    // width: 80%;
-    // height: 60px;
-    // border-radius: 110px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
