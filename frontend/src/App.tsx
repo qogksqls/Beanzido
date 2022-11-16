@@ -22,9 +22,9 @@ function App() {
       document.documentElement.style.setProperty("--vh", `${vh}px`);
     }
 
-    window.addEventListener("resize", setScreenSize);
+    // window.addEventListener("resize", setScreenSize);
 
-    return () => window.removeEventListener("resize", setScreenSize);
+    // return () => window.removeEventListener("resize", setScreenSize);
   }, []);
 
   return (
