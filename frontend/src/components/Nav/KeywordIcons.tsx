@@ -68,58 +68,59 @@ const KeywordIcons = ({ setIsKeywordRank }: keywordRankProps) => {
       >
         <Lottie animationData={train} className="ani-img pin" />
       </div>
-      {location.pathname.split("/").length === 4 ? (
-        <div
-          className={"switch " + (sidebar === 2 ? "active" : "")}
-          onClick={() => {
-            if (location.pathname.split("/").length === 4) {
-              setIsKeywordRank(true);
-              navigate(
-                `/keyword/si/${location.pathname.split("/")[3].slice(0, 2)}`
-              );
-              setSidebarKeywordRank(2);
-            }
-          }}
-          data-for="goon-goo"
-          data-tip
-        >
-          <Lottie animationData={bus} className="ani-img pin" />
-        </div>
-      ) : (
-        <div className="static" style={{ width: "100%" }}>
-          <BusIcon className="bus-icon" />
-        </div>
-      )}
-      {location.pathname.split("/").length === 4 ? (
-        <div>
-          {location.pathname.split("/")[2] === "dong" ? (
-            <div
-              className={"switch " + (sidebar === 3 ? "active" : "")}
-              onClick={() => {
-                if (location.pathname.split("/").length === 4) {
-                  setIsKeywordRank(true);
-                  navigate(
-                    `/keyword/si/${location.pathname.split("/")[3].slice(0, 2)}`
-                  );
-                  setSidebarKeywordRank(3);
-                }
-              }}
-              data-for="dong"
-              data-tip
-            >
-              <Lottie animationData={cycle} className="ani-img pin" />
-            </div>
-          ) : (
-            <div className="static" style={{ width: "100%" }}>
-              <CycleIcon className="cycle-icon" />
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="static" style={{ width: "100%" }}>
-          <CycleIcon className="cycle-icon" />
-        </div>
-      )}
+      <div
+        className={"switch " + (sidebar === 2 ? "active" : "")}
+        onClick={() => {
+          if (location.pathname.split("/").length === 4) {
+            setIsKeywordRank(true);
+            navigate(
+              `/keyword/si/${location.pathname.split("/")[3].slice(0, 2)}`
+            );
+            setSidebarKeywordRank(2);
+          }
+        }}
+        data-for="goon-goo"
+        data-tip
+      >
+        {location.pathname.split("/").length === 4 ? (
+          <div>
+            <Lottie animationData={bus} className="ani-img pin" />
+          </div>
+        ) : (
+          <div className="static" style={{ width: "100%" }}>
+            <BusIcon className="bus-icon" />
+          </div>
+        )}
+      </div>
+      <div
+        className={"switch " + (sidebar === 3 ? "active" : "")}
+        onClick={() => {
+          if (location.pathname.split("/").length === 4) {
+            setIsKeywordRank(true);
+            setSidebarKeywordRank(3);
+          }
+        }}
+        data-for="dong"
+        data-tip
+      >
+        {location.pathname.split("/").length === 4 ? (
+          <div>
+            {location.pathname.split("/")[2] === "dong" ? (
+              <div>
+                <Lottie animationData={cycle} className="ani-img pin" />
+              </div>
+            ) : (
+              <div className="static" style={{ width: "100%" }}>
+                <CycleIcon className="cycle-icon" />
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="static" style={{ width: "100%" }}>
+            <CycleIcon className="cycle-icon" />
+          </div>
+        )}
+      </div>
     </>
   );
 };
