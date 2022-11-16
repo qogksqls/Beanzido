@@ -35,6 +35,22 @@
   &.keyword-modal {
     opacity: 0;
   }
+  &.pop-container {
+    .pop {
+      &:nth-child(1) {
+        bottom: -25px ;
+        left: -25px ;
+      }
+      &:nth-child(2) {
+        bottom: -25px ;
+        left: -25px ;
+      }
+      &:nth-child(3) {
+        bottom: -25px;
+        left: -25px;
+      }
+    }
+  }
 }
 .transition-enter-active {
   &.create-bean {
@@ -56,6 +72,23 @@
   &.keyword-modal {
     opacity: 1;
     transition: opacity ease 500ms;
+  }
+  &.pop-container {
+    .pop {
+      &:nth-child(1) {
+        bottom: 40px ;
+        left: -95px ;
+      }
+      &:nth-child(2) {
+        bottom: 75px ;
+        left: -25px ;
+      }
+      &:nth-child(3) {
+        bottom: 40px ;
+        left: 45px ;
+      }
+      transition: all ease 500ms;
+    }
   }
 }
 .transition-exit {
@@ -80,6 +113,23 @@
     opacity: 1;
     transition: opacity ease 500ms;
   }
+  &.pop-container {
+    .pop {
+      &:nth-child(1) {
+        bottom: 40px ;
+        left: -95px ;
+      }
+      &:nth-child(2) {
+        bottom: 75px ;
+        left: -25px ;
+      }
+      &:nth-child(3) {
+        bottom: 40px ;
+        left: 45px ;
+      }
+      transition: all ease 500ms;
+    }
+  }
 }
 .transition-exit-active {
   &.create-bean {
@@ -97,6 +147,40 @@
   }
   &.keyword-modal {
     opacity: 0;
+  }
+  &.pop-container {
+    .pop {
+      &:nth-child(1) {
+        bottom: -25px ;
+        left: -25px ;
+      }
+      &:nth-child(2) {
+        bottom: -25px ;
+        left: -25px ;
+      }
+      &:nth-child(3) {
+        bottom: -25px;
+        left: -25px;
+      }
+    }
+  }
+}
+.transition-enter-done {
+  &.pop-container {
+    .pop {
+      &:nth-child(1) {
+        bottom: 40px ;
+        left: -95px ;
+      }
+      &:nth-child(2) {
+        bottom: 75px ;
+        left: -25px ;
+      }
+      &:nth-child(3) {
+        bottom: 40px ;
+        left: 45px ;
+      }
+    }
   }
 }
 .transition-exit-done {
