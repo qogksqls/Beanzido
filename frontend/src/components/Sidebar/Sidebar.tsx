@@ -17,7 +17,10 @@ export default function Sidebar() {
   const coloredFocusedList = useRecoilValue(focusedListSelector);
   const navigate = useNavigate();
   const { isBeanLoad } = useBeanAPI();
-  const { upHandlers, slideHandlers } = useSideHandler(() => navigate("/"));
+  const { sidebar, upHandlers, slideHandlers } = useSideHandler(() =>
+    navigate("/")
+  );
+  console.log(sidebar);
 
   return (
     <div className="sidebar">

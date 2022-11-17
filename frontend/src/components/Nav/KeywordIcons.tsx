@@ -20,17 +20,19 @@ const KeywordIcons = () => {
   const [, setMapCenter] = useRecoilState(mapCenterState);
   const { coordinates } = useGeolocation();
 
-  useEffect(() => {
-    if (location.pathname.split("/").length === 4) {
-      if (location.pathname.split("/")[2] === "dong") {
-        setSidebar(3);
-      } else {
-        setSidebar(2);
-      }
-    } else {
-      setSidebar(1);
-    }
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   if (location.pathname.slice(0, 8) == "/keyword") {
+  //     if (location.pathname.split("/").length === 4) {
+  //       if (location.pathname.split("/")[2] === "dong") {
+  //         setSidebar(3);
+  //       } else {
+  //         setSidebar(2);
+  //       }
+  //     } else {
+  //       setSidebar(1);
+  //     }
+  //   }
+  // }, [location.pathname]);
 
   return (
     <>

@@ -12,9 +12,6 @@ export default function useSideHandler(close: () => void) {
   useEffect(() => {
     document.documentElement.style.setProperty("--inner-height", "300px");
     setIsFull(false);
-    if (sidebar === 0) {
-      setSidebar(1);
-    }
 
     return () => {
       document.documentElement.style.setProperty("--mobile-border", "15px");
@@ -155,5 +152,5 @@ export default function useSideHandler(close: () => void) {
     },
   });
 
-  return { upHandlers, slideHandlers };
+  return { sidebar, upHandlers, slideHandlers };
 }

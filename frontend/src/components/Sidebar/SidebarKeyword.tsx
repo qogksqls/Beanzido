@@ -23,17 +23,19 @@ const SidebarKeyword = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname.split("/").length === 4) {
-      if (location.pathname.split("/")[2] === "dong") {
-        setSidebar(3);
+    if (location.pathname.slice(0, 8) == "/keyword") {
+      if (location.pathname.split("/").length === 4) {
+        if (location.pathname.split("/")[2] === "dong") {
+          setSidebar(3);
+        } else {
+          setSidebar(2);
+        }
       } else {
-        setSidebar(2);
+        setSidebar(1);
       }
-    } else {
-      setSidebar(1);
     }
     return () => setSidebar(0);
-  }, []);
+  }, [location.pathname]);
 
   return (
     <div className="sidebar-keyword">

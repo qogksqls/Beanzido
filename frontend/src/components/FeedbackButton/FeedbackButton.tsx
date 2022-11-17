@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./FeedbackButton.scss";
 import Lottie from "lottie-react";
 import likeAni from "assets/img/like.json";
-import x from "assets/img/x.svg";
+import { ReactComponent as X } from "assets/img/x.svg";
 
 export default function FeedbackButton() {
   const navigate = useNavigate();
@@ -37,15 +37,13 @@ export default function FeedbackButton() {
       >
         <Lottie className="feedback-button-img" animationData={likeAni} />
         <p>클릭 시 피드백 페이지로 이동</p>
-        <div
+        <X
           className="feedback-close"
           onClick={(e) => {
             e.stopPropagation();
             navigate("/");
           }}
-        >
-          <img src={x} alt="" />
-        </div>
+        />
       </div>
       <div
         className="feedback-back"

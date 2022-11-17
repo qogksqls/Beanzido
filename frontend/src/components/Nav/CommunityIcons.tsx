@@ -1,4 +1,5 @@
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { sidebarState } from "store/atom";
 import Lottie from "lottie-react";
@@ -11,6 +12,13 @@ const CommunityIcons = () => {
   const [sidebar, setSidebar] = useRecoilState(sidebarState);
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setSidebar(0);
+    }
+  }, [location.pathname]);
+
   return (
     <>
       <div
@@ -27,10 +35,10 @@ const CommunityIcons = () => {
       <div
         className={"switch " + (sidebar === 1 ? "active" : "")}
         onClick={() => {
+          setSidebar(1);
           if (location.pathname !== "/sidebar") {
             navigate("/sidebar");
           }
-          setSidebar(1);
         }}
         data-for="all-bean"
         data-tip
@@ -40,10 +48,10 @@ const CommunityIcons = () => {
       <div
         className={"switch " + (sidebar === 2 ? "active" : "")}
         onClick={() => {
+          setSidebar(2);
           if (location.pathname !== "/sidebar") {
             navigate("/sidebar");
           }
-          setSidebar(2);
         }}
         data-for="one-bean"
         data-tip
