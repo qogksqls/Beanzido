@@ -1,74 +1,36 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useRecoilValue } from "recoil";
-import { colorSelector } from "store/selector";
-import Webcam from "react-webcam";
+import React, { useState } from "react";
+import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
+import useGeolocation from "components/hooks/useGeolocation";
+import useColor from "components/hooks/useColor";
+import { mapCenterState } from "store/atom";
 import useRandomName from "components/hooks/useRandomName";
-import BeanStyle from "components/BeanStyle/BeanStyle";
+import { SendMessage } from "react-use-websocket";
 import imageCompression from "browser-image-compression";
+import BeanStyle from "components/BeanStyle/BeanStyle";
+import WebcamCapture from "./WebcamCapture";
 import "./CreateBean.scss";
-import x from "../../assets/img/x.svg";
+import { ReactComponent as XButton } from "../../assets/img/x.svg";
+import { ReactComponent as RefreshButton } from "../../assets/img/refresh.svg";
 import Camera from "../../assets/img/Camera.svg";
 import Camera_white from "../../assets/img/Camera_white.svg";
 import Img_box from "../../assets/img/Img_box.svg";
 import Img_box_white from "../../assets/img/Img_box_white.svg";
-import 새로고침 from "../../assets/img/새로고침.svg";
-import { SendMessage } from "react-use-websocket";
-import useGeolocation from "components/hooks/useGeolocation";
-import { useNavigate } from "react-router-dom";
 
 type createBeanProps = {
   sendMessage: SendMessage;
 };
 
 export default function CreateBean({ sendMessage }: createBeanProps) {
+  const [, setMapCenter] = useRecoilState(mapCenterState);
   const [isBeanStyle, setIsBeanStyle] = useState(false);
-  const { name, setRandomName } = useRandomName(); // nickname
-  const [contentValue, setContentValue] = useState(""); // content
-  function onContentChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    setContentValue(e.currentTarget.value);
-  }
-  const { coordinates } = useGeolocation();
-  const { color, backgroundColor, beanColor } = useRecoilValue(colorSelector);
+  const [contentValue, setContentValue] = useState(""); // content=
   const [camera, setCamera] = useState(false);
-  const navigate = useNavigate();
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--create-bean-color",
-      backgroundColor
-    );
-    document.documentElement.style.setProperty("--create-text-color", color);
-  }, [beanColor, color, backgroundColor]);
-  function OnCamera() {
-    setCamera(true);
-  }
-  function cancelCamera() {
-    setCamera(false);
-  }
-  const webcamRef = useRef<Webcam>(null);
   const [imgSrc, setImgSrc] = useState("");
-  const WebcamCapture = () => {
-    const capture = useCallback(() => {
-      if (webcamRef.current) {
-        const imageSrc = webcamRef.current.getScreenshot();
-        setImgSrc(imageSrc ? imageSrc : "null");
-      }
-      cancelCamera();
-    }, [webcamRef, setImgSrc]);
-    return (
-      <div className="camera">
-        <Webcam
-          className="webcam"
-          audio={false}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-        />
-        <div className="capture-buttons">
-          <div onClick={capture}>촬영</div>
-          <div onClick={cancelCamera}>취소</div>
-        </div>
-      </div>
-    );
-  };
+  const { name, setRandomName } = useRandomName(); // nickname
+  const { coordinates } = useGeolocation();
+  const { beanColor, setBeanColor, getColor } = useColor();
+  const navigate = useNavigate();
 
   async function handleImageUpload(event: any) {
     const imageFile = event.target.files[0];
@@ -77,7 +39,7 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
 
     const options = {
       maxSizeMB: 1,
-      maxWidthOrHeight: 480,
+      maxWidthOrHeight: 1080,
       useWebWorker: true,
     };
     try {
@@ -111,26 +73,32 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
       latitude: coordinates.lat,
       longitude: coordinates.lng,
       location: "",
+      code: 0,
     };
+    // console.log(beanInfo);
 
-    if (contentValue || imgSrc) {
-      const geocoder = new kakao.maps.services.Geocoder();
-      geocoder.coord2RegionCode(
-        coordinates.lng,
-        coordinates.lat,
-        (result, status) => {
-          for (var i = 0; i < result.length; i++) {
-            if (result[i].region_type === "H") {
-              // console.log(result[i].address_name);
-              beanInfo.location = result[i].address_name;
-              sendMessage(JSON.stringify(beanInfo));
-              navigate("/");
+    if (beanInfo.latitude === 0 || beanInfo.longitude === 0) {
+      alert("위치 정보 제공에 동의해 주세요. 새로고침 ㄱㄱ");
+    } else {
+      if (contentValue || imgSrc) {
+        const geocoder = new kakao.maps.services.Geocoder();
+        geocoder.coord2RegionCode(
+          coordinates.lng,
+          coordinates.lat,
+          (result, status) => {
+            for (var i = 0; i < result.length; i++) {
+              if (result[i].region_type === "B") {
+                beanInfo.location = result[i].address_name;
+                beanInfo.code = +result[i].code.slice(0, 8);
+                sendMessage(JSON.stringify(beanInfo));
+                navigate("/");
+              }
             }
           }
-        }
-      );
-    } else {
-      alert("전할 메시지를 적어주세요.");
+        );
+      } else {
+        alert("전할 메시지를 적어주세요.");
+      }
     }
   }
 
@@ -140,27 +108,36 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
         <div className="header">
           <h2>글 작성</h2>
         </div>
-        <img className="x" src={x} alt="" onClick={() => navigate("/")} />
+        <XButton
+          className="x"
+          stroke="var(--create-text-color)"
+          onClick={() => navigate("/")}
+        />
         <div className="content">
           <div className="name-style">
             <div className="name-refresh">
               <h4>{name}</h4>
               <p>님,</p>
-              <img
+              <RefreshButton
                 className="refresh"
-                src={새로고침}
-                alt=""
                 onClick={setRandomName}
+                fill="transparent"
               />
             </div>
             <div className="style-button" onClick={() => setIsBeanStyle(true)}>
               <p>스타일 변경</p>
             </div>
           </div>
-          {isBeanStyle && <BeanStyle setIsBeanStyle={setIsBeanStyle} />}
+          {isBeanStyle && (
+            <BeanStyle
+              setIsBeanStyle={setIsBeanStyle}
+              setBeanColor={setBeanColor}
+              getColor={getColor}
+            />
+          )}
           <div className="message">
             <textarea
-              onChange={onContentChange}
+              onChange={(event) => setContentValue(event.currentTarget.value)}
               value={contentValue}
               placeholder="전하고 싶은 메시지를 입력해주세요."
             />
@@ -172,23 +149,23 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
                 // eslint-disable-next-line no-restricted-globals
                 if (confirm("사진을 재설정 하시겠습니까?")) {
                   setImgSrc("");
-                  cancelCamera();
+                  setCamera(false);
                 }
               }}
             >
               <img
                 className="capture"
                 src={imgSrc}
-                onClick={OnCamera}
+                onClick={() => setCamera(true)}
                 alt="캡쳐"
               />
             </div>
           ) : (
             <div className="camera-picture">
               {camera ? (
-                <WebcamCapture />
+                <WebcamCapture setCamera={setCamera} setImgSrc={setImgSrc} />
               ) : (
-                <div className="camera-btn" onClick={OnCamera}>
+                <div className="camera-btn" onClick={() => setCamera(true)}>
                   {[1, 5, 7, 8, 9].includes(beanColor) ? (
                     <img className="camera-img" src={Camera_white} alt="" />
                   ) : (
@@ -227,7 +204,19 @@ export default function CreateBean({ sendMessage }: createBeanProps) {
               )}
             </div>
           )}
-          <div className="finish-button" onClick={SaveBean}>
+          <div
+            className="finish-button"
+            onClick={() => {
+              SaveBean();
+              // console.log(coordinates);
+              setMapCenter({
+                lat: coordinates.lat,
+                lng: coordinates.lng,
+                loaded: true,
+                isPanto: true,
+              });
+            }}
+          >
             <h3>글 작성 완료</h3>
           </div>
         </div>
