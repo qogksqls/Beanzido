@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation, Route, Routes } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { CSSTransition } from "react-transition-group";
-import { mapLevelState, mapCenterState } from "store/atom";
+import { mapLevelState, isKeywordRankState } from "store/atom";
 import NavToolTip from "./NavToolTip";
 import CommunityIcons from "./CommunityIcons";
 import KeywordIcons from "./KeywordIcons";
@@ -27,12 +27,11 @@ export default function Nav() {
   const communityRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const [isKeywordRank, setIsKeywordRank] = useState(true);
+  const [isKeywordRank, setIsKeywordRank] = useRecoilState(isKeywordRankState);
 
   useEffect(() => {
     if (location.pathname.slice(0, 8) === "/keyword") {
       setIsKeyword(true);
-      setIsKeywordRank(true);
     } else {
       setIsKeyword(false);
       setIsKeywordRank(false);
@@ -43,15 +42,20 @@ export default function Nav() {
     <nav>
       <div className="bottom-bar">
         {isKeyword ? (
-          <div className="button-container">
-            <Lottie animationData={podium} className="ani-img bubleChat" />
+          <div
+            className="button-container"
+            onClick={() => {
+              setIsKeywordRank(true);
+            }}
+          >
+            <Lottie animationData={podium} className="ani-img podium" />
           </div>
         ) : (
           <div
             className="button-container"
             onClick={() => navigate("/sidebar")}
           >
-            <Lottie animationData={bubbleChat} className="ani-img podium" />
+            <Lottie animationData={bubbleChat} className="ani-img bubleChat" />
           </div>
         )}
         <BottomBridge className="barImage" />
@@ -87,7 +91,14 @@ export default function Nav() {
       >
         <img src={openIcon} alt="open" />
       </div>
-      {isKeywordRank && <SidebarKeyword setIsKeywordRank={setIsKeywordRank} />}
+      <CSSTransition
+        classNames="transition"
+        in={isKeywordRank}
+        timeout={500}
+        unmountOnExit
+      >
+        <SidebarKeyword />
+      </CSSTransition>
       {isKeyword ? (
         <KeywordButton />
       ) : (
@@ -113,7 +124,7 @@ export default function Nav() {
             timeout={500}
           >
             <div className={"switch-container"} ref={keywordRef}>
-              <KeywordIcons setIsKeywordRank={setIsKeywordRank} />
+              <KeywordIcons />
             </div>
           </CSSTransition>
           <CSSTransition

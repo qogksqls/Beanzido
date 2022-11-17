@@ -1,37 +1,36 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import Lottie from "lottie-react";
 import { useRecoilState } from "recoil";
-import {
-  mapCenterState,
-  sidebarState,
-  mapLevelState,
-  sidebarKeywordRankState,
-} from "store/atom";
+import { mapCenterState, sidebarState, isKeywordRankState } from "store/atom";
 import useGeolocation from "components/hooks/useGeolocation";
 import aroundTheWorld from "assets/img/around-the-world.json";
 import cycle from "assets/img/cycling.json";
 import bus from "assets/img/bus.json";
 import train from "assets/img/train.json";
 import "./Nav.scss";
-import { SetStateAction } from "react";
+import { SetStateAction, useEffect } from "react";
 import { ReactComponent as BusIcon } from "assets/img/bus.svg";
 import { ReactComponent as CycleIcon } from "assets/img/cycle.svg";
 
-type keywordRankProps = {
-  setIsKeywordRank: React.Dispatch<SetStateAction<boolean>>;
-};
-
-const KeywordIcons = ({ setIsKeywordRank }: keywordRankProps) => {
+const KeywordIcons = () => {
   const [sidebar, setSidebar] = useRecoilState(sidebarState);
-  const [sidebarKeywordRank, setSidebarKeywordRank] = useRecoilState(
-    sidebarKeywordRankState
-  );
-  const [, setLevel] = useRecoilState(mapLevelState);
   const navigate = useNavigate();
   const location = useLocation();
-
+  const [isKeywordRank, setIsKeywordRank] = useRecoilState(isKeywordRankState);
   const [, setMapCenter] = useRecoilState(mapCenterState);
   const { coordinates } = useGeolocation();
+
+  useEffect(() => {
+    if (location.pathname.split("/").length === 4) {
+      if (location.pathname.split("/")[2] === "dong") {
+        setSidebar(3);
+      } else {
+        setSidebar(2);
+      }
+    } else {
+      setSidebar(1);
+    }
+  }, [location.pathname]);
 
   return (
     <>
@@ -61,7 +60,6 @@ const KeywordIcons = ({ setIsKeywordRank }: keywordRankProps) => {
         onClick={() => {
           setIsKeywordRank(true);
           navigate("/keyword");
-          setSidebarKeywordRank(1);
         }}
         data-for="si-do"
         data-tip
@@ -76,7 +74,6 @@ const KeywordIcons = ({ setIsKeywordRank }: keywordRankProps) => {
             navigate(
               `/keyword/si/${location.pathname.split("/")[3].slice(0, 2)}`
             );
-            setSidebarKeywordRank(2);
           }
         }}
         data-for="goon-goo"
@@ -97,7 +94,6 @@ const KeywordIcons = ({ setIsKeywordRank }: keywordRankProps) => {
         onClick={() => {
           if (location.pathname.split("/").length === 4) {
             setIsKeywordRank(true);
-            setSidebarKeywordRank(3);
           }
         }}
         data-for="dong"

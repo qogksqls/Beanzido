@@ -26,9 +26,9 @@ export const sidebarState = atom({
   default: 0,
 });
 
-export const sidebarKeywordRankState = atom({
-  key: "sidebarKeywordRankState",
-  default: 0,
+export const isKeywordRankState = atom({
+  key: "isKeywordRankState",
+  default: false,
 });
 
 export const mapCenterState = atom({

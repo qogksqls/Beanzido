@@ -228,9 +228,16 @@
     &.sidebar {
       transform: translateX(-350px);
     }
+    &.sidebar-keyword {
+      transform: translateX(-350px);
+    }
   }
   .transition-enter-active {
     &.sidebar {
+      transform: translateX(0);
+      transition: all ease 500ms;
+    }
+    &.sidebar-keyword {
       transform: translateX(0);
       transition: all ease 500ms;
     }
@@ -239,11 +246,17 @@
     &.sidebar {
       transform: translateX(0);
       transition: all ease 500ms;
-
+    }
+    &.sidebar-keyword {
+      transform: translateX(0);
+      transition: all ease 500ms;
     }
   }
   .transition-exit-active {
     &.sidebar {
+      transform: translateX(-350px);
+    }
+    &.sidebar-keyword {
       transform: translateX(-350px);
     }
   }
@@ -253,9 +266,16 @@
     &.sidebar {
       transform: translateY(var(--inner-height));
     }
+    &.sidebar-keyword {
+      transform: translateY(var(--inner-height));
+    }
   }
   .transition-enter-active {
     &.sidebar {
+      transform: translateY(0);
+      transition: all ease 500ms;
+    }
+    &.sidebar-keyword {
       transform: translateY(0);
       transition: all ease 500ms;
     }
@@ -264,9 +284,16 @@
     &.sidebar {
       transform: translateY(0);
     }
+    &.sidebar-keyword {
+      transform: translateY(0);
+    }
   }
   .transition-exit-active {
     &.sidebar {
+      transform: translateY(var(--inner-height));
+      transition: all ease 500ms;
+    }
+    &.sidebar-keyword {
       transform: translateY(var(--inner-height));
       transition: all ease 500ms;
     }
