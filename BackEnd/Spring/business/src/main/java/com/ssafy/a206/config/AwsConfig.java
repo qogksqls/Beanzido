@@ -11,25 +11,18 @@ import software.amazon.awssdk.services.rekognition.RekognitionClient;
 
 @Component
 public class AwsConfig {
-	
+
 	@Value("${AWS_ID}")
 	private String awsId;
 
 	@Value("${AWS_PASSWORD}")
 	private String awsPassword;
-	
+
 	@Bean
 	public RekognitionClient rekClient() {
-		AwsBasicCredentials awsCreds = AwsBasicCredentials.create(
-				  awsId,
-				  awsPassword);
-		
-      Region region = Region.US_EAST_1;
-      RekognitionClient rekClient = RekognitionClient.builder()
-          .region(region)
-          .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-          .build();
-      
-      return rekClient;
+		AwsBasicCredentials awsCreds = AwsBasicCredentials.create(awsId, awsPassword);
+		Region region = Region.US_EAST_1;
+		return RekognitionClient.builder().region(region)
+				.credentialsProvider(StaticCredentialsProvider.create(awsCreds)).build();
 	}
 }

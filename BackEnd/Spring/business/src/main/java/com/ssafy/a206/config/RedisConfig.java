@@ -1,25 +1,18 @@
 package com.ssafy.a206.config;
 
-import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.convert.RedisCustomConversions;
-import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.ssafy.a206.dto.MessageDTO;
-
 @Configuration
-@EnableRedisRepositories(basePackageClasses = MessageDTO.class)
 public class RedisConfig {
-//	@Value("${REDIS_PORT_SESSION}")
-//	private int redisPortSession;
 	
 	@Value("${REDIS_PORT_CHAT}")
 	private int redisPortChat;
@@ -31,9 +24,8 @@ public class RedisConfig {
 	private String redisPassword;
 
 	
-	@Bean
+	@Bean(name= "redisChatConnectionFactory")
 	public RedisConnectionFactory redisChatConnectionFactory() {
-//		return new LettuceConnectionFactory(redisHost, redisPort);
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 		redisStandaloneConfiguration.setHostName(redisHost);
 		redisStandaloneConfiguration.setPort(redisPortChat);
@@ -42,13 +34,10 @@ public class RedisConfig {
         return lettuceConnectionFactory;
 	}
 	
-	
-	//별도의 설정없이 RedisTemplate 메서드로 Redis 서버에 명령어 수행 가능 
-	@Bean
+	@Primary
+	@Bean(name = "redisTemplate")
 	public RedisTemplate<String, String> redisTemplateChat(){
-		// redisTemplate 에서 set, get,delete 사용 
 		RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
-		//redis-cli를 통해 데이터 조회 시, 알아볼 수 없는 형태로 출력되는 것을 방지 
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.setValueSerializer(new StringRedisSerializer());
 		redisTemplate.setConnectionFactory(redisChatConnectionFactory());
@@ -56,18 +45,5 @@ public class RedisConfig {
 		return redisTemplate;
 	}
 	
-
-	
-//	@Bean
-//	public RedisTemplate<String, WebSocketSession> redisTemplateSession(){
-//			// redisTemplate 에서 set, get,delete 사용
-//			RedisTemplate<String, WebSocketSession> redisTemplate = new RedisTemplate<>();
-//			//redis-cli를 통해 데이터 조회 시, 알아볼 수 없는 형태로 출력되는 것을 방지
-//			redisTemplate.setKeySerializer(new StringRedisSerializer());
-//			redisTemplate.setValueSerializer(new StringRedisSerializer());
-//			redisTemplate.setConnectionFactory(redisConnectionFactory(redisPortSession));
-//
-//		return redisTemplate;
-//	}
 	
 }

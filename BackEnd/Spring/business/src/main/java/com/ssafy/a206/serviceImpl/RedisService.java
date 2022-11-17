@@ -1,6 +1,8 @@
 package com.ssafy.a206.serviceImpl;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -11,19 +13,21 @@ import com.ssafy.a206.dto.MessageDTO;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@RequiredArgsConstructor
 public class RedisService {
-	private final RedisTemplate<String, String> redisTemplateChat;
-//	private final RedisTemplate<String, String> redisTemplateSession;
+	@Autowired
+	private  RedisTemplate<String, String> redisTemplateChat;
+	
+	@Autowired
+	@Qualifier("redisTemplateChatTwo")
+	private  RedisTemplate<String, String> redisTemplateChatTwo;
 
 	public void setChatValues(MessageDTO dto, String sessionId) {
 		ValueOperations<String, String> values = redisTemplateChat.opsForValue();
+		ListOperations<String, String> values2 = redisTemplateChatTwo.opsForList();
 		String nano = sessionId+":"+String.valueOf(System.currentTimeMillis());
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -34,8 +38,11 @@ public class RedisService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		if(values2.size("message")>200) {
+			values2.leftPop("message");
+		}
 		values.set(nano, data, 1, TimeUnit.DAYS);
+		values2.rightPush("message", data);
 	}
 
 	public void setChatValues(String key, String data, Duration duration) {
@@ -49,13 +56,13 @@ public class RedisService {
 	}
 	
 	public List<MessageDTO> getChatAll() {
-		Set<String> keys = redisTemplateChat.keys("*");
-		ValueOperations<String, String> values = redisTemplateChat.opsForValue();
+		ListOperations<String, String> values2 = redisTemplateChatTwo.opsForList();
+		List<String> keys = values2.range("message", 0, -1);
 		List<MessageDTO> list = new ArrayList<>();
 		ObjectMapper mapper = new ObjectMapper();
 		for(String s : keys) {
 			try {
-				list.add(mapper.readValue(values.get(s), MessageDTO.class));
+				list.add(mapper.readValue(s, MessageDTO.class));
 			} catch (JsonProcessingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
