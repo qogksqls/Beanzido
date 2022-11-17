@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import "./SidebarKeyword.scss";
 import useSideHandler from "components/hooks/useSideHandler";
+import sadBean from "assets/img/bean-sad.svg";
 import closeIcon from "assets/img/Expand_left_light.svg";
 import { ReactComponent as X } from "assets/img/x.svg";
 import { useRecoilState } from "recoil";
@@ -85,7 +86,12 @@ const SidebarKeyword = () => {
                 );
               })
             ) : (
-              <div>콩이 하나도 없어요ㅠ^ㅠ</div>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ marginBottom: "20px" }}>
+                  이 지역은 콩이 아직 없습니다.
+                </div>
+                <img src={sadBean} alt="" />
+              </div>
             )}
           </div>
         </div>
