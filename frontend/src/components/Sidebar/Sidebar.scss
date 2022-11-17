@@ -76,6 +76,18 @@ html {
 }
 
 @include mobile {
+  .inner {
+    .header {
+      .close {
+        opacity: 0.5;
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
   .sidebar {
     bottom: 0;
     left: 0;
@@ -92,13 +104,6 @@ html {
       position: relative;
       .side-logo, .switch-container {
         display: none;
-      }
-      .close { 
-        position: absolute;
-        top: 6px;
-        right: 6px;
-        width: 24px;
-        height: 24px;
       }
       .swipe-handle {
         display: flex;
@@ -191,7 +196,7 @@ html {
       height: 50px;
 
       top: calc(50% - 50px);
-      right: -25px;
+      right: -26px;
   
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;

@@ -11,7 +11,7 @@
 import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
-import { registerRoute } from "workbox-routing";
+import { NavigationRoute, registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 
@@ -23,7 +23,13 @@ clientsClaim();
 // Their URLs are injected into the manifest variable below.
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching. See https://cra.link/PWA
-precacheAndRoute(self.__WB_MANIFEST);
+
+precacheAndRoute([
+  { url: "/assets/img/", revision: null },
+  { url: process.env.PUBLIC_URL + "/handler.html" },
+]);
+
+const ignored = self.__WB_MANIFEST;
 
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
@@ -49,43 +55,9 @@ registerRoute(
     }
 
     // Return true to signal that we want to use the handler.
-    return true;
+    return false;
   },
-  createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html")
-);
-
-// 폰트 캐싱
-registerRoute(
-  // Add in any other file extensions or routing criteria as needed.
-  ({ url }) =>
-    url.origin === self.location.origin && url.pathname.endsWith(".png"),
-  // Customize this strategy as needed, e.g., by changing to CacheFirst.
-  new StaleWhileRevalidate({
-    cacheName: "images",
-    plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50 }),
-    ],
-  })
-);
-
-// 이미지 캐싱
-registerRoute(
-  // Add in any other file extensions or routing criteria as needed.
-  ({ request }) => request.destination === "image",
-  // Customize this strategy as needed, e.g., by changing to CacheFirst.
-  new StaleWhileRevalidate({
-    cacheName: "image-cache",
-    plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
-      new CacheableResponsePlugin({
-        statuses: [200],
-      }),
-      new ExpirationPlugin({ maxEntries: 50 }),
-    ],
-  })
+  createHandlerBoundToURL(process.env.PUBLIC_URL + "/handler.html")
 );
 
 // This allows the web app to trigger skipWaiting via

@@ -1,5 +1,28 @@
 @import "assets/css/variables.scss";
 
+.create-button {
+  border-radius: 30px;
+  position: absolute;
+  z-index: 88;
+  bottom: 6%;
+  left: calc(50% - 30px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  &:hover {
+    filter: brightness(1.05);
+  }
+  &:active {
+    filter: brightness(0.9);
+    background: #f5f5f5;
+    box-shadow: inset 6px 6px 12px #b8b8b8, inset -6px -6px 12px #ffffff;
+  }
+}
 .feedback-button {
   position: absolute;
   bottom: 0;
@@ -31,6 +54,72 @@
   }
 }
 
+.keyword-button-container {
+  position: absolute;
+  z-index: 88;
+  bottom: calc(4% + 50px);
+  left: calc(50%);
+  .keyword-button {
+    position: absolute;
+    left: -30px;
+    bottom: -30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  
+    .bean {
+      transition: transform ease 500ms;
+    }
+  
+    &.active {
+      .bean {
+        transform: rotate(45deg);
+      }
+    }
+    &:active {
+      filter: brightness(0.9);
+      background: #f5f5f5;
+      box-shadow: inset 6px 6px 12px #b8b8b8, inset -6px -6px 12px #ffffff;
+    }
+  }
+  .pop-container {
+    .pop {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      background: linear-gradient(145deg, #ffffff, #e6e6e6);
+      .ani-img {
+        width: 37px;
+        height: 37px;
+      }
+      .static {
+        opacity: 0.3;
+        width: 29px;
+        height: 29px;
+      }
+      &:active {
+        filter: brightness(0.9);
+        background: #f5f5f5;
+        box-shadow: inset 5px 5px 10px #b8b8b8, inset -5px -5px 10px #ffffff;
+      }
+    }
+  }
+}
+
+.handle-keyword {
+  display: none;
+}
+
 @keyframes feedbackIn {
   0% {
     opacity: 0;
@@ -54,15 +143,50 @@
     background-color: white;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     .side-logo {
-      border-bottom: 1px solid rgba(0,0,0,.15);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+      &::after {
+        content: "";
+        top: 0;
+        left: 0;
+        transform: translateX(100%);
+        width: 100%;
+        height: 80px;
+        position: absolute;
+        z-index: 1;
+        animation: slide 8s infinite 5s;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.8) 50%,
+          rgba(32, 34, 36, 0) 99%,
+          rgba(125, 185, 232, 0) 100%
+        );
+      }
       img {
         width: 80%;
         height: 80px;
       }
     }
+    .side-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      perspective: 1500px;
+    }
     .switch-container {
+      transform-style: preserve-3d;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      // transition: all 500ms ease;
+
       .switch {
+        width: 100%;
         background-color: white;
         cursor: pointer;
         display: flex;
@@ -76,48 +200,56 @@
           height: 70px;
         }
         .pin {
-         width: 40px; 
+          width: 40px;
+        }
+        &.active {
+          background-color: #f5f5f5;
         }
         &:hover {
           background-color: #f5f5f5;
           // border-right: 1px solid rgba(0, 0, 0, 0.15);
         }
       }
-      &.first {
-        .all {
-          background-color: #f5f5f5;
-          // border-right: 1px solid rgba(0, 0, 0, 0.15);
+      .static {
+        width: 100%;
+        opacity: 0.3;
+        .bus-icon {
+          width: 32px;
+          height: 66px;
         }
-      }
-      &.second {
-        .focus {
-          background-color: #f5f5f5;
-          // border-right: 1px solid rgba(0, 0, 0, 0.15);
+        .cycle-icon {
+          width: 32px;
+          height: 70px;
         }
       }
     }
   }
+  
+  .keyword-button-container {
+    display: none;
+  }
+  
   .handle {
     position: absolute;
     z-index: 80;
     display: flex;
     align-items: center;
-    
+
     width: 25px;
     height: 50px;
-    
+
     top: calc(50% - 50px);
     left: 80px;
-    
+
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.25);
     border-left: none;
-    
+
     background-color: #f5f5f5;
-    
+
     cursor: pointer;
-    
+
     img {
       width: 24px;
       height: 24px;
@@ -126,42 +258,62 @@
   .bottom-bar {
     display: none;
   }
+  .handle-keyword {
+    position: absolute;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+
+    width: 25px;
+    height: 50px;
+
+    top: calc(50% - 50px);
+    left: 80px;
+
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-left: none;
+
+    background-color: #f5f5f5;
+
+    cursor: pointer;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
 }
 
 @include mobile {
   .bottom-bar {
     position: absolute;
-    bottom: 5%;
-    left: 14vw;
+    bottom: 4%;
+    left: 12vw;
     z-index: 87;
-    // background-color: #f5f5f5;
-    // width: 80%;
-    // height: 60px;
-    // border-radius: 110px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.25));
     .ani-img {
       width: 40px;
     }
     .button-container {
       display: flex;
       justify-content: center;
-      width: calc(36vw - 40px);
+      width: calc(38vw - 45px);
       height: 50px;
-      background-color: #f5f5f5;
-      box-shadow: 1px 0 0 #f5f5f5;
-      border-radius: 25px 10px 0px 25px;
-      padding: 0 0 0 5px;
+      background-color: #f1f1f1;
+      border-radius: 20px 0px 0px 20px;
+      box-shadow: 1px 0 0 #f1f1f1;
     }
     .barImage {
-      width: 70px;
-      border-radius: 10px 10px 0px 0px;
+      fill: #f1f1f1;
+      display: block;
       & + .button-container {
-        box-shadow: -1px 0 0 #f5f5f5;
-        border-radius: 10px 25px 25px 0px;
-        padding: 0 5px 0 0;
+        border-radius: 0px 20px 20px 0px;
+        box-shadow: -1px 0 0 #f1f1f1;
       }
     }
   }
@@ -169,7 +321,7 @@
     display: none;
   }
   .create-button {
-    bottom: calc(5% + 20px);
+    bottom: calc(4% + 20px);
   }
   .handle {
     display: none;

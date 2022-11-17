@@ -1,128 +1,156 @@
-import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate, useLocation, Route, Routes } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { sidebarState } from "store/atom";
+import { CSSTransition } from "react-transition-group";
+import { mapLevelState, isKeywordRankState } from "store/atom";
+import NavToolTip from "./NavToolTip";
+import CommunityIcons from "./CommunityIcons";
+import KeywordIcons from "./KeywordIcons";
+import SidebarKeyword from "components/Sidebar/SidebarKeyword";
+import KeywordButton from "./KeywordButton";
 import "./Nav.scss";
-import createButton from "assets/img/chat-button.svg";
+import { ReactComponent as CreateSVG } from "assets/img/chat-button.svg";
+import { ReactComponent as BottomBridge } from "assets/img/bottom-bar.svg";
 import openIcon from "assets/img/Expand_right_light.svg";
 import Lottie from "lottie-react";
 import aroundTheWorld from "assets/img/around-the-world.json";
 import bubbleChat from "assets/img/bubble-chat.json";
+import podium from "assets/img/podium.json";
 import likeAni from "assets/img/like.json";
-import locationAni from "assets/img/location.json";
-import pinAni from "assets/img/pin.json";
 import searchAni from "assets/img/search.json";
-import chat from "assets/img/Chat.svg";
 import logo from "assets/img/Logo.svg";
-import bottomBar from "assets/img/bottom-bar.svg";
 
 export default function Nav() {
-  const [sidebar, setSidebar] = useRecoilState(sidebarState);
+  const [, setLevel] = useRecoilState(mapLevelState);
   const [isKeyword, setIsKeyword] = useState(false);
+  const keywordRef = useRef(null);
+  const communityRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isKeywordRank, setIsKeywordRank] = useRecoilState(isKeywordRankState);
+
+  useEffect(() => {
+    if (location.pathname.slice(0, 8) === "/keyword") {
+      setIsKeyword(true);
+    } else {
+      setIsKeyword(false);
+      setIsKeywordRank(false);
+    }
+  }, [location.pathname]);
 
   return (
     <nav>
       <div className="bottom-bar">
-        <div className="button-container" onClick={() => navigate("/sidebar")}>
-          <Lottie animationData={bubbleChat} className="ani-img bubleChat" />
-        </div>
-        <img className="barImage" src={bottomBar} alt="navImage" />
+        {isKeyword ? (
+          <div
+            className="button-container"
+            onClick={() => {
+              setIsKeywordRank(true);
+            }}
+          >
+            <Lottie animationData={podium} className="ani-img podium" />
+          </div>
+        ) : (
+          <div
+            className="button-container"
+            onClick={() => navigate("/sidebar")}
+          >
+            <Lottie animationData={bubbleChat} className="ani-img bubleChat" />
+          </div>
+        )}
+        <BottomBridge className="barImage" />
         <div
           className="button-container"
           onClick={() => {
-            alert("추가 예정인 기능입니다. 기대해주세요.");
+            navigate(isKeyword ? "/" : "/keyword");
             setIsKeyword(!isKeyword);
           }}
         >
           <Lottie
-            animationData={isKeyword ? searchAni : aroundTheWorld}
+            animationData={isKeyword ? aroundTheWorld : searchAni}
             className={
-              isKeyword ? "ani-img searchAni" : "ani-img aroundTheWorld"
+              isKeyword ? "ani-img aroundTheWorld" : "ani-img searchAni"
             }
           />
         </div>
       </div>
       <div
-        className="handle"
+        className={
+          location.pathname.slice(0, 8) !== "/keyword"
+            ? "handle"
+            : "handle-keyword"
+        }
         onClick={() => {
-          navigate("/sidebar");
+          // eslint-disable-next-line no-lone-blocks
+          {
+            location.pathname.slice(0, 8) !== "/keyword"
+              ? navigate("/sidebar")
+              : setIsKeywordRank(true);
+          }
         }}
       >
         <img src={openIcon} alt="open" />
       </div>
-      <div className="create-button">
-        <img
-          className="create-button-img"
-          onClick={() => navigate("/create")}
-          src={createButton}
-          alt="chat-button"
-        />
-      </div>
+      <CSSTransition
+        classNames="transition"
+        in={isKeywordRank}
+        timeout={500}
+        unmountOnExit
+      >
+        <SidebarKeyword />
+      </CSSTransition>
+      {isKeyword ? (
+        <KeywordButton />
+      ) : (
+        <div className="create-button" onClick={() => navigate("/create")}>
+          <CreateSVG width="34" height="34" viewBox="3 3 18 18" />
+        </div>
+      )}
       <div className="sidebar-fix">
         <div className="side-logo">
           <img
             src={logo}
             alt="logo"
             onClick={() => {
-              alert("일해라 황태희희흐히ㅡ히ㅡ히ㅡ흐히");
+              alert("Beanzido is World Best Social Map Community.");
             }}
           />
         </div>
-        <div
-          className={
-            location.pathname === "/sidebar"
-              ? sidebar === 0
-                ? "switch-container first"
-                : "switch-container second"
-              : "switch-container"
-          }
-        >
-          <div className="switch">
-            <Lottie
-              animationData={isKeyword ? searchAni : aroundTheWorld}
-              className={
-                isKeyword ? "ani-img searchAni" : "ani-img aroundTheWorld"
-              }
-              onClick={() => {
-                alert("추가 예정인 기능입니다. 기대해주세요.");
-                setIsKeyword(!isKeyword);
-              }}
-            />
-          </div>
-          <div
-            className="switch all"
-            onClick={() => {
-              if (location.pathname !== "/sidebar") {
-                navigate("/sidebar");
-              }
-              setSidebar(0);
-            }}
+        <div className="side-container">
+          <CSSTransition
+            in={isKeyword}
+            nodeRef={keywordRef}
+            classNames="transition"
+            timeout={500}
           >
-            <Lottie animationData={bubbleChat} className="ani-img bubbleChat" />
-          </div>
-          <div
-            className="switch focus"
-            onClick={() => {
-              if (location.pathname !== "/sidebar") {
-                navigate("/sidebar");
-              }
-              setSidebar(1);
-            }}
+            <div className={"switch-container"} ref={keywordRef}>
+              <KeywordIcons />
+            </div>
+          </CSSTransition>
+          <CSSTransition
+            in={!isKeyword}
+            nodeRef={communityRef}
+            classNames="transition"
+            timeout={500}
           >
-            <Lottie animationData={pinAni} className="ani-img pin" />
-          </div>
+            <div className={"switch-container"} ref={communityRef}>
+              <CommunityIcons />
+            </div>
+          </CSSTransition>
         </div>
+
         {location.pathname !== "/feedback" && (
           <div
             className="feedback-button"
             onClick={() => navigate("/feedback")}
+            data-for="feedback-btn"
+            data-tip
           >
             <Lottie className="feedback-button-img" animationData={likeAni} />
           </div>
         )}
       </div>
+      <NavToolTip />
     </nav>
   );
 }

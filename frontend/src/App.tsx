@@ -1,31 +1,41 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { beanListState } from "store/atom";
 import "./App.scss";
 
 import useBeanAPI from "components/hooks/useBeanAPI";
-import useGeoLocation from "components/hooks/useGeolocation";
 import Main from "components/Main/Main";
 import Nav from "components/Nav/Nav";
-import KakaoMap from "components/KakaoMap";
 import Logo from "assets/img/Logo.svg";
+import useGeolocation from "components/hooks/useGeolocation";
 
 function App() {
-  useBeanAPI();
+  const { fetchBean } = useBeanAPI();
+  const { loaded } = useGeolocation();
   const location = useLocation();
-  const { loaded } = useGeoLocation();
   const navigate = useNavigate();
+
+  useEffect(() => fetchBean(), []);
+
+  useEffect(() => {
+    function setScreenSize() {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    }
+    setScreenSize();
+
+    window.addEventListener("resize", setScreenSize);
+
+    return () => window.removeEventListener("resize", setScreenSize);
+  }, []);
 
   return (
     <div className="App">
-      {loaded && <KakaoMap />}
       <div className="logo">
         <img src={Logo} alt="로고" onClick={() => navigate("/feedback")} />
       </div>
       <Nav />
       <Routes location={location}>
-        <Route path="/*" element={<Main />} />
+        <Route path="/*" element={<>{loaded && <Main />}</>} />
       </Routes>
     </div>
   );

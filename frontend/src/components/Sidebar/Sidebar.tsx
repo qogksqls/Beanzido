@@ -1,189 +1,38 @@
-import { useState, useEffect, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { sidebarState } from "store/atom";
+import { useRecoilValue } from "recoil";
 import { beanListSelector, focusedListSelector } from "store/selector";
-import { useSwipeable } from "react-swipeable";
-import ChatList from "components/ChatList/ChatList";
 import "./Sidebar.scss";
 import closeIcon from "assets/img/Expand_left_light.svg";
-import x from "assets/img/x.svg";
-import logo from "assets/img/Logo.svg";
-import chat from "assets/img/Chat.svg";
-import bigChat from "assets/img/Chat_alt.svg";
+import { ReactComponent as X } from "assets/img/x.svg";
 import { useNavigate } from "react-router-dom";
-import bean from "../../assets/img/logo192.png";
 import sadBean from "assets/img/bean-sad.svg";
 import Lottie from "lottie-react";
 import locationAni from "assets/img/location.json";
+import _ from "lodash";
+import useBeanAPI from "components/hooks/useBeanAPI";
+import ChatList from "components/ChatList/ChatList";
+import useSideHandler from "components/hooks/useSideHandler";
 
 export default function Sidebar() {
-  const nodeRef = useRef(null);
-  const [isFull, setIsFull] = useState(false);
-  const [isFirst, setisFirst] = useState(true);
-  const [isScroll, setIsScroll] = useState(false);
-  const [sidebar, setSidebar] = useRecoilState(sidebarState);
   const coloredBeanList = useRecoilValue(beanListSelector);
   const coloredFocusedList = useRecoilValue(focusedListSelector);
   const navigate = useNavigate();
+  const { isBeanLoad } = useBeanAPI();
+  const { sidebar, upHandlers, slideHandlers } = useSideHandler(() =>
+    navigate("/")
+  );
+  console.log(sidebar);
 
-  useEffect(() => {
-    document.documentElement.style.setProperty("--inner-height", "300px");
-
-    setIsFull(false);
-
-    return () => {
-      document.documentElement.style.setProperty("--mobile-border", "15px");
-      document.documentElement.style.setProperty("--inner-height", "300px");
-      setIsFull(false);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (sidebar === 0) {
-      document.documentElement.style.setProperty(
-        "--scroll-width-default",
-        "0px"
-      );
-    } else {
-      document.documentElement.style.setProperty(
-        "--scroll-width-default",
-        "100%"
-      );
-    }
-  }, [sidebar]);
-  const upHandlers = useSwipeable({
-    onSwiping: (eventData) => {
-      document.documentElement.style.setProperty("--inner-transition", "");
-      if (isFull) {
-        if (
-          eventData.deltaY > -50 &&
-          eventData.deltaY < -50 + window.innerHeight
-        ) {
-          document.documentElement.style.setProperty(
-            "--inner-height",
-            `calc(var(--vh, 1vh) * 100 - ${eventData.deltaY + 50}px)`
-          );
-        }
-      } else {
-        if (
-          eventData.deltaY < 270 &&
-          eventData.deltaY > 300 - window.innerHeight
-        ) {
-          document.documentElement.style.setProperty(
-            "--inner-height",
-            `${300 - eventData.deltaY}px`
-          );
-        }
-      }
-    },
-    onSwiped: (eventData) => {
-      document.documentElement.style.setProperty(
-        "--inner-transition",
-        "all ease 300ms"
-      );
-      if (isFull) {
-        document.documentElement.style.setProperty(
-          "--inner-height",
-          "calc(var(--vh, 1vh) * 100 - 50px)"
-        );
-      } else {
-        document.documentElement.style.setProperty("--inner-height", "300px");
-      }
-      if (
-        eventData.dir === "Up" &&
-        eventData.deltaY < (-1 / 8) * window.innerHeight
-      ) {
-        setIsFull(true);
-        document.documentElement.style.setProperty(
-          "--inner-height",
-          "calc(var(--vh, 1vh) * 100 - 50px)"
-        );
-      } else if (
-        eventData.dir === "Down" &&
-        eventData.deltaY > (1 / 8) * window.innerHeight
-      ) {
-        if (isFull) {
-          document.documentElement.style.setProperty(
-            "--inner-height",
-            `calc(var(--vh, 1vh) * 100 - ${eventData.deltaY + 50}px)`
-          );
-        } else {
-          document.documentElement.style.setProperty(
-            "--inner-height",
-            `${300 - eventData.deltaY}px`
-          );
-        }
-        navigate("/");
-      }
-    },
-  });
-
-  const sideHandlers = useSwipeable({
-    onSwipeStart: (eventData) => {
-      if (eventData.dir === "Down" || eventData.dir === "Up") {
-        setIsScroll(true);
-      }
-    },
-    onSwiping: (eventData) => {
-      if (!isScroll) {
-        document.documentElement.style.setProperty("--scroll-transition", "");
-        if (
-          isFirst &&
-          eventData.deltaX > -1 * window.innerWidth &&
-          eventData.deltaX <= 30
-        ) {
-          document.documentElement.style.setProperty(
-            "--scroll-width",
-            `${eventData.deltaX}px`
-          );
-        } else if (
-          !isFirst &&
-          eventData.deltaX < window.innerWidth &&
-          eventData.deltaX >= -30
-        ) {
-          document.documentElement.style.setProperty(
-            "--scroll-width",
-            `${eventData.deltaX}px`
-          );
-        }
-      }
-    },
-    onSwiped: (eventData) => {
-      document.documentElement.style.setProperty("--scroll-width", "0px");
-      document.documentElement.style.setProperty(
-        "--scroll-transition",
-        "all ease 300ms"
-      );
-      setIsScroll(false);
-      if (
-        eventData.dir === "Left" &&
-        eventData.deltaX < (-1 / 4) * window.innerWidth
-      ) {
-        setSidebar(1);
-      } else if (
-        eventData.dir === "Right" &&
-        eventData.deltaX > (1 / 4) * window.innerWidth
-      ) {
-        setSidebar(0);
-      }
-    },
-  });
   return (
-    <div className="sidebar" ref={nodeRef}>
+    <div className="sidebar">
       <div className="slide-handle" onClick={() => navigate("/")}>
         <img src={closeIcon} alt="open" />
       </div>
       <div className="inner">
         <div className="header">
           <div className="swipe-handle" {...upHandlers} />
-          <img
-            className="close"
-            src={x}
-            onClick={() => navigate("/")}
-            alt="close"
-          />
+          <X className="close" onClick={() => navigate("/")} />
         </div>
-        <div className="scroll-container" {...sideHandlers}>
+        <div className="scroll-container" {...slideHandlers}>
           <div className="scroll first">
             <div className="scroll-description">
               <div className="description-header">
@@ -191,14 +40,13 @@ export default function Sidebar() {
                 모든 콩들의 대화 내용입니다.
               </div>
             </div>
-            <ChatList chatList={coloredBeanList} />
-            {coloredBeanList.length > 0 ? (
-              <div></div>
-            ) : (
+            {isBeanLoad && _.isEmpty(coloredBeanList) ? (
               <div className="empty-list">
                 <img src={sadBean} alt="" />
                 "Beanzido에 콩이 하나도 없어요..."
               </div>
+            ) : (
+              <ChatList chatList={coloredBeanList} />
             )}
           </div>
           <div className="scroll second">
@@ -210,20 +58,25 @@ export default function Sidebar() {
                       animationData={locationAni}
                       className="location-img"
                     />
-                    <div>{coloredFocusedList[0].location}</div>에 있는
+                    <div>
+                      {
+                        coloredFocusedList[coloredFocusedList.length - 1]
+                          .location
+                      }
+                    </div>
+                    에 있는
                   </div>
                   콩들의 대화 내용입니다.
                 </div>
               )}
             </div>
-            <ChatList chatList={coloredFocusedList} />
-            {coloredFocusedList.length > 0 ? (
-              <div></div>
-            ) : (
+            {isBeanLoad && _.isEmpty(coloredFocusedList) ? (
               <div className="empty-list">
                 <img src={sadBean} alt="" />
                 "Beanzido에 심어진 콩을 클릭해봐"
               </div>
+            ) : (
+              <ChatList chatList={coloredFocusedList} />
             )}
           </div>
         </div>

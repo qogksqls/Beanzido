@@ -21,3 +21,11 @@ export type ColoredBean = BeanBase & {
     color: string;
   };
 };
+
+export type LngLat = { lng: number; lat: number };
+
+export type Location = {
+  loaded: boolean;
+  coordinates: { lat: number; lng: number };
+  error?: { code: number; message: string };
+};
