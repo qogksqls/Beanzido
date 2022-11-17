@@ -20,7 +20,6 @@ const KeywordIcons = () => {
   const [, setMapCenter] = useRecoilState(mapCenterState);
   const { coordinates } = useGeolocation();
 
-  console.log(sidebar, isKeywordRank);
   useEffect(() => {
     if (location.pathname.split("/").length === 4) {
       if (location.pathname.split("/")[2] === "dong") {
