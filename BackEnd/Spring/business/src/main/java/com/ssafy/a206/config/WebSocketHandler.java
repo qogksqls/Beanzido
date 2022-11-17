@@ -82,7 +82,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			e1.printStackTrace();
 		}
 
-		String ip = session.getHandshakeHeaders().get("x-forwarded-for").get(0);
+		String ip = "";
 
 		messageLogService.messageAdd(messageReq, ip);
 		MessageDTO dto = new MessageDTO(messageReq, ip);

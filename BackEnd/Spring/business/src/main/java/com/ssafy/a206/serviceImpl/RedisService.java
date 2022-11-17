@@ -1,7 +1,5 @@
 package com.ssafy.a206.serviceImpl;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.ListOperations;
@@ -23,12 +21,13 @@ public class RedisService {
 	@Autowired
 	private  RedisTemplate<String, String> redisTemplateChat;
 	
-	@Qualifier()
-	private  RedisTemplate<String, String> redisTemplateChat2;
+	@Autowired
+	@Qualifier("redisTemplateChatTwo")
+	private  RedisTemplate<String, String> redisTemplateChatTwo;
 
 	public void setChatValues(MessageDTO dto, String sessionId) {
 		ValueOperations<String, String> values = redisTemplateChat.opsForValue();
-		ListOperations<String, String> values2 = redisTemplateChat2.opsForList();
+		ListOperations<String, String> values2 = redisTemplateChatTwo.opsForList();
 		String nano = sessionId+":"+String.valueOf(System.currentTimeMillis());
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -57,7 +56,7 @@ public class RedisService {
 	}
 	
 	public List<MessageDTO> getChatAll() {
-		ListOperations<String, String> values2 = redisTemplateChat2.opsForList();
+		ListOperations<String, String> values2 = redisTemplateChatTwo.opsForList();
 		List<String> keys = values2.range("message", 0, -1);
 		List<MessageDTO> list = new ArrayList<>();
 		ObjectMapper mapper = new ObjectMapper();
