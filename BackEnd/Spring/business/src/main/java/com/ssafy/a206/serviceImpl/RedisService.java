@@ -35,10 +35,9 @@ public class RedisService {
 		try {
 			data = mapper.writeValueAsString(dto);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(values2.size("message")>200) {
+		if(values2.size("message")>100) {
 			values2.leftPop("message");
 		}
 		values.set(nano, data, 1, TimeUnit.DAYS);
@@ -64,7 +63,6 @@ public class RedisService {
 			try {
 				list.add(mapper.readValue(s, MessageDTO.class));
 			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -75,22 +73,4 @@ public class RedisService {
 		redisTemplateChat.delete(key);
 	}
 	
-//	public void setSessionValues(String key, WebSocketSession data) {
-//		ValueOperations<String, WebSocketSession> values = redisTemplateSession.opsForValue();
-//		values.set(key, data);
-//	}
-//
-//	public void setSessionValues(String key, WebSocketSession data, Duration duration) {
-//		ValueOperations<String, WebSocketSession> values = redisTemplateSession.opsForValue();
-//		values.set(key, data, duration);
-//	}
-//
-//	public Object getSessionValues(String key) {
-//		ValueOperations<String, WebSocketSession> values = redisTemplateSession.opsForValue();
-//		return values.get(key);
-//	}
-//
-//	public void deleteSessionValues(String key) {
-//		redisTemplateSession.delete(key);
-//	}
 }
