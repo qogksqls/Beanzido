@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7d15ec59-001f-4bc8-9b5a-97c93225dcfd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Spring/business/src/main/java/com/ssafy/a206/config/AwsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring/business/src/main/java/com/ssafy/a206/config/AwsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Spring/business/src/main/java/com/ssafy/a206/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring/business/src/main/java/com/ssafy/a206/config/RabbitMQConfig.java" afterDir="false" />
-    </list>
+    <list default="true" id="7d15ec59-001f-4bc8-9b5a-97c93225dcfd" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
