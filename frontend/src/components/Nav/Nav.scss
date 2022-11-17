@@ -99,8 +99,8 @@
       border-radius: 25px;
       background: linear-gradient(145deg, #ffffff, #e6e6e6);
       .ani-img {
-        width: 40px;
-        height: 40px;
+        width: 37px;
+        height: 37px;
       }
       &:active {
         filter: brightness(0.9);
@@ -218,10 +218,12 @@
         }
       }
     }
-    .keyword-button {
-      display: none;
-    }
   }
+  
+  .keyword-button-container {
+    display: none;
+  }
+  
   .handle {
     position: absolute;
     z-index: 80;

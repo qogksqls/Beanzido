@@ -47,3 +47,29 @@ function KeywordButton() {
 }
 
 export default KeywordButton;
+
+{
+  /* <div
+  className="button-container"
+  onClick={() => {
+    const locationPath = location.pathname.split("/");
+    if (locationPath.length === 4 && locationPath[2] === "dong") {
+      navigate(`/keyword/si/${locationPath[3].slice(0, 2)}`);
+    } else {
+      navigate("/keyword");
+    }
+  }}
+>
+  {location.pathname.split("/").length === 4 ? (
+    <div style={{ display: "flex", alignItems: "center" }}>
+      {location.pathname.split("/")[2] === "dong" ? (
+        <Lottie animationData={cycle} className="ani-img pin" />
+      ) : (
+        <Lottie animationData={bus} className="ani-img pin" />
+      )}
+    </div>
+  ) : (
+    <Lottie animationData={train} className="ani-img pin" />
+  )}
+</div>; */
+}

@@ -40,6 +40,9 @@
       &:nth-child(1) {
         bottom: -25px ;
         left: -25px ;
+        .ani-img {
+          transform: rotate(-50deg);
+        }
       }
       &:nth-child(2) {
         bottom: -25px ;
@@ -48,7 +51,11 @@
       &:nth-child(3) {
         bottom: -25px;
         left: -25px;
+        .ani-img {
+          transform: rotate(50deg);
+        }
       }
+      box-shadow: none;
     }
   }
 }
@@ -76,18 +83,29 @@
   &.pop-container {
     .pop {
       &:nth-child(1) {
-        bottom: 40px ;
-        left: -95px ;
+        bottom: 20px ;
+        left: -90px ;
+        .ani-img {
+          transform: rotate(0);
+          transition: all ease 500ms;
+        }
       }
       &:nth-child(2) {
-        bottom: 75px ;
+        bottom: 55px ;
         left: -25px ;
+        transition-delay: 100ms;
       }
       &:nth-child(3) {
-        bottom: 40px ;
-        left: 45px ;
+        bottom: 20px ;
+        left: 40px ;
+        transition-delay: 200ms;
+        .ani-img {
+          transform: rotate(0);
+          transition: all ease 300ms 200ms;
+        }
       }
-      transition: all ease 500ms;
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+      transition: all ease-out 300ms;
     }
   }
 }
@@ -116,18 +134,27 @@
   &.pop-container {
     .pop {
       &:nth-child(1) {
-        bottom: 40px ;
-        left: -95px ;
+        bottom: 20px ;
+        left: -90px ;
+        .ani-img {
+          transform: rotate(0);
+          transition: all ease 500ms;
+        }
       }
       &:nth-child(2) {
-        bottom: 75px ;
+        bottom: 55px ;
         left: -25px ;
       }
       &:nth-child(3) {
-        bottom: 40px ;
-        left: 45px ;
+        bottom: 20px ;
+        left: 40px ;
+        .ani-img {
+          transform: rotate(0);
+          transition: all ease 500ms;
+        }
       }
-      transition: all ease 500ms;
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+      transition: all ease-in 300ms;
     }
   }
 }
@@ -143,7 +170,6 @@
   }
   &.switch-container {
     transform: rotateY(90deg) translate3d(22.5px, 0px, 45px);
-    // filter: brightness(0.9);
   }
   &.keyword-modal {
     opacity: 0;
@@ -153,6 +179,9 @@
       &:nth-child(1) {
         bottom: -25px ;
         left: -25px ;
+        .ani-img {
+          transform: rotate(-50deg);
+        }
       }
       &:nth-child(2) {
         bottom: -25px ;
@@ -161,7 +190,11 @@
       &:nth-child(3) {
         bottom: -25px;
         left: -25px;
+        .ani-img {
+          transform: rotate(50deg);
+        }
       }
+      box-shadow: none;
     }
   }
 }
@@ -169,17 +202,18 @@
   &.pop-container {
     .pop {
       &:nth-child(1) {
-        bottom: 40px ;
-        left: -95px ;
+        bottom: 20px ;
+        left: -90px ;
       }
       &:nth-child(2) {
-        bottom: 75px ;
+        bottom: 55px ;
         left: -25px ;
       }
       &:nth-child(3) {
-        bottom: 40px ;
-        left: 45px ;
+        bottom: 20px ;
+        left: 40px ;
       }
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
     }
   }
 }
