@@ -10,7 +10,6 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.stereotype.Component;
 
 public class BadWordFilter {
 	private List<String> keywords;
