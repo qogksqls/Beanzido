@@ -33,10 +33,10 @@ function KeywordButton() {
             className="pop"
             onClick={() => {
               if (location.pathname.split("/").length === 4) {
+                navigate("/keyword");
+              } else {
                 setIsNotice(true);
                 setTimeout(() => setIsNotice(false), 3000);
-              } else {
-                navigate("/keyword");
               }
             }}
           >
