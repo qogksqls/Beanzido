@@ -66,8 +66,12 @@ $breakpoint: 500px;
 
   .x {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    padding: 4px;
+    top: 14px;
+    right: 14px;
+    width: 16px;
+    height: 16px;
+    fill: var(--create-text-color);
     cursor: pointer;
   }
 

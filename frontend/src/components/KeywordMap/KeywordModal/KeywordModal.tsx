@@ -6,12 +6,13 @@ import _ from "lodash";
 type KeywordModalProps = {
   name: string;
   keywords: { [keyword: string]: number };
+  moveTo: () => void;
 };
 
-function KeywordModal({ name, keywords }: KeywordModalProps) {
+function KeywordModal({ name, keywords, moveTo }: KeywordModalProps) {
   return (
     <>
-      <div className="keyword-modal">
+      <div className="keyword-modal" onClick={moveTo}>
         <div className="keyword-header">
           <img src={locationImg} className="location-img" alt="" />
           <div className="keyword-location">{name}</div>
