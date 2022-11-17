@@ -106,13 +106,11 @@
     opacity: 0.9;
     visibility: visible;
   }
-  80% {
+  90% {
     opacity: 0.9;
-    transform: rotate(3600deg);
   }
   100% {
     opacity: 0;
-    transform: rotate(3600deg);
   }
 }
 

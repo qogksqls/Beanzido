@@ -1,68 +1,85 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import React, { SetStateAction } from "react";
 import "./SidebarKeyword.scss";
+import useSideHandler from "components/hooks/useSideHandler";
 import closeIcon from "assets/img/Expand_left_light.svg";
+import { ReactComponent as X } from "assets/img/x.svg";
 import { useRecoilState } from "recoil";
-import { rankState, regionNameState } from "store/atom";
+import {
+  rankState,
+  regionNameState,
+  isKeywordRankState,
+  sidebarState,
+} from "store/atom";
 import locationImg from "assets/img/location.svg";
+import { useEffect } from "react";
 
-type keywordRankProps = {
-  setIsKeywordRank: React.Dispatch<SetStateAction<boolean>>;
-};
-
-const SidebarKeyword = ({ setIsKeywordRank }: keywordRankProps) => {
+const SidebarKeyword = () => {
   const [keywordRank] = useRecoilState(rankState);
   const [regionName] = useRecoilState(regionNameState);
+  const [, setSidebar] = useRecoilState(sidebarState);
+  const [, setIsKeywordRank] = useRecoilState(isKeywordRankState);
+  const { upHandlers, slideHandlers } = useSideHandler(() =>
+    setIsKeywordRank(false)
+  );
+
+  useEffect(() => {
+    return () => setSidebar(0);
+  }, []);
 
   return (
     <div className="sidebar-keyword">
       <div className="inner">
         <div className="keyword-rank header">
-          <img src={locationImg} className="location-img" alt="" />
-          <div style={{ color: "#1b6e6e" }}>{regionName}</div>의 키워드
-          순위입니다.
+          <div className="swipe-handle" {...upHandlers} />
+          <X className="close" onClick={() => setIsKeywordRank(false)} />
         </div>
-        <div className="keyword-rank rank">
-          {Object.keys(keywordRank).length > 0 ? (
-            Object.keys(keywordRank).map((keyword, idx) => {
-              return (
-                <div key={idx} className="item">
-                  {idx === 0 ? (
-                    <div className="perspective-container">
-                      <div className="medal item-rank1">{idx + 1}</div>
+        <div className="keyword-rank rank scroll-container">
+          <div className="scroll">
+            <div className="location-desc">
+              <img src={locationImg} className="location-img" alt="" />
+              <div style={{ color: "#1b6e6e" }}>{regionName}</div>의 키워드
+              순위입니다.
+            </div>
+            {Object.keys(keywordRank).length > 0 ? (
+              Object.keys(keywordRank).map((keyword, idx) => {
+                return (
+                  <div key={idx} className="item">
+                    {idx === 0 ? (
+                      <div className="perspective-container">
+                        <div className="medal item-rank1">{idx + 1}</div>
+                      </div>
+                    ) : (
+                      <div>
+                        {idx === 1 ? (
+                          <div className="perspective-container">
+                            <div className="medal item-rank2">{idx + 1}</div>
+                          </div>
+                        ) : (
+                          <div>
+                            {idx === 2 ? (
+                              <div className="perspective-container">
+                                <div className="medal item-rank3">
+                                  {idx + 1}
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="item-rank-loser">{idx + 1}</div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    <div className="item-keyword">{keyword}</div>
+                    <div className="item-count">
+                      {Object.values(keywordRank)[idx]}회
                     </div>
-                  ) : (
-                    <div>
-                      {idx === 1 ? (
-                        <div className="perspective-container">
-                          <div className="medal item-rank2">{idx + 1}</div>
-                        </div>
-                      ) : (
-                        <div>
-                          {idx === 2 ? (
-                            <div className="perspective-container">
-                              <div className="medal item-rank3">{idx + 1}</div>
-                            </div>
-                          ) : (
-                            <div className="item-rank-loser">{idx + 1}</div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {/* <div
-                    className={idx < 3 ? "item-rank" : "item-rank-style"}
-                  ></div> */}
-                  <div className="item-keyword">{keyword}</div>
-                  <div className="item-count">
-                    {Object.values(keywordRank)[idx]}회
                   </div>
-                </div>
-              );
-            })
-          ) : (
-            <div>콩이 하나도 없어요ㅠ^ㅠ</div>
-          )}
+                );
+              })
+            ) : (
+              <div>콩이 하나도 없어요ㅠ^ㅠ</div>
+            )}
+          </div>
         </div>
       </div>
       <div
