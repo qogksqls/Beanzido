@@ -16,7 +16,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import com.ssafy.a206.dto.MessageDTO;
 
 @Configuration
-@EnableRedisRepositories(basePackageClasses = MessageDTO.class)
 public class RedisConfig {
 //	@Value("${REDIS_PORT_SESSION}")
 //	private int redisPortSession;
@@ -31,7 +30,7 @@ public class RedisConfig {
 	private String redisPassword;
 
 	
-	@Bean
+	@Bean(name= "redisChatConnectionFactory")
 	public RedisConnectionFactory redisChatConnectionFactory() {
 //		return new LettuceConnectionFactory(redisHost, redisPort);
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
@@ -44,7 +43,7 @@ public class RedisConfig {
 	
 	
 	//별도의 설정없이 RedisTemplate 메서드로 Redis 서버에 명령어 수행 가능 
-	@Bean
+	@Bean(name = "redisTemplateChat")
 	public RedisTemplate<String, String> redisTemplateChat(){
 		// redisTemplate 에서 set, get,delete 사용 
 		RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
@@ -56,18 +55,5 @@ public class RedisConfig {
 		return redisTemplate;
 	}
 	
-
-	
-//	@Bean
-//	public RedisTemplate<String, WebSocketSession> redisTemplateSession(){
-//			// redisTemplate 에서 set, get,delete 사용
-//			RedisTemplate<String, WebSocketSession> redisTemplate = new RedisTemplate<>();
-//			//redis-cli를 통해 데이터 조회 시, 알아볼 수 없는 형태로 출력되는 것을 방지
-//			redisTemplate.setKeySerializer(new StringRedisSerializer());
-//			redisTemplate.setValueSerializer(new StringRedisSerializer());
-//			redisTemplate.setConnectionFactory(redisConnectionFactory(redisPortSession));
-//
-//		return redisTemplate;
-//	}
 	
 }
