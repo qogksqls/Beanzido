@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import Lottie from "lottie-react";
-import { useRecoilState } from "recoil";
+import { constSelector, useRecoilState } from "recoil";
 import { mapCenterState, sidebarState, isKeywordRankState } from "store/atom";
 import useGeolocation from "components/hooks/useGeolocation";
 import aroundTheWorld from "assets/img/around-the-world.json";
@@ -20,6 +20,7 @@ const KeywordIcons = () => {
   const [, setMapCenter] = useRecoilState(mapCenterState);
   const { coordinates } = useGeolocation();
 
+  console.log(sidebar, isKeywordRank);
   useEffect(() => {
     if (location.pathname.split("/").length === 4) {
       if (location.pathname.split("/")[2] === "dong") {
@@ -56,7 +57,7 @@ const KeywordIcons = () => {
         />
       </div>
       <div
-        className={"switch " + (sidebar === 1 ? "active" : "")}
+        className={"switch " + (sidebar === 1 && isKeywordRank ? "active" : "")}
         onClick={() => {
           setIsKeywordRank(true);
           navigate("/keyword");
@@ -67,7 +68,7 @@ const KeywordIcons = () => {
         <Lottie animationData={train} className="ani-img pin" />
       </div>
       <div
-        className={"switch " + (sidebar === 2 ? "active" : "")}
+        className={"switch " + (sidebar === 2 && isKeywordRank ? "active" : "")}
         onClick={() => {
           if (location.pathname.split("/").length === 4) {
             setIsKeywordRank(true);
@@ -90,7 +91,7 @@ const KeywordIcons = () => {
         )}
       </div>
       <div
-        className={"switch " + (sidebar === 3 ? "active" : "")}
+        className={"switch " + (sidebar === 3 && isKeywordRank ? "active" : "")}
         onClick={() => {
           if (location.pathname.split("/").length === 4) {
             setIsKeywordRank(true);

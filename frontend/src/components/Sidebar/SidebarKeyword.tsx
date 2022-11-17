@@ -18,11 +18,19 @@ const SidebarKeyword = () => {
   const [regionName] = useRecoilState(regionNameState);
   const [, setSidebar] = useRecoilState(sidebarState);
   const [, setIsKeywordRank] = useRecoilState(isKeywordRankState);
-  const { upHandlers, slideHandlers } = useSideHandler(() =>
-    setIsKeywordRank(false)
-  );
+  const { upHandlers } = useSideHandler(() => setIsKeywordRank(false));
+  const location = useLocation();
 
   useEffect(() => {
+    if (location.pathname.split("/").length === 4) {
+      if (location.pathname.split("/")[2] === "dong") {
+        setSidebar(3);
+      } else {
+        setSidebar(2);
+      }
+    } else {
+      setSidebar(1);
+    }
     return () => setSidebar(0);
   }, []);
 

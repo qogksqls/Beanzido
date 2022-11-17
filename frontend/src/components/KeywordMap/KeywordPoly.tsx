@@ -98,7 +98,18 @@ function KeywordPoly({ polygon, keywords, name, code, map }: PolyProps) {
           timeout={500}
           unmountOnExit
         >
-          <KeywordModal name={name} keywords={keywords} />
+          <KeywordModal
+            name={name}
+            keywords={keywords}
+            moveTo={() => {
+              kakao.maps.event.preventMap();
+              if (code.length === 2) {
+                navigate("/keyword/si/" + code);
+              } else if (code.length === 5) {
+                navigate("/keyword/dong/" + code);
+              }
+            }}
+          />
         </CSSTransition>
       </ModalPortal>
     </>

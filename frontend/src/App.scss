@@ -34,6 +34,9 @@
   }
   &.keyword-modal {
     opacity: 0;
+  }  
+  &.notice-modal {
+    opacity: 0;
   }
   &.pop-container {
     .pop {
@@ -77,6 +80,10 @@
     transition: all ease 500ms;
   }
   &.keyword-modal {
+    opacity: 1;
+    transition: opacity ease 500ms;
+  }
+  &.notice-modal {
     opacity: 1;
     transition: opacity ease 500ms;
   }
@@ -131,6 +138,10 @@
     opacity: 1;
     transition: opacity ease 500ms;
   }
+  &.notice-modal {
+    opacity: 1;
+    transition: opacity ease 500ms;
+  }
   &.pop-container {
     .pop {
       &:nth-child(1) {
@@ -172,6 +183,9 @@
     transform: rotateY(90deg) translate3d(22.5px, 0px, 45px);
   }
   &.keyword-modal {
+    opacity: 0;
+  }
+  &.notice-modal {
     opacity: 0;
   }
   &.pop-container {
