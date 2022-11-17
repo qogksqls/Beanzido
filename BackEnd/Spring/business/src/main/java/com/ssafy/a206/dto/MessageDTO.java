@@ -36,6 +36,7 @@ public class MessageDTO implements Comparable<MessageDTO>{
 	private String ip;
 	private String imgFilter;
 	private boolean contentFilter;
+	private int code;
 	
 	@JsonFormat(shape = JsonFormat.Shape.NUMBER)
 	private Date createdAt;
@@ -53,6 +54,7 @@ public class MessageDTO implements Comparable<MessageDTO>{
 		this.ip = ip;
 		this.imgFilter="";
 		this.contentFilter=false;
+		this.code=mes.getCode();
 	}
 
 	@Override
