@@ -20,6 +20,8 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -49,6 +51,13 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	RabbitTemplate rabbitTemplate;
+	
+	@Value("${EXHANGE_NAME}")
+	private String EXHANGE_NAME;
+	
+	@Value("${ROUTING_KEY}")
+	private String ROUTING_KEY;
+	
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -99,7 +108,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 		String d = mapper.writeValueAsString(dto);
 
-		rabbitTemplate.convertAndSend("dev-beanzido.exchange", "dev-beanzido.oing.#", d);
+		rabbitTemplate.convertAndSend(EXHANGE_NAME, ROUTING_KEY, d);
 
 	}
 
