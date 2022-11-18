@@ -23,6 +23,9 @@ function KeywordModal({ name, keywords, moveTo }: KeywordModalProps) {
         ) : (
           <div className="keyword">{Object.keys(keywords)[0]}</div>
         )}
+        <div className="click-text">
+          눌러서 이동하기
+        </div>
       </div>
     </>
   );
