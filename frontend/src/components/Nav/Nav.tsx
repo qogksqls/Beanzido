@@ -2,12 +2,13 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation, Route, Routes } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { CSSTransition } from "react-transition-group";
-import { mapLevelState, isKeywordRankState } from "store/atom";
+import { mapLevelState, isKeywordRankState, mapCenterState } from "store/atom";
 import NavToolTip from "./NavToolTip";
 import CommunityIcons from "./CommunityIcons";
 import KeywordIcons from "./KeywordIcons";
 import SidebarKeyword from "components/Sidebar/SidebarKeyword";
 import KeywordButton from "./KeywordButton";
+import useGeolocation from "components/hooks/useGeolocation";
 import "./Nav.scss";
 import { ReactComponent as CreateSVG } from "assets/img/chat-button.svg";
 import { ReactComponent as BottomBridge } from "assets/img/bottom-bar.svg";
@@ -28,6 +29,8 @@ export default function Nav() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isKeywordRank, setIsKeywordRank] = useRecoilState(isKeywordRankState);
+  const [, setMapCenter] = useRecoilState(mapCenterState);
+  const { coordinates } = useGeolocation();
 
   useEffect(() => {
     if (location.pathname.slice(0, 8) === "/keyword") {
@@ -64,6 +67,12 @@ export default function Nav() {
           onClick={() => {
             navigate(isKeyword ? "/" : "/keyword");
             setIsKeyword(!isKeyword);
+            setMapCenter({
+              lat: coordinates.lat,
+              lng: coordinates.lng,
+              loaded: true,
+              isPanto: true,
+            });
           }}
         >
           <Lottie
