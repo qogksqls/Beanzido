@@ -2,8 +2,9 @@ import { useState, useEffect, useRef, memo } from "react";
 import "./ClusterBean.scss";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import { useSwipeable } from "react-swipeable";
 import useTime from "components/hooks/useTime";
+import { useRecoilState } from "recoil";
+import { sidebarState } from "store/atom";
 
 type BeanProps = {
   nickname: string[];
@@ -21,6 +22,7 @@ function ClusterBean({
   createdAt,
 }: BeanProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [, setSidebar] = useRecoilState(sidebarState);
   const [elapsedText] = useTime(createdAt);
   const beanRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef(null);
@@ -50,6 +52,7 @@ function ClusterBean({
     <div
       onClick={() => {
         if (isOpen && location.pathname !== "/sidebar") {
+          setSidebar(2);
           navigate("/sidebar");
         }
       }}

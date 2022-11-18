@@ -20,7 +20,6 @@ export default function Sidebar() {
   const { sidebar, upHandlers, slideHandlers } = useSideHandler(() =>
     navigate("/")
   );
-  console.log(sidebar);
 
   return (
     <div className="sidebar">

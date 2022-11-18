@@ -35,7 +35,7 @@ const useGeolocation = () => {
     navigator.geolocation.getCurrentPosition(onSuccess, onError, {
       enableHighAccuracy: true,
     });
-    location.error && alert(location.error.message);
+    location.error && alert(location.error.code);
   }, []);
 
   return location;

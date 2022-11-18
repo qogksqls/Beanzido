@@ -26,7 +26,7 @@ export default function useSideHandler(close: () => void) {
         "--scroll-width-default",
         "0px"
       );
-    } else {
+    } else if (sidebar === 2) {
       document.documentElement.style.setProperty(
         "--scroll-width-default",
         "100%"
