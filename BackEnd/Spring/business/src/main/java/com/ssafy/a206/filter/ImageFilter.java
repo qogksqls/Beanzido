@@ -44,6 +44,8 @@ public class ImageFilter {
 					return "폭력적인 이미지가 포함되어 있습니다.";
 				} else if (label.parentName().equals("Visually Disturbing")) {
 					return "혐오스러운 이미지가 포함되어 있습니다.";
+				} else if(label.parentName().equals("Drugs")) {
+					return "마약은 인생을 망칩니다.";
 				}
 			}
 		} catch (RekognitionException e) {
