@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import "./KeywordModal.scss";
 import locationImg from "assets/img/location.svg";
 import _ from "lodash";
@@ -10,6 +11,7 @@ type KeywordModalProps = {
 };
 
 function KeywordModal({ name, keywords, moveTo }: KeywordModalProps) {
+  const location = useLocation();
   return (
     <>
       <div className="keyword-modal" onClick={moveTo}>
@@ -23,9 +25,12 @@ function KeywordModal({ name, keywords, moveTo }: KeywordModalProps) {
         ) : (
           <div className="keyword">{Object.keys(keywords)[0]}</div>
         )}
-        <div className="click-text">
-          눌러서 이동하기
-        </div>
+        {location.pathname.split("/").length > 2 && location.pathname.split("/")[2] === 'dong' ? 
+          <div></div> :
+          <div className="click-text">
+            눌러서 이동하기
+          </div>
+        }
       </div>
     </>
   );
