@@ -35,7 +35,12 @@ const useGeolocation = () => {
     navigator.geolocation.getCurrentPosition(onSuccess, onError, {
       enableHighAccuracy: true,
     });
-    location.error && alert(location.error.message);
+    location.error &&
+      alert(
+        location.error.code === 1
+          ? "위치 정보를 허용해 주세요."
+          : "위치 정보를 사용할 수 없습니다."
+      );
   }, []);
 
   return location;

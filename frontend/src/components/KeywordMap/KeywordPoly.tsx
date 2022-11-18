@@ -5,7 +5,7 @@ import { Polygon } from "react-kakao-maps-sdk";
 import { isMobile } from "react-device-detect";
 import { CSSTransition } from "react-transition-group";
 import { LngLat } from "store/types";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import KeywordTooltip from "./KeywordTooltip";
 import KeywordModal from "./KeywordModal/KeywordModal";
 import ModalPortal from "Portal";
@@ -20,6 +20,7 @@ type PolyProps = {
 
 function KeywordPoly({ polygon, keywords, name, code, map }: PolyProps) {
   const navigate = useNavigate();
+  const polyRef = useRef(null);
   const { backgroundColor } = useRecoilValue(colorSelector);
   const [mousePosition, setMousePosition] = useState({
     lat: 0,
@@ -58,9 +59,10 @@ function KeywordPoly({ polygon, keywords, name, code, map }: PolyProps) {
   };
 
   const tapHandler = {
-    onClick: () => {
+    onClick: (target: kakao.maps.Polygon) => {
       kakao.maps.event.preventMap();
 
+      target.setOptions({ fillColor: backgroundColor });
       if (isMobileKeyword) {
         if (code.length === 2) {
           navigate("/keyword/si/" + code);
@@ -84,6 +86,7 @@ function KeywordPoly({ polygon, keywords, name, code, map }: PolyProps) {
         strokeStyle={"solid"}
         fillColor={"#f5f5f5"}
         fillOpacity={0.9}
+        ref={polyRef}
         {...(isMobile ? tapHandler : mouseHandler)}
       />
       <KeywordTooltip
