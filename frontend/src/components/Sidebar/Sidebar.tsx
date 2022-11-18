@@ -1,4 +1,5 @@
-import { useRecoilValue } from "recoil";
+import { useEffect } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { beanListSelector, focusedListSelector } from "store/selector";
 import "./Sidebar.scss";
 import closeIcon from "assets/img/Expand_left_light.svg";
@@ -11,15 +12,21 @@ import _ from "lodash";
 import useBeanAPI from "components/hooks/useBeanAPI";
 import ChatList from "components/ChatList/ChatList";
 import useSideHandler from "components/hooks/useSideHandler";
+import { sidebarState } from "store/atom";
 
 export default function Sidebar() {
   const coloredBeanList = useRecoilValue(beanListSelector);
   const coloredFocusedList = useRecoilValue(focusedListSelector);
+  const [sidebar, setSidebar] = useRecoilState(sidebarState);
   const navigate = useNavigate();
   const { isBeanLoad } = useBeanAPI();
-  const { sidebar, upHandlers, slideHandlers } = useSideHandler(() =>
-    navigate("/")
-  );
+  const { upHandlers, slideHandlers } = useSideHandler(() => navigate("/"));
+
+  useEffect(() => {
+    if (sidebar === 0) {
+      setSidebar(1);
+    }
+  }, []);
 
   return (
     <div className="sidebar">
