@@ -21,7 +21,7 @@ nltk.download('punkt')
 
 # 명사추출.
 sched = BackgroundScheduler(timezone='Asia/Seoul')
-hannanum = konlpy.tag.Hannanum()
+hannanum = konlpy.tag.Okt()
 tf_keyword_rank = {}
 # print(hannanum.pos('아 배고파 점심메뉴 추천좀요'))
 
