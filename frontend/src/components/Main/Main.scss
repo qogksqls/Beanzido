@@ -26,12 +26,15 @@
 @keyframes img-loading {
   0% {
     width: 30%;
+    height: auto;
   }
   50% {
     width: 30%;
+    height: auto;
   }
   100% {
     width: 60px;
+    height: 45px;
   }
 }
 
@@ -80,6 +83,7 @@
 
   img {
     width: 60px;
+    height: 45px;
     min-width: 60px;
     opacity: 1.5;
     animation: img-loading 1000ms ease;
