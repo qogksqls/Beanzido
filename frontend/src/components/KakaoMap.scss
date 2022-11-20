@@ -6,3 +6,13 @@
 	right: 50%;
 	z-index: 100;
 }
+
+#map {
+	div {
+		svg {
+			path[id^=daum-maps-shape] {
+				transition: fill ease 300ms;
+			}
+		}
+	}
+}
