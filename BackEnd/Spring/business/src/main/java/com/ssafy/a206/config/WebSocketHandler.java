@@ -91,8 +91,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			e1.printStackTrace();
 		}
 
-		String ip = "";
-
+        String ip = session.getHandshakeHeaders().get("x-forwarded-for").get(0);
+        
 		messageLogService.messageAdd(messageReq, ip);
 		MessageDTO dto = new MessageDTO(messageReq, ip);
 		dto.setContentFilter(badWordFilter.search(dto.getContent()));
