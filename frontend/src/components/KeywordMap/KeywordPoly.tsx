@@ -63,6 +63,7 @@ function KeywordPoly({ polygon, keywords, name, code, map }: PolyProps) {
       kakao.maps.event.preventMap();
 
       target.setOptions({ fillColor: backgroundColor });
+      setTimeout(() => target.setOptions({ fillColor: "#f5f5f5" }), 3000)
       if (isMobileKeyword) {
         if (code.length === 2) {
           navigate("/keyword/si/" + code);
