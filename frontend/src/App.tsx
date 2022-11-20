@@ -30,9 +30,6 @@ function App() {
 
   return (
     <div className="App">
-      <div className="logo">
-        <img src={Logo} alt="로고" onClick={() => navigate("/feedback")} />
-      </div>
       <Nav />
       <Routes location={location}>
         <Route path="/*" element={<>{loaded && <Main />}</>} />
