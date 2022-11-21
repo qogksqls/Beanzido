@@ -61,6 +61,9 @@
       box-shadow: none;
     }
   }
+  &.intro-modal {
+    opacity: 0;
+  }
 }
 .transition-enter-active {
   &.create-bean {
@@ -115,6 +118,10 @@
       transition: all ease-out 300ms;
     }
   }
+  &.intro-modal {
+    opacity: 1;
+    transition: opacity ease 500ms;
+  }
 }
 .transition-exit {
   &.create-bean {
@@ -168,6 +175,10 @@
       transition: all ease-in 300ms;
     }
   }
+  &.intro-modal {
+    opacity: 1;
+    transition: opacity ease 500ms;
+  }
 }
 .transition-exit-active {
   &.create-bean {
@@ -210,6 +221,9 @@
       }
       box-shadow: none;
     }
+  }
+  &.intro-modal {
+    opacity: 0;
   }
 }
 .transition-enter-done {
