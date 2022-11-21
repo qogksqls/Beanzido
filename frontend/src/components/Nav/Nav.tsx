@@ -9,6 +9,8 @@ import KeywordIcons from "./KeywordIcons";
 import SidebarKeyword from "components/Sidebar/SidebarKeyword";
 import KeywordButton from "./KeywordButton";
 import useGeolocation from "components/hooks/useGeolocation";
+import IntroModal from "components/IntroModal/IntroModal";
+import ModalPortal from "Portal";
 import "./Nav.scss";
 import { ReactComponent as CreateSVG } from "assets/img/chat-button.svg";
 import { ReactComponent as BottomBridge } from "assets/img/bottom-bar.svg";
@@ -24,6 +26,7 @@ import logo from "assets/img/Logo.svg";
 export default function Nav() {
   const [, setLevel] = useRecoilState(mapLevelState);
   const [isKeyword, setIsKeyword] = useState(false);
+  const [isIntro, setIsIntro] = useState(false);
   const keywordRef = useRef(null);
   const communityRef = useRef(null);
   const navigate = useNavigate();
@@ -43,6 +46,9 @@ export default function Nav() {
 
   return (
     <nav>
+      <div className="logo">
+        <img src={logo} alt="로고" onClick={() => setIsIntro(true)} />
+      </div>
       <div className="bottom-bar">
         {isKeyword ? (
           <div
@@ -117,13 +123,7 @@ export default function Nav() {
       )}
       <div className="sidebar-fix">
         <div className="side-logo">
-          <img
-            src={logo}
-            alt="logo"
-            onClick={() => {
-              alert("Beanzido is World Best Social Map Community.");
-            }}
-          />
+          <img src={logo} alt="logo" onClick={() => setIsIntro(true)} />
         </div>
         <div className="side-container">
           <CSSTransition
@@ -160,6 +160,16 @@ export default function Nav() {
         )}
       </div>
       <NavToolTip />
+      <ModalPortal>
+        <CSSTransition
+          in={isIntro}
+          classNames="transition"
+          timeout={500}
+          unmountOnExit
+        >
+          <IntroModal setIsIntro={setIsIntro} />
+        </CSSTransition>
+      </ModalPortal>
     </nav>
   );
 }
