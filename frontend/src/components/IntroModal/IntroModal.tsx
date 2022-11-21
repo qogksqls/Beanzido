@@ -16,12 +16,27 @@ function IntroModal({ setIsIntro }: IntroModalProps) {
   return (
     <>
       <div className="intro-modal">
-        <img src={introBase} className="intro-base" alt="intro" onClick={() => setIsIntro(false)}/>
+        <img
+          src={introBase}
+          className="intro-base"
+          alt="intro"
+          onClick={() => setIsIntro(false)}
+        />
         <div className="intro-wrapper">
           {frame === 3 && (
             <div className="frame_3">
               <Iphone className="intro-img iphone" />
-              <Search className="intro-img search-beanzido" />
+              <Search
+                className="intro-img search-beanzido"
+                onClick={() => {
+                  window.open(
+                    "https://play.google.com/store/apps/details?id=com.beanzido.twa"
+                  );
+                }}
+              />
+              <span className="footer">
+                Beanzido A206 김우창 배한빈 안현모 이경무 이준경 황태희
+              </span>
             </div>
           )}
           {frame === 2 && (

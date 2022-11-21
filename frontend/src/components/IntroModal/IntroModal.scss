@@ -13,11 +13,12 @@
 .intro-modal {
   --intro-width: min(max(85%, 500px), 1080px);
   position: fixed;
-  top: calc(50% - var(--intro-width) * 9 / 32);
+  top: 16%;
   left: calc(50% - var(--intro-width) / 2);
   width: var(--intro-width);
   z-index: 111;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
 
   .intro-wrapper {
     display: flex;
@@ -25,7 +26,6 @@
     width: 100%;
     padding-bottom: 56%;
     height: 0;
-
     div {
       position:absolute;
       top: 0;
@@ -71,15 +71,30 @@
     }
     .frame_3 {
       background-image: url("../../assets/intro/frame3.png");
+      .footer {
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+        font-size: 14px;
+        color: #222222;
+      }
       .search-beanzido {
         top: 60%;
         left: 10%;
         width: 40%;
         height: 10%;
         animation: intro-search ease-out 1500ms;
+        z-index: 1;
+        cursor: pointer;
+        &:hover {
+          filter: brightness(1.1);
+        }
+        &:active{
+          filter: brightness(0.9);
+        }
       }
       .iphone {
-        top: 0;
+        top: 3%;
         left: 48%;
         width: 50%;
         height: 70%;
@@ -108,8 +123,38 @@
       background: linear-gradient( to left, transparent 10%, rgba(0, 0, 0, 0.4));
     }
     .front {
+      text-align: right;
       left: 50%;
       background: linear-gradient( to right, transparent 10%, rgba(0, 0, 0, 0.4));
+    }
+  }
+}
+
+@include desktop {
+  .intro-modal{
+    background-color: transparent;
+    .intro-base {
+      display: none;
+    }
+  }
+}
+
+@include mobile {
+  .intro-modal {
+    left: 10px;
+    top: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border-radius: 10px;
+    overflow: auto;
+    background-color: #BDDB79;
+    .intro-base {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .intro-wrapper {
+      display: none;
     }
   }
 }
@@ -159,33 +204,5 @@
   }
   100% {
     opacity: 1;
-  }
-}
-@include desktop {
-  .intro-modal{
-    background-color: transparent;
-    .intro-base {
-      display: none;
-    }
-  }
-}
-
-@include mobile {
-  .intro-modal {
-    left: 10px;
-    top: 10px;
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
-    border-radius: 10px;
-    overflow: auto;
-    background-color: #BDDB79;
-    .intro-base {
-      width: 100%;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .intro-wrapper {
-      display: none;
-    }
   }
 }
