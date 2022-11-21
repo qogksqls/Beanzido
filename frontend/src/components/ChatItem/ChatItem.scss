@@ -1,0 +1,126 @@
+@import "assets/css/variables.scss";
+
+@include mobile {
+  .chat-item {
+    .chat-item-tooltip {
+      display: none;
+    }
+  }
+}
+
+.chat-item {
+  display: flex;
+  background-color: white;
+  padding: 10px;
+  border-radius: 22px 22px 22px 2px;
+  margin-bottom: 20px;
+  box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  
+  .nickname-container {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.25);
+    color: white;
+    font-size: 16px;
+    line-height: 35px;
+    // margin-top: 5px;
+  }
+  
+  .contents-container {
+    position: relative;
+    width: calc(100% - 45px);
+    margin-left: 10px;
+    &>div {
+      margin-left: 5px;
+    }
+    .up {
+      font-size: 12px;
+      font-weight: bold;
+      display: flex;
+      width: 100%;
+      min-height: 16px;
+      
+      div {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .nickname {
+        text-align: left;
+        width: 32%;
+        min-width: 77px;
+      }
+      .time {
+        margin-left: 10px;
+        min-width: 55px;
+        color: rgba(0, 0, 0, 0.4);
+      }
+    }
+    .location {
+      font-size: 10px;
+      text-align: start;
+      margin: 4px 8px 4px 4px;
+      display: flex;
+      align-items: center;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      min-width: 150px;
+      min-height: 14px;
+      .location-img {
+        width: 14px;
+        height: 14px;
+        margin-right: 0px;
+        animation-duration: 5s;
+      }
+    }
+    .down {
+      font-size: 16px;
+      text-align: start;
+      margin-bottom: 10px;
+    }
+    .chat-item-img {
+      text-align: start;
+      .chat-item-img-off {
+        width: 80%;
+      }
+    }
+  }
+
+  &.skeleton {
+    .gray {
+      background-color: #f0f0f0;
+    }
+    .text {
+      border-radius: 3px;
+    }
+    .nickname-container {
+      box-shadow: none;
+    }
+    .up {
+      .text {
+        width: 160px;
+      }
+    }
+    .location {
+      padding-right: 5px;
+      .text {
+        width: 120px;
+        height: 13px;
+      }
+    }
+    .down {
+      .text {
+        width: 90%;
+        height: 16px;
+        &+.text {
+          margin-top: 3px;
+          margin-bottom: 16px;
+          width: 60%;
+        }
+      }
+    }
+  }
+}

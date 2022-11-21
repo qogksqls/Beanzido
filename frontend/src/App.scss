@@ -1,0 +1,318 @@
+@import "assets/css/variables.scss";
+
+.App {
+  text-align: center;
+  position: relative;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  max-height: 100vh;
+  overflow: hidden;
+  perspective: 800px;
+  
+  @font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: 'GmarketSansMedium';
+}
+
+.transition-enter {
+  &.create-bean {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  &.feedback {
+    top: calc(100% - 80px);
+    left: 0%;
+    width: 80px;
+  }
+  &.switch-container {
+    transform: rotateY(-90deg) translate3d(22.5px, 0px, 45px);
+    // filter: brightness(0.9)
+  }
+  &.keyword-modal {
+    opacity: 0;
+  }  
+  &.notice-modal {
+    opacity: 0;
+  }
+  &.pop-container {
+    .pop {
+      &:nth-child(1) {
+        bottom: -25px ;
+        left: -25px ;
+        .ani-img {
+          transform: rotate(-50deg);
+        }
+      }
+      &:nth-child(2) {
+        bottom: -25px ;
+        left: -25px ;
+      }
+      &:nth-child(3) {
+        bottom: -25px;
+        left: -25px;
+        .ani-img {
+          transform: rotate(50deg);
+        }
+      }
+      box-shadow: none;
+    }
+  }
+}
+.transition-enter-active {
+  &.create-bean {
+    opacity: 1;
+    transform: translateZ(0);
+    transition: all ease 500ms;
+  }
+  &.feedback {
+    top: 35%;
+    left: calc(50%  - 180px);
+    width: 360px;
+    transition: all ease 500ms;
+  }
+  &.switch-container {
+    transform: translateZ(0);
+    filter: brightness(1);
+    transition: all ease 500ms;
+  }
+  &.keyword-modal {
+    opacity: 1;
+    transition: opacity ease 500ms;
+  }
+  &.notice-modal {
+    opacity: 1;
+    transition: opacity ease 500ms;
+  }
+  &.pop-container {
+    .pop {
+      &:nth-child(1) {
+        bottom: 20px ;
+        left: -90px ;
+        .ani-img {
+          transform: rotate(0);
+          transition: all ease 500ms;
+        }
+      }
+      &:nth-child(2) {
+        bottom: 55px ;
+        left: -25px ;
+        transition-delay: 100ms;
+      }
+      &:nth-child(3) {
+        bottom: 20px ;
+        left: 40px ;
+        transition-delay: 200ms;
+        .ani-img {
+          transform: rotate(0);
+          transition: all ease 300ms 200ms;
+        }
+      }
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+      transition: all ease-out 300ms;
+    }
+  }
+}
+.transition-exit {
+  &.create-bean {
+    opacity: 1;
+    transform: translateZ(0);
+    box-shadow: 0px 0px 8px rgba(181, 96, 57, 0.8);
+    transition: all ease 500ms;
+  }
+  &.feedback {
+    top: 35%;
+    left: calc(50%  - 180px);
+    width: 360px;
+    transition: all ease 500ms;
+  }
+  &.switch-container {
+    transform: translateZ(0);
+    filter: brightness(1);
+    transition: all ease 500ms;
+  }
+  &.keyword-modal {
+    opacity: 1;
+    transition: opacity ease 500ms;
+  }
+  &.notice-modal {
+    opacity: 1;
+    transition: opacity ease 500ms;
+  }
+  &.pop-container {
+    .pop {
+      &:nth-child(1) {
+        bottom: 20px ;
+        left: -90px ;
+        .ani-img {
+          transform: rotate(0);
+          transition: all ease 500ms;
+        }
+      }
+      &:nth-child(2) {
+        bottom: 55px ;
+        left: -25px ;
+      }
+      &:nth-child(3) {
+        bottom: 20px ;
+        left: 40px ;
+        .ani-img {
+          transform: rotate(0);
+          transition: all ease 500ms;
+        }
+      }
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+      transition: all ease-in 300ms;
+    }
+  }
+}
+.transition-exit-active {
+  &.create-bean {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+  &.feedback {
+    top: calc(100% - 80px);
+    left: 0%; 
+    width: 80px;
+  }
+  &.switch-container {
+    transform: rotateY(90deg) translate3d(22.5px, 0px, 45px);
+  }
+  &.keyword-modal {
+    opacity: 0;
+  }
+  &.notice-modal {
+    opacity: 0;
+  }
+  &.pop-container {
+    .pop {
+      &:nth-child(1) {
+        bottom: -25px ;
+        left: -25px ;
+        .ani-img {
+          transform: rotate(-50deg);
+        }
+      }
+      &:nth-child(2) {
+        bottom: -25px ;
+        left: -25px ;
+      }
+      &:nth-child(3) {
+        bottom: -25px;
+        left: -25px;
+        .ani-img {
+          transform: rotate(50deg);
+        }
+      }
+      box-shadow: none;
+    }
+  }
+}
+.transition-enter-done {
+  &.pop-container {
+    .pop {
+      &:nth-child(1) {
+        bottom: 20px ;
+        left: -90px ;
+      }
+      &:nth-child(2) {
+        bottom: 55px ;
+        left: -25px ;
+      }
+      &:nth-child(3) {
+        bottom: 20px ;
+        left: 40px ;
+      }
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+.transition-exit-done {
+  &.switch-container {
+    display: none;
+  } 
+}
+
+@include desktop {
+  .transition-enter {
+    &.sidebar {
+      transform: translateX(-350px);
+    }
+    &.sidebar-keyword {
+      transform: translateX(-350px);
+    }
+  }
+  .transition-enter-active {
+    &.sidebar {
+      transform: translateX(0);
+      transition: all ease 500ms;
+    }
+    &.sidebar-keyword {
+      transform: translateX(0);
+      transition: all ease 500ms;
+    }
+  }
+  .transition-exit {
+    &.sidebar {
+      transform: translateX(0);
+      transition: all ease 500ms;
+    }
+    &.sidebar-keyword {
+      transform: translateX(0);
+      transition: all ease 500ms;
+    }
+  }
+  .transition-exit-active {
+    &.sidebar {
+      transform: translateX(-350px);
+    }
+    &.sidebar-keyword {
+      transform: translateX(-350px);
+    }
+  }
+}
+@include mobile {
+  .transition-enter {
+    &.sidebar {
+      transform: translateY(var(--inner-height));
+    }
+    &.sidebar-keyword {
+      transform: translateY(var(--inner-height));
+    }
+  }
+  .transition-enter-active {
+    &.sidebar {
+      transform: translateY(0);
+      transition: all ease 500ms;
+    }
+    &.sidebar-keyword {
+      transform: translateY(0);
+      transition: all ease 500ms;
+    }
+  }
+  .transition-exit {
+    &.sidebar {
+      transform: translateY(0);
+    }
+    &.sidebar-keyword {
+      transform: translateY(0);
+    }
+  }
+  .transition-exit-active {
+    &.sidebar {
+      transform: translateY(var(--inner-height));
+      transition: all ease 500ms;
+    }
+    &.sidebar-keyword {
+      transform: translateY(var(--inner-height));
+      transition: all ease 500ms;
+    }
+  }
+
+}
+
+

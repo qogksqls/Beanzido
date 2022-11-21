@@ -1,0 +1,17 @@
+.notice-modal {
+  --notice-modal-width: min(80%, 350px);
+  position: absolute;
+  top: 17%;
+  left: calc(calc(100% - var(--notice-modal-width)) / 2);
+  z-index: 110;
+  padding: 10px;
+  width: var(--notice-modal-width);
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.15);
+  background-color: #f0f0f0;
+
+  .message {
+    margin: 5px;
+    padding-left: 10px;
+  }
+}

@@ -1,0 +1,111 @@
+.cluster-bean.close {
+  border-radius: 18px 18px 18px 1px;
+}
+
+.cluster-bean {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-radius: 10px 10px 10px 1px;
+  padding: 5px;
+  background: #f5f5f5;
+  box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  transition: all ease 500ms;
+
+  .nickname-cluster {
+    display: flex;
+    position: relative;
+    height: 25px;
+    width: 25px;
+    &.three {
+      width: 55px;
+    }
+    &.two {
+      width: 40px;
+    }
+    .nickname-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.25);
+      color: white;
+      font-size: 12px;
+      line-height: 25px;
+      &.second {
+        left: 15px;
+      }
+      &.third {
+        left: 30px;
+      }
+    }
+  }
+
+  .contents-container {
+    text-overflow: clip;
+    & > div {
+      width: 120px;
+      margin-left: 5px;
+    }
+    .up {
+      font-size: 8px;
+      display: flex;
+      width: 100%;
+
+      div {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .time {
+        margin-left: 5px;
+        color: rgba(0, 0, 0, 0.4);
+      }
+      h4 {
+        margin: 0;
+      }
+    }
+    .down {
+      margin-top: 2px;
+      font-size: 10px;
+      text-align: start;
+      overflow: hidden;
+      white-space: normal;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+  }
+  div.fade-enter {
+    width: 0;
+    opacity: 0;
+  }
+  div.fade-enter-active {
+    width: 120px;
+    margin-left: 5px;
+    opacity: 1;
+    transition: all ease 500ms;
+  }
+
+  div.fade-exit {
+    height: 42px;
+    width: 120px;
+    margin: 0;
+    opacity: 1;
+  }
+  div.fade-exit-active {
+    height: 0;
+    width: 0;
+    opacity: 0;
+    transition: all ease 500ms;
+    .down {
+      display: none;
+    }
+  }
+}

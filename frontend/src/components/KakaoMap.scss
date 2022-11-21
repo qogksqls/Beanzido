@@ -1,0 +1,18 @@
+@import "assets/css/variables.scss";
+
+.my-location {
+	position: fixed;
+	top: 50%;
+	right: 50%;
+	z-index: 100;
+}
+
+#map {
+	div {
+		svg {
+			path[id^=daum-maps-shape] {
+				transition: fill ease 300ms;
+			}
+		}
+	}
+}
