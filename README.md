@@ -69,4 +69,4 @@
 <br>
 
 ## [:tv: UCC](https://www.youtube.com/watch?v=w2W9CDbPXj0)
-<img src="./exec/자율PJT_서울_2반_A206_UCC경진대회.mp4"  controls></img>
+<img src="./exec/ucc.mp4"  controls></img>
