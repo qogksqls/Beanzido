@@ -46,7 +46,7 @@
 <br>
 
 ## 🚀 배포 플로우
-<img src="./resource/배포흐름.png"/>
+<img src="./resource/flow.png"/>
 
 
 
