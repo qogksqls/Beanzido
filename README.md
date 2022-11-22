@@ -1,6 +1,6 @@
 ## [<img src="./resource/notion.png"  width="30" height="30"/>Notion_Link](https://stupendous-drill-2ee.notion.site/Beanzido-8e427f79be4749aa919ec58e7420bf3c)
 
-[![프로젝트_소개](./resource/프로젝트_소개.png)](https://stupendous-drill-2ee.notion.site/Beanzido-8e427f79be4749aa919ec58e7420bf3c)
+[<img src="./resource/프로젝트소개.png"/>프로젝트 소개](https://stupendous-drill-2ee.notion.site/Beanzido-8e427f79be4749aa919ec58e7420bf3c)
 
 
 <br>
@@ -46,7 +46,7 @@
 <br>
 
 ## 🚀 배포 플로우
-![image](./resource/image.png)
+<img src="./resource/배포흐름.png"/>
 
 
 
