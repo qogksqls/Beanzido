@@ -1,6 +1,6 @@
 ## [<img src="./resource/notion.png"  width="30" height="30"/>Notion_Link](https://stupendous-drill-2ee.notion.site/Beanzido-8e427f79be4749aa919ec58e7420bf3c)
 
-[<img src="./resource/intro.png"/>프로젝트 소개](https://stupendous-drill-2ee.notion.site/Beanzido-8e427f79be4749aa919ec58e7420bf3c)
+[<img src="./resource/intro.png"/>](https://stupendous-drill-2ee.notion.site/Beanzido-8e427f79be4749aa919ec58e7420bf3c)
 
 
 <br>
