@@ -1,8 +1,6 @@
+## [<img src="./resource/notion.png"  width="30" height="30"/>Notion_Link](https://stupendous-drill-2ee.notion.site/Beanzido-8e427f79be4749aa919ec58e7420bf3c)
 
-
-## [<img src="/uploads/02f3a48285d434b252f6470ed5263bf8/notion.png"  width="30" height="30"/>Notion_Link](https://stupendous-drill-2ee.notion.site/Beanzido-8e427f79be4749aa919ec58e7420bf3c)
-
-[![프로젝트_소개](/uploads/1dd89a9a72b782941d7a8e4c1d53da1a/프로젝트_소개.png)](https://stupendous-drill-2ee.notion.site/Beanzido-8e427f79be4749aa919ec58e7420bf3c)
+[<img src="./resource/intro.png"/>](https://stupendous-drill-2ee.notion.site/Beanzido-8e427f79be4749aa919ec58e7420bf3c)
 
 
 <br>
@@ -48,7 +46,7 @@
 <br>
 
 ## 🚀 배포 플로우
-![image](/uploads/bfc8a462f4a3cee77ccb8bff2add3235/image.png)
+<img src="./resource/flow.png"/>
 
 
 
